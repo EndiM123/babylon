@@ -1,0 +1,35 @@
+import React, { useEffect, useState } from 'react';
+import './WordTransitionSection.css';
+
+const WORDS = ['Elegant', 'Chic', 'Pureness', 'Unordinary'];
+const OVERLAY_COLOR = 'rgba(0,0,0,0.10)'; // 10% black overlay
+
+export default function WordTransitionSection() {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % WORDS.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <section className="word-transition-section">
+      <div className="word-transition-box">
+        <video
+          className="word-transition-video"
+          src="/word-transition-bg.mp4"
+          autoPlay
+          loop
+          playsInline
+          preload="auto"
+          muted
+        />
+        <div className="word-transition-overlay" style={{ background: OVERLAY_COLOR }}></div>
+        <div className="word-transition-content">
+          <span className="word-transition-caption">Our Essence</span>
+          <span className="word-transition-main">{WORDS[index]}</span>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,122 @@
+.word-transition-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F7EFE5;
+}
+
+.word-transition-box {
+  position: relative;
+  width: 90vw;
+  max-width: 1200px;
+  height: 80vh;
+  max-height: 700px;
+  background: #F7EFE5; /* Linen from palette */
+  border-radius: 48px;
+  box-shadow: 0 8px 40px 0 rgba(30, 57, 50, 0.15);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: box-shadow 0.3s cubic-bezier(.77,0,.18,1);
+}
+
+@media (max-width: 700px) {
+  .word-transition-box {
+    width: 98vw;
+    height: 60vh;
+    border-radius: 24px;
+    max-height: none;
+  }
+}
+
+.word-transition-video,
+.word-transition-overlay,
+.word-transition-content {
+  border-radius: inherit;
+}
+
+.word-transition-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.word-transition-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.word-transition-content {
+  position: relative;
+  z-index: 3;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.word-transition-caption {
+  color: #A9DDD6;
+  font-family: 'Wolmer', sans-serif;
+  font-weight: 300;
+  font-size: 1.3rem;
+  margin-bottom: 2vw;
+  letter-spacing: 0.05em;
+  text-align: center;
+  user-select: none;
+}
+
+.word-transition-main {
+  color: #F7EFE5;
+  font-family: 'Wolmer', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 8vw;
+  text-align: center;
+  user-select: none;
+  display: inline-block;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.8s cubic-bezier(.77,0,.18,1), transform 0.9s cubic-bezier(.77,0,.18,1);
+}
+
+.word-transition-main.word-exit {
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.7s cubic-bezier(.77,0,.18,1), transform 0.7s cubic-bezier(.77,0,.18,1);
+}
+
+.word-transition-main.word-enter {
+  opacity: 1;
+  transform: scale(1.18);
+  transition: opacity 0.7s cubic-bezier(.77,0,.18,1), transform 0.7s cubic-bezier(.77,0,.18,1);
+}
+
+@media (max-width: 700px) {
+  .word-transition-main {
+    font-size: 13vw;
+  }
+  .word-transition-caption {
+    font-size: 1.1rem;
+  }
+}
