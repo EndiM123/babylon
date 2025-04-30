@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './App.css';
 import { COLORS, FONTS } from './theme';
 
@@ -7,7 +8,8 @@ import DualPromoSection from './DualPromoSection';
 import ProductCarousel from "./ProductCarousel";
 import MediaShowcaseSection from "./MediaShowcaseSection";
 
-const NAV_ITEMS = ['HOME', 'ABOUT', 'SHOP', 'BLOG', 'CART'];
+
+const NAV_ITEMS = ['HOME', 'SHOP', 'ABOUT', 'BLOG', 'CART'];
 const IMAGES = [
   'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80',
   'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=80',
@@ -53,99 +55,58 @@ function App() {
       : 'babylon-title to-header';
 
   return (
-    <div className="babylon-root" style={{ background: COLORS.darkGreen, minHeight: '100vh' }}>
-      {/* Fixed Header - NO logo until transition is complete */}
-      <header className="babylon-header">
-        <div className="babylon-header-inner">
-          <div className="babylon-header-logo-space">
-            {phase === 2 && (
-              <span className="babylon-header-logo">BABYLON</span>
-            )}
+    <>
+      <div className="babylon-root" style={{ background: COLORS.darkGreen, minHeight: '100vh' }}>
+        {/* Fixed Header - NO logo until transition is complete */}
+        <header className="babylon-header">
+          <div className="babylon-header-inner">
+            <div className="babylon-header-logo-space">
+              {phase === 2 && (
+                <span className="babylon-header-logo">BABYLON</span>
+              )}
+            </div>
+            <nav className="babylon-nav">
+              {NAV_ITEMS.map((item) => (
+                item === 'SHOP' ? (
+                  <Link to="/shop" key={item} className="babylon-nav-item">
+                    {item}
+                  </Link>
+                ) : (
+                  <span key={item} className="babylon-nav-item">
+                    {item}
+                  </span>
+                )
+              ))}
+            </nav>
           </div>
-          <nav className="babylon-nav">
-            {NAV_ITEMS.map((item) => (
-              <span key={item} className="babylon-nav-item">
-                {item}
-              </span>
-            ))}
-          </nav>
+        </header>
+        {/* Hero Section */}
+        <div className="word-transition-box">
+          <video className="word-transition-video" src="/word-transition-bg.mp4" autoPlay loop playsInline preload="auto" style={{ width: '100%', height: '100vh', objectFit: 'cover' }}></video>
+          <div className="word-transition-overlay" style={{ background: 'rgba(0, 0, 0, 0.1)' }}></div>
+          <div className="word-transition-content" style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+            <span className="word-transition-main" style={{ fontFamily: 'Wolmer, sans-serif', fontWeight: 700, fontSize: '10vw', color: '#FAF5F0', textAlign: 'center' }}>BABYLON</span>
+          </div>
         </div>
-      </header>
-      {/* Hero Section */}
-      <section className="babylon-hero" ref={heroRef}>
-  <div className={titleClass}>
-    {/* Phase 1: Solid title, Phase 2: Masked */}
-    {phase !== 1 ? (
-      <span className="babylon-title-solid" style={{ color: COLORS.linen, fontFamily: 'Wolmer, sans-serif', fontWeight: 900, letterSpacing: '-0.04em' }}>BABYLON</span>
-    ) : (
-      <svg
-        className="babylon-title-mask-svg"
-        viewBox="0 0 1200 300"
-        width="100%"
-        height="100%"
-      >
-        <defs>
-          <pattern
-            id="babylon-img-pattern"
-            patternUnits="userSpaceOnUse"
-            width="1200"
-            height="300"
-          >
-            {IMAGES.map((src, idx) => (
-              <image
-                key={src}
-                href={src}
-                x={idx * 400}
-                y="0"
-                width="400"
-                height="300"
-                style={{ borderRadius: '2vw' }}
-                preserveAspectRatio="xMidYMid slice"
-              />
-            ))}
-          </pattern>
-        </defs>
-        <text
-          x="50%"
-          y="65%"
-          textAnchor="middle"
-          fontFamily={FONTS.brand}
-          fontWeight="900"
-          fontSize="220"
-          fill="url(#babylon-img-pattern)"
-          letterSpacing="-10"
-        >
-          BABYLON
-        </text>
-      </svg>
-    )}
-  </div>
-</section>
-      {/* Word Transition Section: Video visualization */}
-      <WordTransitionSection />
 
-      {/* Dual Promo Section: Appears immediately after video visualization */}
-      <DualPromoSection />
-
-      {/* Melting Grid Section: Four geometric squares with melting effect */}
-      
-
-      {/* Product Carousel: Horizontally fixed product gallery */}
-      <ProductCarousel />
-      <MediaShowcaseSection />
-
-      {/* Main content follows */}
-      <section className="babylon-content" ref={contentRef}>
-        <div className="babylon-content-inner">
-          <h2>LONDON-BASED CREATOR OF STRIKING VISUALS & TIMELESS STORIES.</h2>
-          <p>
-            Based in the heart of London, Babylon is a passionate fashion brand and visual storyteller, crafting captivating images that blend artistry with authenticity. From iconic cityscapes to intimate editorials, our work is a reflection of bold creativity and attention to detail.
-          </p>
-          <button className="babylon-cta">LET'S TALK</button>
-        </div>
-      </section>
-
-    </div>
+        {/* Dual Promo Section: Appears immediately after video visualization */}
+        <DualPromoSection />
+        {/* Melting Grid Section: Four geometric squares with melting effect */}
+        {/* Product Carousel: Horizontally fixed product gallery */}
+        <ProductCarousel />
+        <MediaShowcaseSection />
+        {/* Main content follows */}
+        <section className="babylon-content" ref={contentRef}>
+          <div className="babylon-content-inner">
+            <h2>LONDON-BASED CREATOR OF STRIKING VISUALS & TIMELESS STORIES.</h2>
+            <p>
+              Based in the heart of London, Babylon is a passionate fashion brand and visual storyteller, crafting captivating images that blend artistry with authenticity. From iconic cityscapes to intimate editorials, our work is a reflection of bold creativity and attention to detail.
+            </p>
+            <button className="babylon-cta">LET'S TALK</button>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
 

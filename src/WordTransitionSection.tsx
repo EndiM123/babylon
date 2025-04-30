@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './WordTransitionSection.css';
 
-const WORDS = ['Elegant', 'Chic', 'Pureness', 'Unordinary'];
+const WORDS = ['BABYLON'];
 const OVERLAY_COLOR = 'rgba(0,0,0,0.10)'; // 10% black overlay
 
 export default function WordTransitionSection() {
