@@ -23,7 +23,7 @@ export default function WordTransitionSection() {
           muted
           playsInline
           preload="auto"
-        ></video>
+      ></video>
 
         <div className="word-transition-overlay" />
         <div className="word-transition-content">
