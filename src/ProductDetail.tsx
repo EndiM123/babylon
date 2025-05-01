@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './ProductDetail.css';
-import './App.css';
 
 // Example product data. In real use, fetch from backend or context.
 export const PRODUCTS = [
@@ -40,13 +39,6 @@ export const PRODUCTS = [
   // ...Add more products as needed
 ];
 
-const COLORS = {
-  mountbattenPink: '#A67899',
-  linen: '#F7EFE5',
-  tiffanyBlue: '#A9DDD6',
-  darkGreen: '#1E3932',
-};
-
 const COLOR_OPTIONS = [
   { name: 'Navy', value: '#222' },
   { name: 'Orange', value: '#FF9900' },
@@ -60,12 +52,8 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || '');
   const [quantity, setQuantity] = useState(1);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState(product?.image || '');
 
   if (!product) return <div>Product not found.</div>;
-
-  // For demonstration, only one image; extendable for more images
-  const images = [product.image];
 
   return (
     <main className="product-detail-container">
@@ -94,16 +82,11 @@ export default function ProductDetail() {
         <div className="product-detail-color-row">
           <span className="product-detail-color-label">Color</span>
           <div className="product-detail-color-options" role="radiogroup" aria-label="Select color">
-            {[
-              { name: 'Navy', value: '#222' },
-              { name: 'Orange', value: '#FF9900' },
-              { name: 'Black', value: '#000' },
-            ].map(opt => (
+            {COLOR_OPTIONS.map(opt => (
               <button
                 key={opt.name}
                 className={`product-detail-color-option${selectedColor === opt.name ? ' selected' : ''}`}
                 style={{ color: selectedColor === opt.name ? '#222' : '#888' }}
-                aria-checked={selectedColor === opt.name}
                 aria-label={opt.name}
                 tabIndex={0}
                 onClick={() => setSelectedColor(opt.name)}

@@ -9,7 +9,7 @@ import ProductCarousel from './ProductCarousel';
 import MediaShowcaseSection from './MediaShowcaseSection';
 import WordTransitionSection from './WordTransitionSection';
 
-export default function AppRoutes({ contentRef }: { contentRef: React.RefObject<HTMLDivElement | null> }) {
+export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
     <Routes>
       <Route path="/" element={

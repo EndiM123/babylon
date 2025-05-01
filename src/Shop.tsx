@@ -3,31 +3,8 @@ import { Link } from 'react-router-dom';
 import './Shop.css';
 import './App.css';
 
-const NAV_ITEMS = ['HOME', 'SHOP', 'ABOUT', 'BLOG', 'CART'];
 
-const COLORS = {
-  mountbattenPink: '#A67899',
-  linen: '#F7EFE5',
-  tiffanyBlue: '#A9DDD6',
-  darkGreen: '#1E3932',
-};
-
-const SIZES = ['XS', 'S', 'M', 'L', 'XL'];
-const COLORS_FILTER = [
-  { name: 'Mountbatten Pink', value: COLORS.mountbattenPink },
-  { name: 'Black', value: '#222' },
-  { name: 'White', value: '#fff' },
-  { name: 'Linen', value: COLORS.linen },
-  { name: 'Tiffany Blue', value: COLORS.tiffanyBlue },
-  { name: 'Cream', value: '#f7f2e6' },
-];
 const CATEGORIES = ['Dresses', 'Outerwear', 'Tops', 'Bottoms', 'Swimwear', 'Accessories'];
-const SORT_OPTIONS = [
-  { label: 'Newest', value: 'newest' },
-  { label: 'Price: Low to High', value: 'priceLow' },
-  { label: 'Price: High to Low', value: 'priceHigh' },
-  { label: 'Most Popular', value: 'popular' },
-];
 
 const PRODUCTS = [
   {
@@ -82,17 +59,12 @@ const PRODUCTS = [
 
 export default function Shop() {
   // Filter state
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [priceRange, setPriceRange] = useState<[number, number]>([100, 800]);
-  const [sortBy, setSortBy] = useState<string>('newest');
   const [showFilterDropdown, setShowFilterDropdown] = useState<boolean>(false);
   const [dropdownPlacement, setDropdownPlacement] = useState<'left' | 'bottom'>('left');
   const filterIconRef = React.useRef<HTMLButtonElement>(null);
   const filterDropdownRef = React.useRef<HTMLDivElement>(null);
 
-  // Filtering logic omitted for brevity
 
   React.useEffect(() => {
     function handleResize() {
