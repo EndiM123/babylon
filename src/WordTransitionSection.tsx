@@ -19,20 +19,19 @@ export default function WordTransitionSection() {
   return (
     <section className="word-transition-section">
       <div className="word-transition-box">
-      <video
-        className="word-transition-video"
-        src="/endi_noaudio.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        controls={false}
-        disablePictureInPicture
-        onContextMenu={e => e.preventDefault()}
-      />
-
-
+        <video
+          className="word-transition-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          controls={false}
+          disablePictureInPicture
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          <source src="/endi_noaudio.mp4" type="video/mp4" />
+        </video>
         <div className="word-transition-overlay" />
         <div className="word-transition-content">
           <span className="word-transition-main">BABYLON</span>
