@@ -15,10 +15,16 @@ export default function WordTransitionSection() {
   return (
     <section className="word-transition-section">
       <div className="word-transition-box">
-        <img
+        <video
           className="word-transition-video"
-          src="/endi.gif"
-          alt="Babylon"
+          src="/word-transition-bg.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          controls={false}
+          disablePictureInPicture
           onContextMenu={e => e.preventDefault()}
         />
 
