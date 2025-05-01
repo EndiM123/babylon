@@ -17,7 +17,7 @@ export default function WordTransitionSection() {
       <div className="word-transition-box">
         <video
           className="word-transition-video"
-          src="/endi-noaudio.mp4"
+          src="/endi_noaudio.mp4"
           autoPlay
           loop
           muted
