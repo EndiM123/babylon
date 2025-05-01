@@ -114,11 +114,6 @@
   }
 }
 
-.word-transition-video,
-.word-transition-overlay,
-.word-transition-content {
-  /* inherit; */
-}
 
 .word-transition-video {
   position: absolute;
