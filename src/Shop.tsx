@@ -112,7 +112,15 @@ export default function Shop() {
 
   return (
     <div className="shop-video-frame">
-
+      <video
+        className="word-transition-video"
+        src="/endi.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+      ></video>
       <div className="shop-page">
         {/* Babylon Header (copied from App) */}
         <header className="babylon-header">
