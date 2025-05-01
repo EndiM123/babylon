@@ -117,10 +117,9 @@ export default function Shop() {
         src="/word-transition-bg.mp4"
         autoPlay
         loop
+        muted
         playsInline
         preload="auto"
-        muted
-        style={{ pointerEvents: 'none' }}
       />
       <div className="shop-page">
         {/* Babylon Header (copied from App) */}

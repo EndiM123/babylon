@@ -52,9 +52,10 @@ function App() {
 
   return (
     <>
-      <div className="babylon-root" style={{ background: COLORS.darkGreen, minHeight: '100vh' }}>
+
+      <div className="babylon-root" style={{ background: COLORS.darkGreen, minHeight: '100vh', position: 'relative', zIndex: 1 }}>
         {/* Fixed Header - NO logo until transition is complete */}
-        <header className="babylon-header">
+        <header className="babylon-header" style={{ position: 'relative', zIndex: 2 }}>
           <div className="babylon-header-inner">
             <div className="babylon-header-logo-space">
               {phase === 2 && (

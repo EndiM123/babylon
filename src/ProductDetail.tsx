@@ -70,11 +70,7 @@ export default function ProductDetail() {
   return (
     <main className="product-detail-container">
       <div className="product-detail-media-container">
-        {product.video ? (
-          <video className="product-detail-media" src={product.video} autoPlay loop muted playsInline />
-        ) : (
-          <img className="product-detail-media" src={product.image} alt={product.name} />
-        )}
+        <img className="product-detail-media" src={product.image} alt={product.name} />
       </div>
       <div className="product-detail-info-panel">
         <h1 className="product-detail-title">{product.name}</h1>

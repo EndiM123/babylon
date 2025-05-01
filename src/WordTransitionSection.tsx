@@ -20,10 +20,20 @@ export default function WordTransitionSection() {
           src="/word-transition-bg.mp4"
           autoPlay
           loop
+          muted
           playsInline
           preload="auto"
-          muted
         />
+        <video
+          className="word-transition-video"
+          src="/word-transition-bg.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        />
+
         <div className="word-transition-overlay" style={{ background: OVERLAY_COLOR }}></div>
         <div className="word-transition-content">
           <span className="word-transition-caption">Our Essence</span>
