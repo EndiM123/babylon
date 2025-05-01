@@ -24,6 +24,9 @@ export default function WordTransitionSection() {
           playsInline
           preload="auto"
         />
+        <div className="word-transition-content">
+          <span className="word-transition-main">BABYLON</span>
+        </div>
       </div>
     </section>
   );
