@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
 import './App.css';
+import './global-video-override.css';
 import { COLORS, FONTS } from './theme';
 import AppRoutes from './AppRoutes';
 
