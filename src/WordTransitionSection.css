@@ -32,6 +32,7 @@
   height: 100%;
   z-index: 2;
   pointer-events: none;
+  user-select: none;
   background: none;
 }
 
@@ -44,6 +45,7 @@
   object-fit: cover;
   z-index: 1;
   pointer-events: none;
+  user-select: none;
 }
 
 .word-transition-overlay {
@@ -54,6 +56,7 @@
   height: 100%;
   z-index: 2;
   pointer-events: none;
+  user-select: none;
   background: rgba(0,0,0,0.10);
 }
 
@@ -68,6 +71,7 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  user-select: none;
 }
 
 .word-transition-main {
@@ -121,6 +125,7 @@
   object-fit: cover;
   z-index: 1;
   pointer-events: none;
+  user-select: none;
 }
 
 .word-transition-overlay {
@@ -131,6 +136,7 @@
   height: 100%;
   z-index: 2;
   pointer-events: none;
+  user-select: none;
 }
 
 .word-transition-content {
@@ -143,6 +149,7 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  user-select: none;
 }
 
 .word-transition-caption {

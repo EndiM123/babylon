@@ -120,7 +120,8 @@ export default function Shop() {
         muted
         playsInline
         preload="auto"
-      ></video>
+        controls={false}
+      />
       <div className="shop-page">
         {/* Babylon Header (copied from App) */}
         <header className="babylon-header">
