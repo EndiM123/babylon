@@ -17,7 +17,7 @@ export default function WordTransitionSection() {
       <div className="word-transition-box">
         <video
           className="word-transition-video"
-          src="/endi.mp4"
+          src="/endi-VEED.mp4"
           autoPlay
           loop
           muted
@@ -25,7 +25,7 @@ export default function WordTransitionSection() {
           preload="auto"
           controls={false}
           disablePictureInPicture
-          onContextMenu={e => e.preventDefault()}
+          onContextMenu={(e: React.MouseEvent<HTMLVideoElement>) => e.preventDefault()}
         />
 
         <div className="word-transition-overlay" />
