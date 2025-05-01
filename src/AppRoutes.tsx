@@ -16,22 +16,21 @@ export default function AppRoutes({ contentRef }: { contentRef: React.RefObject<
         <>
           {/* Hero Section */}
           <div className="word-transition-box" style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="landing-background-video"
-              style={{ width: '100vw', height: '100vh', objectFit: 'cover', position: 'absolute', top: 0, left: 0, zIndex: 1 }}
-            >
-              <source src="/word-transition-bg.mp4" type="video/mp4" />
-            </video>
-            <div className="word-transition-overlay" style={{ background: 'rgba(0, 0, 0, 0.1)', position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 2 }}></div>
-            <div className="word-transition-content" style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', zIndex: 3 }}>
-              <span className="word-transition-main" style={{ fontFamily: 'Wolmer, sans-serif', fontWeight: 700, fontSize: '10vw', color: '#FAF5F0', textAlign: 'center' }}>BABYLON</span>
-            </div>
-          </div>
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="auto"
+    className="landing-background-video"
+    style={{ width: '100vw', height: '100vh', objectFit: 'cover', position: 'absolute', top: 0, left: 0, zIndex: 1 }}
+  >
+    <source src="/word-transition-bg.mp4" type="video/mp4" />
+  </video>
+  <div className="word-transition-content" style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', zIndex: 2 }}>
+    <span className="word-transition-main" style={{ fontFamily: 'Wolmer, sans-serif', fontWeight: 700, fontSize: '10vw', color: '#FAF5F0', textAlign: 'center' }}>BABYLON</span>
+  </div>
+</div>
           <DualPromoSection />
           <ProductCarousel />
           <MediaShowcaseSection />
