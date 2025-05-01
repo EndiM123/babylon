@@ -121,6 +121,8 @@ export default function Shop() {
         playsInline
         preload="auto"
         controls={false}
+        disablePictureInPicture
+        onContextMenu={e => e.preventDefault()}
       />
       <div className="shop-page">
         {/* Babylon Header (copied from App) */}

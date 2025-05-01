@@ -33,6 +33,7 @@
   z-index: 2;
   pointer-events: none;
   user-select: none;
+
   background: none;
 }
 
@@ -46,6 +47,7 @@
   z-index: 1;
   pointer-events: none;
   user-select: none;
+
 }
 
 .word-transition-overlay {
@@ -57,6 +59,7 @@
   z-index: 2;
   pointer-events: none;
   user-select: none;
+
   background: rgba(0,0,0,0.10);
 }
 
@@ -72,6 +75,7 @@
   justify-content: center;
   pointer-events: none;
   user-select: none;
+
 }
 
 .word-transition-main {
@@ -85,6 +89,7 @@
   margin: 0;
   padding: 0;
   user-select: none;
+
 }
 
 @media (max-width: 700px) {
@@ -126,6 +131,7 @@
   z-index: 1;
   pointer-events: none;
   user-select: none;
+
 }
 
 .word-transition-overlay {
@@ -137,6 +143,7 @@
   z-index: 2;
   pointer-events: none;
   user-select: none;
+
 }
 
 .word-transition-content {
@@ -150,6 +157,7 @@
   justify-content: center;
   pointer-events: none;
   user-select: none;
+
 }
 
 .word-transition-caption {
@@ -161,6 +169,7 @@
   letter-spacing: 0.05em;
   text-align: center;
   user-select: none;
+
 }
 
 .word-transition-main {
@@ -172,6 +181,7 @@
   font-size: 8vw;
   text-align: center;
   user-select: none;
+
   display: inline-block;
   opacity: 1;
   transform: scale(1);

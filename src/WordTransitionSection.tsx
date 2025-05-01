@@ -24,6 +24,8 @@ export default function WordTransitionSection() {
           playsInline
           preload="auto"
           controls={false}
+          disablePictureInPicture
+          onContextMenu={e => e.preventDefault()}
         />
 
         <div className="word-transition-overlay" />
