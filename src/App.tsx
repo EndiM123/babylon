@@ -2,12 +2,13 @@ import React from 'react';
 import './App.css';
 import './global-video-override.css';
 import AppRoutes from './AppRoutes';
-
 import { Link } from 'react-router-dom';
+import GlitterParticlesPortal from './GlitterParticlesPortal';
 
 function App() {
   return (
     <>
+      <GlitterParticlesPortal />
       <header className="babylon-header">
         <div className="babylon-header-inner">
           <div className="babylon-header-logo-space"></div>

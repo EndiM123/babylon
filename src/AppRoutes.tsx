@@ -8,6 +8,7 @@ import DualPromoSection from './DualPromoSection';
 import ProductCarousel from './ProductCarousel';
 import MediaShowcaseSection from './MediaShowcaseSection';
 import WordTransitionSection from './WordTransitionSection';
+import Footer from './Footer';
 
 export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
@@ -19,15 +20,7 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
           <DualPromoSection />
           <ProductCarousel />
           <MediaShowcaseSection />
-          <section className="babylon-content" ref={contentRef}>
-            <div className="babylon-content-inner">
-              <h2>LONDON-BASED CREATOR OF STRIKING VISUALS & TIMELESS STORIES.</h2>
-              <p>
-                Babylon is a modern, luxury fashion house inspired by editorial minimalism and timeless elegance. Our collections are designed to elevate everyday moments with premium materials, mindful craftsmanship, and a signature color palette.
-              </p>
-              <button className="babylon-cta">LET'S TALK</button>
-            </div>
-          </section>
+          <Footer />
         </>
       } />
       <Route path="/shop" element={<Shop />} />

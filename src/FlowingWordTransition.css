@@ -1,0 +1,32 @@
+.flowing-word {
+  display: inline-block;
+  font-family: 'Wolmer', 'Inter', Arial, sans-serif;
+  font-size: 3.6rem;
+  font-weight: 400;
+  color: #A67899;
+  letter-spacing: 0.04em;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.6s cubic-bezier(.77,0,.18,1), transform 0.6s cubic-bezier(.77,0,.18,1);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.flowing-word.exiting {
+  opacity: 0;
+  transform: translateY(36px);
+}
+
+.flowing-word.entering {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 700px) {
+  .flowing-word {
+    font-size: 2rem;
+  }
+}
