@@ -16,7 +16,16 @@ export default function AppRoutes({ contentRef }: { contentRef: React.RefObject<
         <>
           {/* Hero Section */}
           <div className="word-transition-box">
-            <video className="word-transition-video" src="/word-transition-bg.mp4" autoPlay loop playsInline preload="auto" style={{ width: '100%', height: '100vh', objectFit: 'cover' }}></video>
+            <video
+  className="word-transition-video"
+  src="/word-transition-bg.mp4"
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="auto"
+  style={{ width: '100%', height: '100vh', objectFit: 'cover', pointerEvents: 'none' }}
+></video>
             <div className="word-transition-overlay" style={{ background: 'rgba(0, 0, 0, 0.1)' }}></div>
             <div className="word-transition-content" style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
               <span className="word-transition-main" style={{ fontFamily: 'Wolmer, sans-serif', fontWeight: 700, fontSize: '10vw', color: '#FAF5F0', textAlign: 'center' }}>BABYLON</span>
