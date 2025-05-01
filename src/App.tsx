@@ -1,12 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { COLORS, FONTS } from './theme';
-
-import WordTransitionSection from './WordTransitionSection';
-import DualPromoSection from './DualPromoSection';
-import ProductCarousel from "./ProductCarousel";
-import MediaShowcaseSection from "./MediaShowcaseSection";
+import AppRoutes from './AppRoutes';
 
 
 const NAV_ITEMS = ['HOME', 'SHOP', 'ABOUT', 'BLOG', 'CART'];
@@ -66,45 +62,15 @@ function App() {
               )}
             </div>
             <nav className="babylon-nav">
-              {NAV_ITEMS.map((item) => (
-                item === 'SHOP' ? (
-                  <Link to="/shop" key={item} className="babylon-nav-item">
-                    {item}
-                  </Link>
-                ) : (
-                  <span key={item} className="babylon-nav-item">
-                    {item}
-                  </span>
-                )
-              ))}
+              <Link to="/" className="babylon-nav-item">HOME</Link>
+              <Link to="/shop" className="babylon-nav-item">SHOP</Link>
+              <Link to="/about" className="babylon-nav-item">ABOUT</Link>
+              <Link to="/blog" className="babylon-nav-item">BLOG</Link>
+              <Link to="/cart" className="babylon-nav-item">CART</Link>
             </nav>
           </div>
         </header>
-        {/* Hero Section */}
-        <div className="word-transition-box">
-          <video className="word-transition-video" src="/word-transition-bg.mp4" autoPlay loop playsInline preload="auto" style={{ width: '100%', height: '100vh', objectFit: 'cover' }}></video>
-          <div className="word-transition-overlay" style={{ background: 'rgba(0, 0, 0, 0.1)' }}></div>
-          <div className="word-transition-content" style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-            <span className="word-transition-main" style={{ fontFamily: 'Wolmer, sans-serif', fontWeight: 700, fontSize: '10vw', color: '#FAF5F0', textAlign: 'center' }}>BABYLON</span>
-          </div>
-        </div>
-
-        {/* Dual Promo Section: Appears immediately after video visualization */}
-        <DualPromoSection />
-        {/* Melting Grid Section: Four geometric squares with melting effect */}
-        {/* Product Carousel: Horizontally fixed product gallery */}
-        <ProductCarousel />
-        <MediaShowcaseSection />
-        {/* Main content follows */}
-        <section className="babylon-content" ref={contentRef}>
-          <div className="babylon-content-inner">
-            <h2>LONDON-BASED CREATOR OF STRIKING VISUALS & TIMELESS STORIES.</h2>
-            <p>
-              Based in the heart of London, Babylon is a passionate fashion brand and visual storyteller, crafting captivating images that blend artistry with authenticity. From iconic cityscapes to intimate editorials, our work is a reflection of bold creativity and attention to detail.
-            </p>
-            <button className="babylon-cta">LET'S TALK</button>
-          </div>
-        </section>
+        <AppRoutes contentRef={contentRef} />
       </div>
     </>
   );

@@ -88,158 +88,137 @@ export default function Shop() {
   const [priceRange, setPriceRange] = useState<[number, number]>([100, 800]);
   const [sortBy, setSortBy] = useState<string>('newest');
   const [showFilterDropdown, setShowFilterDropdown] = useState<boolean>(false);
+  const [dropdownPlacement, setDropdownPlacement] = useState<'left' | 'bottom'>('left');
+  const filterIconRef = React.useRef<HTMLButtonElement>(null);
+  const filterDropdownRef = React.useRef<HTMLDivElement>(null);
 
   // Filtering logic omitted for brevity
 
+  React.useEffect(() => {
+    function handleResize() {
+      if (filterIconRef.current) {
+        const rect = filterIconRef.current.getBoundingClientRect();
+        const minLeft = 340;
+        if (rect.left < minLeft || window.innerWidth < 700) {
+          setDropdownPlacement('bottom');
+        } else {
+          setDropdownPlacement('left');
+        }
+      }
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className="shop-page" style={{ background: COLORS.linen, minHeight: '100vh' }}>
-      {/* Babylon Header (same as main page, logo always visible) */}
-      <header className="babylon-header">
-        <div className="babylon-header-inner">
-          <div className="babylon-header-logo-space">
-            <span className="babylon-header-logo">BABYLON</span>
+    <div className="shop-video-frame">
+      <video
+        className="shop-video-frame-video"
+        src="/word-transition-bg.mp4"
+        autoPlay
+        loop
+        playsInline
+        preload="auto"
+        muted
+        style={{ pointerEvents: 'none' }}
+      />
+      <div className="shop-page">
+        {/* Babylon Header (copied from App) */}
+        <header className="babylon-header">
+          <div className="babylon-header-inner">
+            <div className="babylon-header-logo-space"></div>
+            <nav className="babylon-nav">
+              <Link to="/" className="babylon-nav-item">HOME</Link>
+              <Link to="/shop" className="babylon-nav-item">SHOP</Link>
+              <Link to="/about" className="babylon-nav-item">ABOUT</Link>
+              <Link to="/blog" className="babylon-nav-item">BLOG</Link>
+              <Link to="/cart" className="babylon-nav-item">CART</Link>
+            </nav>
           </div>
-          <nav className="babylon-nav">
-            {NAV_ITEMS.map((item) => (
-              item === 'SHOP' ? null : (
-                <span key={item} className="babylon-nav-item">
-                  {item}
-                </span>
-              )
-            ))}
-          </nav>
-        </div>
-      </header>
-
-      {/* Unified Container for Filter/Sort Bar and Product Grid */}
-      <div className="shop-main-container">
-        {/* Minimalistic Side Filter/Sort Bar */}
-        <div className="shop-side-controls">
-          <div className="shop-side-filters" style={{ position: 'relative' }}>
-            <button
-              className="shop-side-filter-icon"
-              aria-label="filters"
-              onClick={() => setShowFilterDropdown(v => !v)}
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-            >
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="5" y="8" width="18" height="2" rx="1" fill="#888"/>
-                <rect x="5" y="18" width="18" height="2" rx="1" fill="#888"/>
-                <circle cx="9" cy="9" r="2" fill="#888"/>
-                <circle cx="19" cy="19" r="2" fill="#888"/>
-              </svg>
-            </button>
-            <span className="shop-side-filter-label">Filters by</span>
-            <span className="shop-side-filter-all">All</span>
-
-            {showFilterDropdown && (
-              <div className="shop-filter-dropdown-popover" onClick={e => e.stopPropagation()}>
-                <div className="shop-filter-dropdown-section">
-                  <div className="shop-filter-dropdown-label">Size</div>
-                  <div className="shop-filter-dropdown-options">
-                    {SIZES.map(size => (
-                      <button
-                        key={size}
-                        className={`shop-filter-dropdown-pill${selectedSize === size ? ' selected' : ''}`}
-                        onClick={() => { setSelectedSize(size); setShowFilterDropdown(false); }}
-                      >
-                        {size}
-                      </button>
-                    ))}
+        </header>
+        {/* Unified Container for Filter/Sort Bar and Product Grid */}
+        <div className="shop-main-container">
+          <div className="shop-side-controls">
+            <div className="shop-side-filters" style={{ position: 'relative' }}>
+              <button
+                className="shop-side-filter-icon"
+                aria-label="filters"
+                ref={filterIconRef}
+                style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                onClick={() => {
+                  if (filterIconRef.current) {
+                    const rect = filterIconRef.current.getBoundingClientRect();
+                    const minLeft = 340; // px, matches max-width + offset
+                    if (rect.left < minLeft || window.innerWidth < 700) {
+                      setDropdownPlacement('bottom');
+                    } else {
+                      setDropdownPlacement('left');
+                    }
+                  }
+                  setShowFilterDropdown(v => !v);
+                }}
+              >
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="5" y="8" width="18" height="2" rx="1" fill="#888" />
+                  <rect x="5" y="18" width="18" height="2" rx="1" fill="#888" />
+                  <circle cx="9" cy="9" r="2" fill="#888" />
+                  <circle cx="19" cy="19" r="2" fill="#888" />
+                </svg>
+              </button>
+              {showFilterDropdown && (
+                <div
+                  ref={filterDropdownRef}
+                  className={`shop-filter-dropdown-popover${dropdownPlacement === 'bottom' ? ' shop-filter-dropdown-popover--bottom' : ''}`}
+                  onClick={e => e.stopPropagation()}
+                >
+                  <div className="shop-filter-dropdown-section">
+                    <div className="shop-filter-dropdown-label">Category</div>
+                    <ul className="shop-filter-dropdown-options" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
+                      {CATEGORIES.map(cat => (
+                        <li key={cat}>
+                          <button
+                            className={`shop-filter-dropdown-pill${selectedCategory === cat ? ' selected' : ''}`}
+                            style={{ width: '100%', textAlign: 'left' }}
+                            onClick={() => { setSelectedCategory(cat); setShowFilterDropdown(false); }}
+                          >
+                            {cat}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
-                <div className="shop-filter-dropdown-section">
-                  <div className="shop-filter-dropdown-label">Color</div>
-                  <div className="shop-filter-dropdown-options">
-                    {COLORS_FILTER.map(color => (
-                      <button
-                        key={color.name}
-                        className={`shop-filter-dropdown-pill${selectedColor === color.value ? ' selected' : ''}`}
-                        style={{ borderColor: color.value }}
-                        onClick={() => { setSelectedColor(color.value); setShowFilterDropdown(false); }}
-                      >
-                        <span className="shop-filter-color-dot" style={{ background: color.value }}></span>
-                        {color.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="shop-filter-dropdown-section">
-                  <div className="shop-filter-dropdown-label">Category</div>
-                  <div className="shop-filter-dropdown-options">
-                    {CATEGORIES.map(cat => (
-                      <button
-                        key={cat}
-                        className={`shop-filter-dropdown-pill${selectedCategory === cat ? ' selected' : ''}`}
-                        onClick={() => { setSelectedCategory(cat); setShowFilterDropdown(false); }}
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="shop-filter-dropdown-section">
-                  <div className="shop-filter-dropdown-label">Price</div>
-                  <div className="shop-filter-dropdown-options">
-                    <input
-                      type="range"
-                      min={100}
-                      max={800}
-                      value={priceRange[0]}
-                      className="shop-price-slider"
-                      onChange={e => setPriceRange([Number(e.target.value), priceRange[1]])}
-                    />
-                    <input
-                      type="range"
-                      min={100}
-                      max={800}
-                      value={priceRange[1]}
-                      className="shop-price-slider"
-                      onChange={e => setPriceRange([priceRange[0], Number(e.target.value)])}
-                    />
-                    <span className="shop-price-minmax">${priceRange[0]} - ${priceRange[1]}</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="shop-side-sort">
-            <span className="shop-side-sort-label">Sort by</span>
-            <select className="shop-side-sort-dropdown" value={sortBy} onChange={e => setSortBy(e.target.value)}>
-              <option value="default">Default</option>
-              {SORT_OPTIONS.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-        {/* Product Grid */}
-        <div className="shop-product-grid">
-          {PRODUCTS.map(product => (
-            <div className="shop-product-card" key={product.id}>
-              <span className="shop-product-price shop-product-price-corner" style={{ position: 'absolute', top: 8, right: 8, padding: '4px 12px', zIndex: 12 }}>${product.price}</span>
-              {product.tag && (
-                <span className="shop-product-tag shop-product-tag-corner" style={{ position: 'absolute', top: 8, left: 8, padding: '4px 12px', borderRadius: '1em', background: '#A9DDD6', color: '#1E3932', fontWeight: 700, fontSize: 13, letterSpacing: '0.03em', zIndex: 12 }}>{product.tag}</span>
               )}
-              <div className="shop-product-content">
-                <div className="shop-product-img-wrap">
-                  <img src={product.image} alt={product.name} className="shop-product-img" />
-                </div>
-                <div className="shop-product-gradient" >
-                  <div className="shop-product-gradient-bg"></div>
-                  <div className="shop-product-row" style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '0.5em' }}>
-                    <span className="shop-product-name">{product.name}</span>
-                    
-                  </div>
-                  <span className="shop-product-cat" style={{ fontSize: 15 }}>{product.category}</span>
-                </div>
-                <span className="shop-product-view">→</span>
-              </div>
             </div>
-          ))}
+          </div>
+          {/* Product Grid */}
+          <div className="shop-product-grid">
+            {PRODUCTS.map(product => (
+              <Link to={`/product/${product.id}`} key={product.id} className="shop-product-card-link">
+                <div className="shop-product-card">
+                  <span className="shop-product-price shop-product-price-corner" style={{ position: 'absolute', top: 8, right: 8, padding: '4px 12px', zIndex: 12 }}>${product.price}</span>
+                  {product.tag && (
+                    <span className="shop-product-tag shop-product-tag-corner" style={{ position: 'absolute', top: 8, left: 8, padding: '4px 12px', borderRadius: '1em', background: '#A9DDD6', color: '#1E3932', fontWeight: 700, fontSize: 13, letterSpacing: '0.03em', zIndex: 12 }}>{product.tag}</span>
+                  )}
+                  <div className="shop-product-content">
+                    <div className="shop-product-img-wrap">
+                      <img src={product.image} alt={product.name} className="shop-product-img" />
+                    </div>
+                    <div className="shop-product-gradient" >
+                      <div className="shop-product-gradient-bg"></div>
+                      <div className="shop-product-row" style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '0.5em' }}>
+                        <span className="shop-product-name" style={{ fontFamily: 'Wolmer, serif' }}>{product.name}</span>
+                      </div>
+                      <span className="shop-product-cat" style={{ fontFamily: 'Wolmer, serif', fontSize: 15 }}>{product.category}</span>
+                    </div>
+                    <span className="shop-product-view">→</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
-      
     </div>
   );
 }
