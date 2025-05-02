@@ -9,10 +9,7 @@ export default function AppRouter() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/*" element={<App />} />
       </Routes>
     </Router>
   );

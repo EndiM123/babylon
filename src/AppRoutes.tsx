@@ -9,6 +9,8 @@ import ProductCarousel from './ProductCarousel';
 import MediaShowcaseSection from './MediaShowcaseSection';
 import WordTransitionSection from './WordTransitionSection';
 import Footer from './Footer';
+import BlogSection from './BlogSection';
+import BlogPost from './BlogPost';
 
 export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
@@ -35,6 +37,8 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
       {/* Dynamic fallback for direct access or unknown ids */}
       <Route path="/product/:id" element={<ProductDetail />} />
       <Route path="/about" element={<About />} />
+      <Route path="/blog" element={<BlogSection />} />
+      <Route path="/blog/:id" element={<BlogPost />} />
     </Routes>
   );
 }
