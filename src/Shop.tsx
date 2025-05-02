@@ -62,6 +62,9 @@ export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showFilterDropdown, setShowFilterDropdown] = useState<boolean>(false);
   const [dropdownPlacement, setDropdownPlacement] = useState<'left' | 'bottom'>('left');
+  const [searchText, setSearchText] = useState<string>('');
+  const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
   const filterIconRef = React.useRef<HTMLButtonElement>(null);
   const filterDropdownRef = React.useRef<HTMLDivElement>(null);
 
@@ -112,8 +115,58 @@ export default function Shop() {
         </header>
         {/* Unified Container for Filter/Sort Bar and Product Grid */}
         <div className="shop-main-container">
-          <div className="shop-side-controls">
-            <div className="shop-side-filters" style={{ position: 'relative' }}>
+          <div className="shop-side-controls" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            {/* Search Bar on the left */}
+            <div className="shop-side-search" style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+              {/* Mobile: Only icon initially, show input on click */}
+              <button
+                className="shop-search-icon-btn"
+                aria-label="Open search"
+                style={{
+                  display: showSearchBar ? 'none' : 'flex',
+                  background: 'none',
+                  border: 'none',
+                  padding: '0.25em 0.45em 0.25em 0',
+                  cursor: 'pointer',
+                  alignItems: 'center',
+                  marginRight: 10,
+                }}
+                onClick={() => {
+                  setShowSearchBar(true);
+                  setTimeout(() => searchInputRef.current?.focus(), 80);
+                }}
+              >
+                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#A9DDD6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </button>
+              {/* Show input if open (mobile), always show on desktop */}
+              <input
+                ref={searchInputRef}
+                type="text"
+                className="shop-search-input"
+                placeholder="Search products..."
+                value={searchText}
+                onChange={e => setSearchText(e.target.value)}
+                style={{
+                  width: '100%',
+                  maxWidth: 260,
+                  padding: '0.55em 1em',
+                  borderRadius: 16,
+                  border: '1.5px solid #A9DDD6',
+                  fontSize: '1.01em',
+                  outline: 'none',
+                  background: '#fff',
+                  color: '#232323',
+                  marginRight: 12,
+                  boxSizing: 'border-box',
+                  transition: 'border-color 0.18s',
+                  display: showSearchBar ? 'block' : 'none',
+                }}
+                aria-label="Search products"
+                onBlur={() => { if (window.innerWidth <= 700) setShowSearchBar(false); }}
+              />
+            </div>
+            {/* Filter Icon on the right */}
+            <div className="shop-side-filters" style={{ position: 'relative', marginLeft: 12 }}>
               <button
                 className="shop-side-filter-icon"
                 aria-label="filters"
@@ -167,7 +220,15 @@ export default function Shop() {
           </div>
           {/* Product Grid */}
           <div className="shop-product-grid">
-            {PRODUCTS.map(product => (
+            {PRODUCTS.filter(product => {
+              const search = searchText.trim().toLowerCase();
+              return (
+                (!search ||
+                  product.name.toLowerCase().includes(search) ||
+                  product.category.toLowerCase().includes(search)) &&
+                (!selectedCategory || product.category === selectedCategory)
+              );
+            }).map(product => (
               <Link to={`/product/${product.id}`} key={product.id} className="shop-product-card-link">
                 <div className="shop-product-card">
                   <span className="shop-product-price shop-product-price-corner" style={{ position: 'absolute', top: 8, right: 8, padding: '4px 12px', zIndex: 12 }}>${product.price}</span>
