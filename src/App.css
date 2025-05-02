@@ -11,7 +11,6 @@ body, html, #root, .babylon-root {
 }
 
 
-
 .babylon-header {
   width: 100vw;
   height: 80px;
@@ -67,7 +66,6 @@ body, html, #root, .babylon-root {
 .babylon-nav-item:hover {
   color: #A9DDD6;
 }
-
 .babylon-hero {
   min-height: 100vh;
   width: 100vw;
@@ -82,7 +80,6 @@ body, html, #root, .babylon-root {
   padding-bottom: 7vh;
   box-sizing: border-box;
 }
-
 .babylon-hero-custom {
   display: flex;
   align-items: flex-end;
@@ -90,7 +87,6 @@ body, html, #root, .babylon-root {
   width: 100%;
   max-width: 1600px;
 }
-
 .babylon-hero-accent {
   width: 5px;
   height: 13vw;
@@ -116,7 +112,6 @@ body, html, #root, .babylon-root {
   justify-content: flex-end;
   gap: 1.5rem;
 }
-
 .babylon-hero-title-main {
   display: flex;
   flex-direction: column;
@@ -125,7 +120,6 @@ body, html, #root, .babylon-root {
   gap: 0;
   min-width: 0;
 }
-
 .babylon-hero-title-all {
   font-family: 'Wolmer', 'Inter', Arial, sans-serif;
   font-weight: 900;
@@ -138,7 +132,6 @@ body, html, #root, .babylon-root {
   position: relative;
   white-space: nowrap;
 }
-
 .babylon-hero-title-underline {
   display: block;
   position: absolute;
@@ -159,12 +152,10 @@ body, html, #root, .babylon-root {
     opacity: 1;
   }
 }
-
 /* Remove split-line styles */
 .babylon-hero-title-baby, .babylon-hero-title-lon {
   display: none !important;
 }
-
 .babylon-hero-title-line {
   font-family: 'Wolmer', 'Inter', Arial, sans-serif;
   font-weight: 900;
@@ -200,11 +191,9 @@ body, html, #root, .babylon-root {
     opacity: 1;
   }
 }
-
 .babylon-hero-title-main .babylon-hero-title-baby {
   margin-bottom: 0.02em;
 }
-
 .babylon-hero-title-caption {
   font-family: 'Montserrat', Arial, sans-serif;
   font-size: 1.3rem;
@@ -223,8 +212,110 @@ body, html, #root, .babylon-root {
     transform: translateY(0);
   }
 }
+@media (max-width: 700px) {
+  .babylon-header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 0 2vw;
+    width: 100vw;
+    min-height: 54px;
+    height: 54px;
+    box-sizing: border-box;
+  }
+  .babylon-header-logo-space {
+    min-width: 50px;
+    width: 50px;
+    justify-content: flex-start;
+    display: block;
+  }
+  .babylon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3vw;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+  }
+  .babylon-nav-item {
+    min-width: max-content;
+    padding: 0.5em 0.7em;
+    font-size: 0.92rem;
+    border-radius: 6px;
+    background: none;
+    color: #F7EFE5;
+    box-shadow: none;
+    letter-spacing: 0.13em;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin: 0;
+    text-align: center;
+    display: inline-block;
+  }
+  .babylon-nav-item:hover {
+    color: #A9DDD6;
+  }
+  .babylon-header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 0 2vw;
+    width: 100vw;
+    min-height: 54px;
+    height: 54px;
+    box-sizing: border-box;
+  }
+  .babylon-header-logo-space {
+    min-width: 50px;
+    width: 50px;
+    justify-content: flex-start;
+    display: block;
+  }
+  .babylon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3vw;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+  }
+  .babylon-nav-item {
+    min-width: max-content;
+    padding: 0.5em 0.7em;
+    font-size: 0.92rem;
+    border-radius: 6px;
+    background: none;
+    color: #F7EFE5;
+    box-shadow: none;
+    letter-spacing: 0.13em;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin: 0;
+    text-align: center;
+    display: inline-block;
+  }
+  .babylon-nav-item:hover {
+    color: #A9DDD6;
+  }
 
-@media (max-width: 900px) {
+}
+@media (max-width: 900px) {}
   .babylon-hero {
     padding-left: 3vw;
     padding-top: 54px;
@@ -240,8 +331,6 @@ body, html, #root, .babylon-root {
   .babylon-hero-title-caption {
     font-size: 1.05rem;
   }
-}
-
 /* Remove old .babylon-title styles */
 .babylon-title, .babylon-title-solid, .babylon-title-mask-svg {
   display: none !important;
@@ -295,7 +384,6 @@ body, html, #root, .babylon-root {
   opacity: 1;
   text-align: left;
 }
-
 .babylon-gallery {
   display: flex;
   flex-direction: row;
@@ -334,7 +422,6 @@ body, html, #root, .babylon-root {
 .babylon-gallery-img-wrapper:hover img {
   transform: scale(1.06);
 }
-
 .babylon-content {
   background: #1E3932;
   color: #F7EFE5;
@@ -380,8 +467,110 @@ body, html, #root, .babylon-root {
   background: #A67899;
   color: #fff;
 }
+@media (max-width: 700px) {
+  .babylon-header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 0 2vw;
+    width: 100vw;
+    min-height: 54px;
+    height: 54px;
+    box-sizing: border-box;
+  }
+  .babylon-header-logo-space {
+    min-width: 50px;
+    width: 50px;
+    justify-content: flex-start;
+    display: block;
+  }
+  .babylon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3vw;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+  }
+  .babylon-nav-item {
+    min-width: max-content;
+    padding: 0.5em 0.7em;
+    font-size: 0.92rem;
+    border-radius: 6px;
+    background: none;
+    color: #F7EFE5;
+    box-shadow: none;
+    letter-spacing: 0.13em;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin: 0;
+    text-align: center;
+    display: inline-block;
+  }
+  .babylon-nav-item:hover {
+    color: #A9DDD6;
+  }
+  .babylon-header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 0 2vw;
+    width: 100vw;
+    min-height: 54px;
+    height: 54px;
+    box-sizing: border-box;
+  }
+  .babylon-header-logo-space {
+    min-width: 50px;
+    width: 50px;
+    justify-content: flex-start;
+    display: block;
+  }
+  .babylon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3vw;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+  }
+  .babylon-nav-item {
+    min-width: max-content;
+    padding: 0.5em 0.7em;
+    font-size: 0.92rem;
+    border-radius: 6px;
+    background: none;
+    color: #F7EFE5;
+    box-shadow: none;
+    letter-spacing: 0.13em;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin: 0;
+    text-align: center;
+    display: inline-block;
+  }
+  .babylon-nav-item:hover {
+    color: #A9DDD6;
+  }
 
-@media (max-width: 900px) {
+}
+@media (max-width: 900px){}
   .babylon-header {
     height: 54px;
     padding: 0 2vw;
@@ -407,8 +596,7 @@ body, html, #root, .babylon-root {
     max-width: 220px;
     border-radius: 2vw;
   }
-}
-@media (max-width: 600px) {
+@media (max-width: 600px) {}
   .babylon-header {
     height: 44px;
     padding: 0 1vw;
@@ -450,8 +638,6 @@ body, html, #root, .babylon-root {
     font-size: 0.98rem;
     padding: 0.6em 1.4em;
   }
-}
-
 
 
 .babylon-header {
@@ -469,7 +655,6 @@ body, html, #root, .babylon-root {
   box-sizing: border-box;
   transition: background 0.4s cubic-bezier(.77,0,.18,1);
 }
-
 .babylon-logo {
   font-family: 'Wolmer', sans-serif;
   font-weight: 900;
@@ -480,13 +665,11 @@ body, html, #root, .babylon-root {
   color: #F7EFE5;
   will-change: transform;
 }
-
 .babylon-nav {
   display: flex;
   gap: 2.2vw;
   align-items: center;
 }
-
 .babylon-nav-item {
   font-family: 'Wolmer', sans-serif;
   font-size: 0.92rem;
@@ -501,7 +684,6 @@ body, html, #root, .babylon-root {
 .babylon-nav-item:hover {
   color: #A9DDD6;
 }
-
 .babylon-hero {
   min-height: 100vh;
   display: flex;
@@ -514,7 +696,6 @@ body, html, #root, .babylon-root {
   padding-top: 90px;
   overflow: visible;
 }
-
 .babylon-hero-title {
   font-family: 'Wolmer', sans-serif;
   font-weight: 900;
@@ -538,7 +719,6 @@ body, html, #root, .babylon-root {
   z-index: 3;
   pointer-events: none;
 }
-
 .babylon-gallery {
   display: flex;
   flex-direction: row;
@@ -578,7 +758,6 @@ body, html, #root, .babylon-root {
 .babylon-gallery-img-wrapper:hover img {
   transform: scale(1.06);
 }
-
 .babylon-about {
   background: #1E3932;
   color: #F7EFE5;
@@ -623,8 +802,110 @@ body, html, #root, .babylon-root {
   background: #A67899;
   color: #fff;
 }
+@media (max-width: 700px) {
+  .babylon-header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 0 2vw;
+    width: 100vw;
+    min-height: 54px;
+    height: 54px;
+    box-sizing: border-box;
+  }
+  .babylon-header-logo-space {
+    min-width: 50px;
+    width: 50px;
+    justify-content: flex-start;
+    display: block;
+  }
+  .babylon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3vw;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+  }
+  .babylon-nav-item {
+    min-width: max-content;
+    padding: 0.5em 0.7em;
+    font-size: 0.92rem;
+    border-radius: 6px;
+    background: none;
+    color: #F7EFE5;
+    box-shadow: none;
+    letter-spacing: 0.13em;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin: 0;
+    text-align: center;
+    display: inline-block;
+  }
+  .babylon-nav-item:hover {
+    color: #A9DDD6;
+  }
+  .babylon-header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 0 2vw;
+    width: 100vw;
+    min-height: 54px;
+    height: 54px;
+    box-sizing: border-box;
+  }
+  .babylon-header-logo-space {
+    min-width: 50px;
+    width: 50px;
+    justify-content: flex-start;
+    display: block;
+  }
+  .babylon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3vw;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+  }
+  .babylon-nav-item {
+    min-width: max-content;
+    padding: 0.5em 0.7em;
+    font-size: 0.92rem;
+    border-radius: 6px;
+    background: none;
+    color: #F7EFE5;
+    box-shadow: none;
+    letter-spacing: 0.13em;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin: 0;
+    text-align: center;
+    display: inline-block;
+  }
+  .babylon-nav-item:hover {
+    color: #A9DDD6;
+  }
 
-@media (max-width: 900px) {
+}
+@media (max-width: 900px) {}
   .babylon-header {
     height: 54px;
     padding: 0 2vw;
@@ -647,9 +928,7 @@ body, html, #root, .babylon-root {
     max-width: 220px;
     border-radius: 2vw;
   }
-}
-
-@media (max-width: 600px) {
+@media (max-width: 600px) {}
   .babylon-header {
     height: 44px;
     padding: 0 1vw;
@@ -691,15 +970,12 @@ body, html, #root, .babylon-root {
     font-size: 0.98rem;
     padding: 0.6em 1.4em;
   }
-}
-
 /* === BABYLON SHOWCASE SECTIONS === */
 .babylon-showcase-section {
   background: #F7EFE5;
   padding: 0;
   width: 100vw;
 }
-
 .babylon-section-header {
   display: flex;
   justify-content: space-between;
@@ -733,7 +1009,6 @@ body, html, #root, .babylon-root {
 .babylon-section-link:hover {
   text-decoration: underline;
 }
-
 .babylon-work-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -797,7 +1072,6 @@ body, html, #root, .babylon-root {
 .babylon-work-card:hover .babylon-work-tag {
   color: #F3D6A4;
 }
-
 .babylon-latest-updates {
   margin-top: 0;
 }
@@ -863,7 +1137,6 @@ body, html, #root, .babylon-root {
 .babylon-update-card:hover .babylon-update-title {
   color: #F3D6A4;
 }
-
 @media (max-width: 1100px) {
   .babylon-work-grid, .babylon-updates-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -874,6 +1147,106 @@ body, html, #root, .babylon-root {
   }
 }
 @media (max-width: 700px) {
+  .babylon-header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 0 2vw;
+    width: 100vw;
+    min-height: 54px;
+    height: 54px;
+    box-sizing: border-box;
+  }
+  .babylon-header-logo-space {
+    min-width: 50px;
+    width: 50px;
+    justify-content: flex-start;
+    display: block;
+  }
+  .babylon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3vw;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+  }
+  .babylon-nav-item {
+    min-width: max-content;
+    padding: 0.5em 0.7em;
+    font-size: 0.92rem;
+    border-radius: 6px;
+    background: none;
+    color: #F7EFE5;
+    box-shadow: none;
+    letter-spacing: 0.13em;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin: 0;
+    text-align: center;
+    display: inline-block;
+  }
+  .babylon-nav-item:hover {
+    color: #A9DDD6;
+  }
+  .babylon-header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 0 2vw;
+    width: 100vw;
+    min-height: 54px;
+    height: 54px;
+    box-sizing: border-box;
+  }
+  .babylon-header-logo-space {
+    min-width: 50px;
+    width: 50px;
+    justify-content: flex-start;
+    display: block;
+  }
+  .babylon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3vw;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+  }
+  .babylon-nav-item {
+    min-width: max-content;
+    padding: 0.5em 0.7em;
+    font-size: 0.92rem;
+    border-radius: 6px;
+    background: none;
+    color: #F7EFE5;
+    box-shadow: none;
+    letter-spacing: 0.13em;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin: 0;
+    text-align: center;
+    display: inline-block;
+  }
+  .babylon-nav-item:hover {
+    color: #A9DDD6;
+  }
   .babylon-work-grid, .babylon-updates-grid {
     grid-template-columns: 1fr;
     gap: 5vw;
