@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './ProductDetail.css';
+import Footer from './Footer';
 
 // Example product data. In real use, fetch from backend or context.
 export const PRODUCTS = [
@@ -115,7 +116,7 @@ export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(COLOR_OPTIONS[0].name);
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || '');
   const [quantity, setQuantity] = useState(1);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
 
   if (!product) return <div>Product not found.</div>;
 
@@ -137,7 +138,7 @@ export default function ProductDetail() {
       <main className="product-detail-container">
       <div className="product-detail-main-row">
         <div className="product-detail-media-container">
-          <img className="product-detail-media" src={product.image} alt={product.name} />
+          <img className="product-detail-media product-detail-media-tall" src={product.image} alt={product.name} />
         </div>
         <div className="product-detail-info-panel">
         <div className="product-detail-price-row">
@@ -191,27 +192,41 @@ export default function ProductDetail() {
             { label: 'Returns Policy', content: product.returns }
           ].map(({ label, content }) => (
             <div className="product-detail-dropdown" key={label}>
-              <button
-                className="product-detail-dropdown-toggle"
-                onClick={() => setOpenDropdown(openDropdown === label ? null : label)}
-              >
+              <div className="product-detail-dropdown-toggle-static">
                 {label}
-                <span className={`dropdown-arrow${openDropdown === label ? ' open' : ''}`}>▼</span>
-              </button>
-              {openDropdown === label && (
-                <div
-                  className="product-detail-dropdown-content open"
-                  style={{ maxHeight: 200 }}
-                >
-                  {content}
-                </div>
-              )}
+              </div>
+              <div className="product-detail-dropdown-content open" style={{ maxHeight: 200 }}>
+                {content}
+              </div>
             </div>
           ))}
+        </div>
+        {/* More For You Section */}
+        <div className="more-for-you-section">
+          <div className="more-for-you-title">More For You</div>
+          <div className="more-for-you-row">
+            {PRODUCTS.filter(p => p.id !== product.id).slice(0, 3).map((suggested) => (
+              <Link to={`/product/${suggested.id}`} className="more-for-you-card" key={suggested.id}>
+                <div className="more-for-you-img-wrap">
+                  <img src={suggested.image} alt={suggested.name} className="more-for-you-img" />
+                </div>
+                <div className="more-for-you-info">
+                  <div className="more-for-you-name">{suggested.name}</div>
+                  <div className="more-for-you-prices">
+                    <span className="more-for-you-price">${suggested.price}</span>
+                    {suggested.oldPrice && (
+                      <span className="more-for-you-oldprice">${suggested.oldPrice}</span>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>
       </main>
+    <Footer />
     </>
   );
 }
