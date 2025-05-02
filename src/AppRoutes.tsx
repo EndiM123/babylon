@@ -26,15 +26,7 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
         </>
       } />
       <Route path="/shop" element={<Shop />} />
-      {/* Explicit routes for each product */}
-      {PRODUCTS.map((product: { id: number }) => (
-        <Route
-          key={product.id}
-          path={`/product/${product.id}`}
-          element={<ProductDetail />}
-        />
-      ))}
-      {/* Dynamic fallback for direct access or unknown ids */}
+      {/* Product detail route */}
       <Route path="/product/:id" element={<ProductDetail />} />
       <Route path="/about" element={<About />} />
       <Route path="/blog" element={<BlogSection />} />
