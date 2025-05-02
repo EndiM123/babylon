@@ -1,7 +1,10 @@
 @font-face {
   font-family: 'Wolmer';
   src: url('/wolmer-font/Wolmer-endi.woff') format('woff'),
-       url('/wolmer-font/endi.ttf') format('truetype');
+       url('/wolmer-font/endi.ttf') format('truetype'),
+       url('/wolmer-font/endi.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
+

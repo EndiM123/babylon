@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './ProductDetail.css';
 
 // Example product data. In real use, fetch from backend or context.
@@ -36,6 +36,70 @@ export const PRODUCTS = [
     returns: 'Returns accepted within 30 days. Free return shipping.',
     category: 'Blazers',
   },
+  {
+    id: 3,
+    name: 'Minimalist Silk Top',
+    image: '/media3.png',
+    video: '',
+    price: 240,
+    oldPrice: 280,
+    rating: 4.6,
+    reviews: 21,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    description: 'A sleek, minimalist silk top perfect for layering or wearing solo. Lightweight, soft, and versatile.',
+    materials: '100% Silk. Dry clean only.',
+    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
+    returns: 'Returns accepted within 30 days. Free return shipping.',
+    category: 'Tops',
+  },
+  {
+    id: 4,
+    name: 'Soft Trapeze Skirt',
+    image: '/media4.png',
+    video: '',
+    price: 310,
+    oldPrice: 350,
+    rating: 4.5,
+    reviews: 15,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    description: 'A soft, flowing trapeze skirt with a flattering silhouette. Effortlessly chic for any occasion.',
+    materials: 'Viscose blend. Machine wash cold.',
+    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
+    returns: 'Returns accepted within 30 days. Free return shipping.',
+    category: 'Bottoms',
+  },
+  {
+    id: 5,
+    name: 'Tiffany Bikini',
+    image: '/media5.png',
+    video: '',
+    price: 195,
+    oldPrice: 220,
+    rating: 4.3,
+    reviews: 11,
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'A stylish bikini set in a signature Tiffany blue. Comfortable, supportive, and eye-catching.',
+    materials: 'Nylon, Spandex. Hand wash.',
+    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
+    returns: 'Returns accepted within 30 days. Free return shipping.',
+    category: 'Swimwear',
+  },
+  {
+    id: 6,
+    name: 'Linen Mini Bag',
+    image: '/media6.png',
+    video: '',
+    price: 160,
+    oldPrice: 180,
+    rating: 4.8,
+    reviews: 8,
+    sizes: [],
+    description: 'A compact linen mini bag, perfect for summer outings and essentials. Lightweight and stylish.',
+    materials: '100% Linen. Spot clean only.',
+    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
+    returns: 'Returns accepted within 30 days. Free return shipping.',
+    category: 'Accessories',
+  },
   // ...Add more products as needed
 ];
 
@@ -56,18 +120,30 @@ export default function ProductDetail() {
   if (!product) return <div>Product not found.</div>;
 
   return (
-    <main className="product-detail-container">
-      <div className="product-detail-media-container">
-        <img className="product-detail-media" src={product.image} alt={product.name} />
-      </div>
-      <div className="product-detail-info-panel">
-        <h1 className="product-detail-title">{product.name}</h1>
-        <div className="product-detail-price-row">
-          <span className="product-detail-price">${product.price}</span>
-          {product.oldPrice && (
-            <span className="product-detail-oldprice">${product.oldPrice}</span>
-          )}
+    <>
+      <header className="babylon-header">
+        <div className="babylon-header-inner">
+          <div className="babylon-header-logo-space"></div>
+          <nav className="babylon-nav">
+            <Link to="/" className="babylon-nav-item">HOME</Link>
+            <Link to="/shop" className="babylon-nav-item">SHOP</Link>
+            <Link to="/about" className="babylon-nav-item">ABOUT</Link>
+            <Link to="/blog" className="babylon-nav-item">BLOG</Link>
+            <Link to="/cart" className="babylon-nav-item">CART</Link>
+          </nav>
         </div>
+      </header>
+
+      <main className="product-detail-container">
+      <div className="product-detail-main-row">
+        <div className="product-detail-media-container">
+          <img className="product-detail-media" src={product.image} alt={product.name} />
+        </div>
+        <div className="product-detail-info-panel">
+        <div className="product-detail-price-row">
+  <h1 className="product-detail-title">{product.name}</h1>
+  <span className="product-detail-price">${product.price}</span>
+</div>
         <div className="product-detail-sizes">
           {product.sizes.map(size => (
             <button
@@ -122,16 +198,20 @@ export default function ProductDetail() {
                 {label}
                 <span className={`dropdown-arrow${openDropdown === label ? ' open' : ''}`}>▼</span>
               </button>
-              <div
-                className={`product-detail-dropdown-content${openDropdown === label ? ' open' : ''}`}
-                style={{ maxHeight: openDropdown === label ? 200 : 0 }}
-              >
-                {content}
-              </div>
+              {openDropdown === label && (
+                <div
+                  className="product-detail-dropdown-content open"
+                  style={{ maxHeight: 200 }}
+                >
+                  {content}
+                </div>
+              )}
             </div>
           ))}
         </div>
       </div>
-    </main>
+    </div>
+      </main>
+    </>
   );
 }

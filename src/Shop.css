@@ -112,11 +112,36 @@
 @media (max-width: 700px) {
   .shop-side-controls {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 0.7em;
     width: 100%;
-    padding: 1.1em 0 0.7em 0;
+    padding: 1.3em 0 1.1em 0;
+    position: relative;
+    min-height: 4.5em;
+  }
+  .shop-side-search, .shop-side-logo, .shop-side-filters {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .shop-side-logo {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #A67899;
+    margin: 0 0.1em;
+    font-family: 'Wolmer', 'Inter', Arial, sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    line-height: 1.08;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    min-width: 120px;
+    background: none;
   }
   .shop-side-search {
     flex: 1 1 0;
@@ -124,6 +149,12 @@
     align-items: center;
     margin-right: 0.7em;
     position: relative;
+  }
+  .shop-side-filters {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
   .shop-search-icon-btn {
     background: none;
@@ -193,6 +224,63 @@
     margin-left: 0.1em;
     display: flex;
     align-items: center;
+  }
+  .shop-side-logo {
+    font-family: 'Wolmer', 'Inter', Arial, sans-serif;
+    font-weight: 900;
+    font-size: 2.4rem;
+    color: #A67899;
+    letter-spacing: 0.18em;
+    margin: 0 1.2em;
+    user-select: none;
+    white-space: nowrap;
+    flex: 0 1 400px;
+    text-align: center;
+    line-height: 1.1;
+    transition: font-size 0.18s, color 0.18s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 40vw;
+    align-self: center;
+    justify-self: center;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @media (max-width: 700px) {
+    .shop-side-controls {
+      justify-content: center;
+      align-items: center;
+      gap: 0.4em;
+      position: relative;
+      padding-top: 0.7em;
+      padding-bottom: 0.7em;
+    }
+    .shop-side-logo {
+      font-size: 1.45rem;
+      color: #A67899;
+      margin: 0 0.1em;
+      max-width: 50vw;
+      flex: 1 1 0;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Wolmer', 'Inter', Arial, sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      line-height: 1.08;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      user-select: none;
+    }
+    .shop-side-search,
+    .shop-side-filters {
+      min-width: 36px;
+      flex: 1 1 0;
+    }
   }
   .shop-side-filter-icon {
     margin-left: 0.2em;

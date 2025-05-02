@@ -115,9 +115,9 @@ export default function Shop() {
         </header>
         {/* Unified Container for Filter/Sort Bar and Product Grid */}
         <div className="shop-main-container">
-          <div className="shop-side-controls" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          <div className="shop-side-controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', gap: '0.5em' }}>
             {/* Search Bar on the left */}
-            <div className="shop-side-search" style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+            <div className="shop-side-search" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
               {/* Mobile: Only icon initially, show input on click */}
               <button
                 className="shop-search-icon-btn"
@@ -165,6 +165,8 @@ export default function Shop() {
                 onBlur={() => { if (window.innerWidth <= 700) setShowSearchBar(false); }}
               />
             </div>
+            {/* Babylon Logo Centered */}
+            <span className="shop-side-logo">BABYLON</span>
             {/* Filter Icon on the right */}
             <div className="shop-side-filters" style={{ position: 'relative', marginLeft: 12 }}>
               <button
@@ -218,7 +220,7 @@ export default function Shop() {
               )}
             </div>
           </div>
-          {/* Product Grid */}
+            {/* Product Grid */}
           <div className="shop-product-grid">
             {PRODUCTS.filter(product => {
               const search = searchText.trim().toLowerCase();
