@@ -15,7 +15,7 @@ function App() {
           <nav className="babylon-nav">
             <Link to="/" className="babylon-nav-item">HOME</Link>
             <Link to="/shop" className="babylon-nav-item">SHOP</Link>
-            <Link to="/about" className="babylon-nav-item">ABOUT</Link>
+            <Link to="/about" className="babylon-nav-item">SOLIRA</Link>
             <Link to="/blog" className="babylon-nav-item">BLOG</Link>
             <Link to="/cart" className="babylon-nav-item">CART</Link>
           </nav>

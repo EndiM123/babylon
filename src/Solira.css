@@ -1,0 +1,223 @@
+/* Solira Collection Campaign Styles */
+.solira-root {
+  background: #F7EFE5;
+  min-height: 100vh;
+  font-family: 'Wolmer', serif;
+  color: #222;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.solira-hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F7EFE5;
+  width: 100vw;
+  overflow: hidden;
+}
+.solira-hero-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100vw; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  filter: brightness(0.99) blur(0.5px) saturate(1.08);
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.solira-hero-content {
+  z-index: 2;
+  position: relative;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8vh 2vw 6vh 2vw;
+  background: rgba(247,239,229,0.16);
+  backdrop-filter: blur(1.5px);
+}
+.solira-title {
+  font-family: 'Wolmer', serif;
+  font-size: 7vw;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  margin: 0 0 1.2vw 0;
+  color: #A67899;
+  text-shadow: 0 2px 20px rgba(166,120,153,0.08);
+}
+.solira-subheading {
+  font-family: inherit;
+  font-size: 2vw;
+  color: #222;
+  opacity: 0.55;
+  margin-top: 0.5vw;
+  letter-spacing: 0.01em;
+}
+@media (max-width: 800px) {
+  .solira-title { font-size: 3.2rem; }
+  .solira-subheading { font-size: 1.1rem; }
+}
+
+.solira-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5vw;
+  padding: 5vw 6vw 2vw 6vw;
+  background: none;
+}
+@media (max-width: 1100px) {
+  .solira-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3vw;
+    padding: 6vw 3vw 2vw 3vw;
+  }
+}
+@media (max-width: 700px) {
+  .solira-gallery {
+    grid-template-columns: 1fr;
+    gap: 5vw;
+    padding: 7vw 2vw 2vw 2vw;
+  }
+}
+.solira-product-card {
+  background: #fff;
+  border-radius: 2.2vw;
+  box-shadow: 0 2px 18px 0 rgba(166,120,153,0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  cursor: pointer;
+  padding-bottom: 1.3vw;
+  animation: solira-fadein 0.7s cubic-bezier(0.4,0,0.2,1) both;
+}
+.solira-product-card.limited .solira-limited-tag {
+  position: absolute;
+  top: 1.1vw; right: 1.3vw;
+  background: #A67899;
+  color: #fff;
+  font-size: 0.95em;
+  font-family: 'Wolmer', serif;
+  padding: 0.4em 1.1em;
+  border-radius: 1em;
+  opacity: 0.93;
+  z-index: 2;
+  letter-spacing: 0.06em;
+}
+.solira-product-img-wrap {
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 1.2vw 1.2vw 0 0;
+  background: #F7EFE5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.solira-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 220ms cubic-bezier(0.4,0,0.2,1), box-shadow 220ms cubic-bezier(0.4,0,0.2,1);
+  will-change: transform, box-shadow;
+}
+.solira-product-card:hover .solira-product-img,
+.solira-product-card:focus .solira-product-img {
+  transform: scale(1.02);
+  box-shadow: 0 8px 40px 0 rgba(166,120,153,0.13);
+}
+.solira-product-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.1vw;
+  padding: 0 1.4vw;
+}
+.solira-product-name {
+  font-family: 'Wolmer', serif;
+  font-size: 1.3em;
+  color: #A67899;
+  font-weight: 400;
+}
+.solira-product-price {
+  font-family: inherit;
+  font-size: 1.1em;
+  color: #222;
+  font-weight: 400;
+}
+@keyframes solira-fadein {
+  from { opacity: 0; transform: translateY(38px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Editorial Moments */
+.solira-moments-section {
+  margin-top: 7vw;
+  padding-bottom: 4vw;
+  background: none;
+}
+.solira-moments-title {
+  font-family: 'Wolmer', serif;
+  font-size: 2.5vw;
+  color: #A67899;
+  text-align: left;
+  margin: 0 0 2vw 6vw;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 800px) {
+  .solira-moments-title {
+    font-size: 1.5rem;
+    margin-left: 2vw;
+  }
+}
+.solira-moments-scroll {
+  display: flex;
+  flex-direction: row;
+  gap: 3vw;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 6vw;
+}
+.solira-moments-scroll::-webkit-scrollbar {
+  display: none;
+}
+.solira-moment-panel {
+  flex: 0 0 60vw;
+  height: 72vh;
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2vw;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 18px 0 rgba(166,120,153,0.12);
+  animation: solira-fadein 0.7s cubic-bezier(0.4,0,0.2,1) both;
+}
+@media (max-width: 900px) {
+  .solira-moment-panel {
+    flex-basis: 80vw;
+    height: 44vw;
+  }
+}
+@media (max-width: 600px) {
+  .solira-moment-panel {
+    flex-basis: 96vw;
+    height: 58vw;
+  }
+}
+.solira-moment-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2vw;
+  pointer-events: none;
+  user-select: none;
+}

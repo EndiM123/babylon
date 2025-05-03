@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Shop from './Shop';
-import About from './About';
+import Solira from './Solira';
 import ProductDetail from './ProductDetail';
 import { PRODUCTS } from './ProductDetail';
 import DualPromoSection from './DualPromoSection';
@@ -28,7 +28,7 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
       <Route path="/shop" element={<Shop />} />
       {/* Product detail route */}
       <Route path="/product/:id" element={<ProductDetail />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/about" element={<Solira />} />
       <Route path="/blog" element={<BlogSection />} />
       <Route path="/blog/:id" element={<BlogPost />} />
     </Routes>
