@@ -155,6 +155,24 @@
   to { opacity: 1; transform: none; }
 }
 
+/* Solira Page Title */
+.solira-page-title {
+  font-family: 'Wolmer', serif;
+  font-size: 5vw;
+  font-weight: 700;
+  text-align: center;
+  color: #A67899;
+  letter-spacing: 0.04em;
+  margin: 4vw 0 2vw 0;
+  line-height: 1.05;
+}
+@media (max-width: 800px) {
+  .solira-page-title {
+    font-size: 2.5rem;
+    margin: 8vw 0 4vw 0;
+  }
+}
+
 /* Editorial Moments */
 .solira-moments-section {
   margin-top: 7vw;

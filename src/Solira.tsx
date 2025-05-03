@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import './Solira.css';
+import SoliraSlideshow from './SoliraSlideshow';
 
 // Example Solira collection data
 const SOLIRA_PRODUCTS = [
@@ -48,10 +49,10 @@ const SOLIRA_PRODUCTS = [
 ];
 
 const SOLIRA_MOMENTS = [
-  '/solira-moment1.jpg',
-  '/solira-moment2.jpg',
-  '/solira-moment3.jpg',
-  '/solira-moment4.jpg',
+  '/solira1.png',
+  '/solira2.png',
+  '/solira3.png',
+  '/solira4.png',
 ];
 
 export default function Solira() {
@@ -72,25 +73,11 @@ export default function Solira() {
 
   return (
     <div className="solira-root">
-      {/* Hero Section */}
-      <section className="solira-hero">
-        <video
-          className="solira-hero-bg"
-          src="/solira-hero.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/solira-hero-poster.jpg"
-        />
-        <div className="solira-hero-content">
-          <h1 className="solira-title">Solira</h1>
-          <div className="solira-subheading">
-            A collection shaped by light, salt, and quiet defiance
-          </div>
-        </div>
-      </section>
+      {/* Fullscreen Landing Slideshow */}
+      <SoliraSlideshow />
+
+      {/* Solira Title */}
+      <div className="solira-page-title">Solira</div>
 
       {/* Product Gallery */}
       <section className="solira-gallery">
