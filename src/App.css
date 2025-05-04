@@ -25,6 +25,16 @@ body, html, #root, .babylon-root {
   border: none;
   transition: background 0.4s cubic-bezier(.77,0,.18,1);
 }
+
+@media (max-width: 900px) {
+  .babylon-header,
+  .babylon-header-inner {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+  }
+}
+
 .babylon-header-inner {
   width: 100vw;
   display: flex;

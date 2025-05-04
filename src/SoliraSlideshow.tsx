@@ -10,9 +10,9 @@ const SLIDES = [
     type: 'image/png',
   },
   {
-    src: '/solira2.png',
+    src: '/solira5.png',
     alt: 'Solira Summer Collection - Look 2',
-    srcSet: '/solira2.png 800w, /solira2.png 1600w, /solira2.png 2400w',
+    srcSet: '/solira5.png 800w, /solira5.png 1600w, /solira5.png 2400w',
     type: 'image/png',
   },
   {
@@ -27,6 +27,13 @@ const SLIDES = [
     srcSet: '/solira4.png 800w, /solira4.png 1600w, /solira4.png 2400w',
     type: 'image/png',
   },
+  {
+    src: '/solira2.png',
+    alt: 'Solira Summer Collection - Look 4',
+    srcSet: '/solira2.png 800w, /solira2.png 1600w, /solira2.png 2400w',
+    type: 'image/png',
+  },
+  
   {
     src: '/solira6.png',
     alt: 'Solira Summer Collection - Look 5',

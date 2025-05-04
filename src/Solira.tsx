@@ -78,6 +78,7 @@ export default function Solira() {
 
       {/* Solira Title */}
       <div className="solira-page-title">Solira</div>
+<div className="solira-collection-description">Effortless summer elegance inspired by the Mediterranean.</div>
 
       {/* Product Gallery */}
       <section className="solira-gallery">
