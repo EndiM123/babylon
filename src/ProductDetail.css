@@ -831,19 +831,25 @@ html, body {
   margin-bottom: 1.3em;
 }
 .product-detail-add-to-cart {
-  flex: 1 1 0;
-  background: var(--color-btn-alt);
-  color: var(--color-primary);
-  border: 1px solid var(--color-btn-border);
-  border-radius: var(--radius);
-  padding: 0.9em 0;
-  font-size: 1.08em;
-  font-weight: 500;
+  width: 100%;
+  background: #1E3932;
+  color: #F7EFE5;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.11rem;
+  font-weight: 600;
+  padding: 1.13em 0;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  margin-top: 1.2em;
+  letter-spacing: 0.04em;
+  box-shadow: none;
+  font-family: 'Wolmer', sans-serif !important;
+  outline: none;
+  transition: background 0.18s, color 0.18s;
 }
 .product-detail-add-to-cart:hover {
-  background: var(--color-muted);
+  background: #232323;
+  color: #FAF5F0;
 }
 .product-detail-buy-now {
   flex: 1 1 0;

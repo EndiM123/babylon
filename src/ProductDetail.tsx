@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import './ProductDetail.css';
 import Footer from './Footer';
+import CartPanel from './components/CartPanel';
+import { CartContext } from './App';
 
 // Example product data. In real use, fetch from backend or context.
 export const PRODUCTS = [
@@ -116,12 +118,48 @@ export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(COLOR_OPTIONS[0].name);
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || '');
   const [quantity, setQuantity] = useState(1);
+  const [cartOpen, setCartOpen] = useState(false);
+  const navigate = useNavigate();
 
+  const { cart, setCart } = useContext(CartContext);
+
+  function handleAddToCart() {
+    setCartOpen(true);
+  }
+
+  function handleCartPanelAdd() {
+    // Add or update product in cart
+    if (!product) return;
+    setCart((prevCart: any[]) => {
+      const idx = prevCart.findIndex(item => item.product.id === product.id);
+      if (idx !== -1) {
+        // Update quantity if already in cart
+        const updated = [...prevCart];
+        updated[idx] = { ...updated[idx], quantity: updated[idx].quantity + quantity };
+        return updated;
+      } else {
+        // Add new product
+        return [...prevCart, { product, quantity }];
+      }
+    });
+    setCartOpen(false);
+  }
+  function handleBuyNow() {
+    navigate('/checkout', { state: { product, quantity } });
+  }
 
   if (!product) return <div>Product not found.</div>;
 
   return (
     <>
+      <CartPanel
+        open={cartOpen}
+        product={product}
+        quantity={quantity}
+        onClose={handleCartPanelAdd}
+        onQuantityChange={setQuantity}
+        onCheckout={() => { setCartOpen(false); navigate('/checkout', { state: { product, quantity } }); }}
+      />
       <main className="product-detail-container">
       <div className="product-detail-main-row">
         <div className="product-detail-media-container">
@@ -169,8 +207,8 @@ export default function ProductDetail() {
           <button className="product-detail-qty-btn" onClick={() => setQuantity(q => q + 1)}>+</button>
         </div>
         <div className="product-detail-cta-row">
-          <button className="product-detail-cta add-to-cart">Add to Cart</button>
-          <button className="product-detail-cta buy-now">Buy Now</button>
+          <button className="product-detail-cta add-to-cart" onClick={handleAddToCart}>Add to Cart</button>
+          <button className="product-detail-cta buy-now" onClick={handleBuyNow}>Buy Now</button>
         </div>
         <div className="product-detail-dropdowns">
           {[

@@ -11,6 +11,7 @@ import WordTransitionSection from './WordTransitionSection';
 import Footer from './Footer';
 import BlogSection from './BlogSection';
 import BlogPost from './BlogPost';
+import CheckoutPage from './components/CheckoutPage';
 
 export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
@@ -28,6 +29,7 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
       <Route path="/shop" element={<Shop />} />
       {/* Product detail route */}
       <Route path="/product/:id" element={<ProductDetail />} />
+      <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/about" element={<Solira />} />
       <Route path="/blog" element={<BlogSection />} />
       <Route path="/blog/:id" element={<BlogPost />} />
