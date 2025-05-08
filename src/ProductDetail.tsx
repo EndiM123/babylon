@@ -121,7 +121,7 @@ export default function ProductDetail() {
   const [cartOpen, setCartOpen] = useState(false);
   const navigate = useNavigate();
 
-  const { cart, setCart } = useContext(CartContext);
+  const { setCart } = useContext(CartContext);
 
   function handleAddToCart() {
     setCartOpen(true);

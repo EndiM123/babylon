@@ -1,37 +1,6 @@
 import React from 'react';
 import './SoliraPreviewMenu.css';
 
-const SOLIRA_PRODUCTS = [
-  {
-    id: 1,
-    name: 'Salt Veil Dress',
-    image: '/solira1.png',
-    price: 540,
-    limited: true,
-  },
-  {
-    id: 2,
-    name: 'Luminance Top',
-    image: '/solira2.png',
-    price: 320,
-    limited: false,
-  },
-  {
-    id: 3,
-    name: 'Sunlit Trench',
-    image: '/solira3.png',
-    price: 690,
-    limited: true,
-  },
-  {
-    id: 4,
-    name: 'Mediterranean Skirt',
-    image: '/solira4.png',
-    price: 410,
-    limited: false,
-  },
-];
-
 export default function SoliraPreviewMenu() {
   return (
     <div className="solira-preview-menu">

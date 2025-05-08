@@ -1,0 +1,63 @@
+.sea-star-section {
+  width: 100vw;
+  background: #F7EFE5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+.sea-star-carousel-outer {
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+
+.sea-star-carousel-inner {
+  display: flex;
+  flex-direction: row;
+  width: 200%;
+  animation: sea-star-scroll var(--sea-star-duration, 16s) linear infinite;
+}
+
+@keyframes sea-star-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.sea-star-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.sea-star-box {
+  flex: 0 0 auto;
+  width: 10vw;
+  margin-right: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sea-star-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .sea-star-section {
+    padding: 1rem 0;
+  }
+  .sea-star-box {
+    width: 15vw;
+    margin-right: 4vw;
+  }
+}

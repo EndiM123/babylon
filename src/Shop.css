@@ -226,28 +226,29 @@
     align-items: center;
   }
   .shop-side-logo {
-    font-family: 'Wolmer', 'Inter', Arial, sans-serif;
-    font-weight: 900;
-    font-size: 2.4rem;
-    color: #A67899;
-    letter-spacing: 0.18em;
-    margin: 0 1.2em;
-    user-select: none;
-    white-space: nowrap;
-    flex: 0 1 400px;
-    text-align: center;
-    line-height: 1.1;
-    transition: font-size 0.18s, color 0.18s;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 40vw;
-    align-self: center;
-    justify-self: center;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  font-family: 'Wolmer', 'Inter', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 2.4rem;
+  color: #A67899;
+  letter-spacing: 0.18em;
+  margin: 0 1.2em;
+  user-select: none;
+  white-space: nowrap;
+  flex: 1 1 0;
+  text-align: center;
+  line-height: 1.1;
+  transition: font-size 0.18s, color 0.18s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40vw;
+  align-self: center;
+  justify-self: center;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
   @media (max-width: 700px) {
     .shop-side-controls {
       justify-content: center;

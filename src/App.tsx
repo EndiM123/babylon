@@ -5,6 +5,7 @@ import './global-video-override.css';
 import AppRoutes from './AppRoutes';
 import { Link } from 'react-router-dom';
 import GlitterParticlesPortal from './GlitterParticlesPortal';
+// Removed unused import ScrollStorySection
 
 // --- Cart Context ---
 type CartContextType = {

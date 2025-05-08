@@ -1,7 +1,8 @@
 import React from 'react';
 import './DualPromoSection.css';
 import FlowingWordTransition from './FlowingWordTransition';
-import PetalRain from './PetalRain';
+
+// Removed unused PetalRain import
 
 const summerImg = '/summer-collection-placeholder.png';
 const saleImg = '/sale-collection-placeholder.png';

@@ -3,8 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import Shop from './Shop';
 import Solira from './Solira';
 import ProductDetail from './ProductDetail';
-import { PRODUCTS } from './ProductDetail';
+// Removed unused import PRODUCTS
 import DualPromoSection from './DualPromoSection';
+import ScrollStorySection from './ScrollStorySection';
 import ProductCarousel from './ProductCarousel';
 import MediaShowcaseSection from './MediaShowcaseSection';
 import WordTransitionSection from './WordTransitionSection';
@@ -12,6 +13,7 @@ import Footer from './Footer';
 import BlogSection from './BlogSection';
 import BlogPost from './BlogPost';
 import CheckoutPage from './components/CheckoutPage';
+import SeaStarLoop from './SeaStarLoop';
 
 export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
@@ -20,6 +22,8 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
         <>
           {/* Hero Section */}
           <WordTransitionSection />
+          <ScrollStorySection />
+          <SeaStarLoop />
           <DualPromoSection />
           <ProductCarousel />
           <MediaShowcaseSection />

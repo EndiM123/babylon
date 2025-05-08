@@ -36,10 +36,10 @@ export default function Footer() {
         <div className="footer-contact-item">hello@example.com</div>
         <div className="footer-contact-item">London, UK</div>
         <div className="footer-socials">
-          <a href="#" aria-label="Facebook"><i className="icon-facebook" /></a>
-          <a href="#" aria-label="Instagram"><i className="icon-instagram" /></a>
-          <a href="#" aria-label="Twitter"><i className="icon-twitter" /></a>
-          <a href="#" aria-label="Dribbble"><i className="icon-dribbble" /></a>
+          <a href="/" aria-label="Facebook"><i className="icon-facebook" /></a>
+          <a href="/" aria-label="Instagram"><i className="icon-instagram" /></a>
+          <a href="/" aria-label="Twitter"><i className="icon-twitter" /></a>
+          <a href="/" aria-label="Dribbble"><i className="icon-dribbble" /></a>
         </div>
       </div>
     </footer>
