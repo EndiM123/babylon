@@ -4,11 +4,12 @@ import Shop from './Shop';
 import Solira from './Solira';
 import ProductDetail from './ProductDetail';
 // Removed unused import PRODUCTS
-import DualPromoSection from './DualPromoSection';
+import WordTransitionSection from './WordTransitionSection';
 import ScrollStorySection from './ScrollStorySection';
+import FeaturedProductCarousel from './FeaturedProductCarousel';
+import DualPromoSection from './DualPromoSection';
 import ProductCarousel from './ProductCarousel';
 import MediaShowcaseSection from './MediaShowcaseSection';
-import WordTransitionSection from './WordTransitionSection';
 import Footer from './Footer';
 import BlogSection from './BlogSection';
 import BlogPost from './BlogPost';
@@ -23,7 +24,7 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
           {/* Hero Section */}
           <WordTransitionSection />
           <ScrollStorySection />
-          <SeaStarLoop />
+          <FeaturedProductCarousel />
           <DualPromoSection />
           <ProductCarousel />
           <MediaShowcaseSection />

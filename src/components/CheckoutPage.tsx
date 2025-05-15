@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import './CheckoutPage.css';
 import { CartContext } from '../App';
+import ReceiptModal from '../components/ReceiptModal';
 
 export default function CheckoutPage() {
   const { cart } = useContext(CartContext);
@@ -11,6 +12,7 @@ export default function CheckoutPage() {
   const [form, setForm] = useState({
     name: '', email: '', address: '', country: '', city: '', postal: '', phone: ''
   });
+  const [showReceipt, setShowReceipt] = useState(false);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }));
@@ -18,12 +20,21 @@ export default function CheckoutPage() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // TODO: handle real checkout
-    alert('Order placed!');
+    // trigger receipt animation
+    setShowReceipt(true);
   }
 
   return (
     <div className="checkout-page-root">
+      {showReceipt && (
+        <ReceiptModal
+          items={cart}
+          subtotal={subtotal}
+          shipping={shipping}
+          total={total}
+          onClose={() => setShowReceipt(false)}
+        />
+      )}
       <main className="checkout-main">
         {typeof window !== 'undefined' && window.innerWidth <= 700 ? (
           <>

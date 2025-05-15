@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Shop.css';
 import './App.css';
-
 
 const CATEGORIES = ['Dresses', 'Outerwear', 'Tops', 'Bottoms', 'Swimwear', 'Accessories'];
 
@@ -57,9 +56,20 @@ const PRODUCTS = [
   },
 ];
 
+
 export default function Shop() {
+  const location = useLocation();
   // Filter state
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // On mount, check for category in query params
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const cat = params.get('category');
+    if (cat && CATEGORIES.includes(cat)) {
+      setSelectedCategory(cat);
+    }
+  }, [location.search]);
   const [showFilterDropdown, setShowFilterDropdown] = useState<boolean>(false);
   const [dropdownPlacement, setDropdownPlacement] = useState<'left' | 'bottom'>('left');
   const [searchText, setSearchText] = useState<string>('');
@@ -195,29 +205,33 @@ export default function Shop() {
                 </svg>
               </button>
               {showFilterDropdown && (
-                <div
-                  ref={filterDropdownRef}
-                  className={`shop-filter-dropdown-popover${dropdownPlacement === 'bottom' ? ' shop-filter-dropdown-popover--bottom' : ''}`}
-                  onClick={e => e.stopPropagation()}
-                >
-                  <div className="shop-filter-dropdown-section">
-                    <div className="shop-filter-dropdown-label">Category</div>
-                    <ul className="shop-filter-dropdown-options" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
-                      {CATEGORIES.map(cat => (
-                        <li key={cat}>
-                          <button
-                            className={`shop-filter-dropdown-pill${selectedCategory === cat ? ' selected' : ''}`}
-                            style={{ width: '100%', textAlign: 'left' }}
-                            onClick={() => { setSelectedCategory(cat); setShowFilterDropdown(false); }}
-                          >
-                            {cat}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
+  <>
+    <div className="shop-filter-sidebar-overlay" onClick={() => setShowFilterDropdown(false)} />
+    <div
+      ref={filterDropdownRef}
+      className="shop-filter-sidebar"
+      onClick={e => e.stopPropagation()}
+    >
+      <button className="shop-filter-sidebar-close" onClick={() => setShowFilterDropdown(false)} aria-label="Close filter sidebar">&times;</button>
+      <div className="shop-filter-dropdown-section">
+        <div className="shop-filter-dropdown-label">Category</div>
+        <ul className="shop-filter-dropdown-options" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
+          {CATEGORIES.map(cat => (
+            <li key={cat}>
+              <button
+                className={`shop-filter-dropdown-pill${selectedCategory === cat ? ' selected' : ''}`}
+                style={{ width: '100%', textAlign: 'left' }}
+                onClick={() => { setSelectedCategory(cat); setShowFilterDropdown(false); }}
+              >
+                {cat}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </>
+)}
             </div>
           </div>
             {/* Product Grid */}

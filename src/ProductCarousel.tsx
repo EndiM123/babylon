@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ProductCarousel.css';
 
 const PRODUCTS = [
@@ -21,6 +22,7 @@ const PRODUCTS = [
 ];
 
 export default function ProductCarousel() {
+  const navigate = useNavigate();
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
   const [motion, setMotion] = useState(false);
@@ -49,19 +51,31 @@ export default function ProductCarousel() {
           >
             <div className="carousel-product-names-overlay">
               {PRODUCTS.map((product, idx) => (
-                <span
-                  key={product.name}
-                  className={`carousel-product-name-overlay${displayedIdx === idx ? ' active' : ''}`}
-                  onClick={() => setActive(idx)}
-                  onMouseEnter={() => setHovered(idx)}
-                  onMouseLeave={() => setHovered(null)}
-                  tabIndex={0}
-                  role="button"
-                  aria-label={`Show ${product.name}`}
-                >
-                  {product.name}
-                </span>
-              ))}
+  <span
+    key={product.name}
+    className={`carousel-product-name-overlay${displayedIdx === idx ? ' active' : ''}`}
+    onClick={() => {
+      if (product.name === 'Dresses') {
+        navigate('/shop?category=Dresses');
+      } else if (product.name === 'Accessories') {
+        navigate('/shop?category=Accessories');
+      } else if (product.name === 'Bags') {
+        navigate('/shop?category=Bags');
+      } else if (product.name === 'Bikinis') {
+        navigate('/shop?category=Swimwear');
+      } else {
+        setActive(idx);
+      }
+    }}
+    onMouseEnter={() => setHovered(idx)}
+    onMouseLeave={() => setHovered(null)}
+    tabIndex={0}
+    role="button"
+    aria-label={`Show ${product.name}`}
+  >
+    {product.name}
+  </span>
+))}
             </div>
           </div>
         </div>

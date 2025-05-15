@@ -1,13 +1,171 @@
 /* Product Detail Styles */
 
+.product-detail-main-row.product-detail-split-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 3.5vw;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3vw 0 2vw 0;
+  font-family: 'Wolmer', 'Inter', Arial, sans-serif !important;
+}
+
+.product-detail-image-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 420px;
+  max-width: 520px;
+  width: 36vw;
+}
+
+.product-detail-image-box {
+  background: #fff;
+  border-radius: 2.3em;
+  box-shadow: 0 6px 32px 0 rgba(30,57,50,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 520px;
+  padding: 2.2em;
+}
+
+@media (min-width: 900px) {
+  main.product-detail-container {
+    margin-top: 120px;
+  }
+  .product-detail-image-box {
+    overflow: hidden;
+    margin-top: 0;
+    height: auto;
+  }
+  .product-detail-media,
+  .product-detail-media-tall {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0 auto;
+    aspect-ratio: 1/1;
+  }
+}
+
+
+.product-detail-media,
+.product-detail-media-tall {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 1.8em;
+  background: #F7F7FA;
+  box-shadow: 0 2px 12px 0 rgba(30,57,50,0.06);
+  font-family: 'Wolmer', 'Inter', Arial, sans-serif !important;
+}
+
+@media (min-width: 900px) {
+  .product-detail-media,
+  .product-detail-media-tall {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    min-height: 0;
+    display: block;
+    margin: 0 auto;
+    aspect-ratio: 1/1;
+  }
+  .product-detail-info-panel {
+    margin-left: 4vw;
+  }
+}
+
+
+.product-detail-info-panel {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 2vw 1vw;
+  background: none;
+  min-width: 340px;
+  max-width: 540px;
+  font-family: 'Wolmer', 'Inter', Arial, sans-serif !important;
+}
+
+@media (max-width: 900px) {
+  .product-detail-main-row.product-detail-split-layout {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2vw;
+    padding: 2vw 0 1vw 0;
+  }
+  .product-detail-image-side {
+    min-width: 0;
+    width: 100%;
+    max-width: 100vw;
+  }
+  .product-detail-image-box {
+    height: 320px;
+    padding: 1em;
+    border-radius: 1.2em;
+  }
+  .product-detail-info-panel {
+  /* margin-left moved to desktop media query only */
+
+    min-width: 0;
+    max-width: 100vw;
+    padding: 1.2vw 2vw;
+  }
+}
+
+
 main.product-detail-container {
   background: #F6F0E7 !important;
   min-height: 100vh;
   width: 100vw;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 0;
   box-sizing: border-box;
+  font-family: 'Wolmer', 'Inter', Arial, sans-serif !important;
 }
+
+@media (min-width: 900px) {
+  main.product-detail-container {
+    padding-top: 2vh;
+  }
+  .product-detail-main-row.product-detail-split-layout {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .product-detail-image-box {
+    overflow: hidden;
+  }
+  .product-detail-media,
+  .product-detail-media-tall {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0 auto;
+    aspect-ratio: 1/1;
+  }
+}
+
 
 
 
@@ -31,6 +189,7 @@ main.product-detail-container {
 
 /* Product Detail Page - Modern Minimalist Split Layout */
 .more-for-you-row {
+  text-decoration: none !important;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -42,6 +201,36 @@ main.product-detail-container {
   margin: 0 auto;
   padding: 0;
 }
+
+.more-for-you-name, .more-for-you-name *, .more-for-you-name:link, .more-for-you-name:visited, a.more-for-you-name, a.more-for-you-name:link, a.more-for-you-name:visited {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  display: block;
+  text-align: center;
+  margin-top: 0.5em;
+  margin-bottom: 0.2em;
+  font-family: 'Wolmer', 'Montserrat', Arial, sans-serif;
+  font-size: 1.08em;
+  font-weight: 500;
+  color: #232323;
+  background: none;
+}
+
+.more-for-you-name:hover, .more-for-you-name:active, .more-for-you-name:focus {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.more-for-you-img-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 
 @media (min-width: 1200px) {
   .more-for-you-row {
@@ -154,6 +343,8 @@ main.product-detail-container {
   }
 }
   .product-detail-info-panel {
+  /* margin-left moved to desktop media query only */
+
     flex: 1 1 40%;
     max-width: 40%;
     padding: 0 2em;
@@ -161,6 +352,8 @@ main.product-detail-container {
 }
 
 .product-detail-info-panel {
+  /* margin-left moved to desktop media query only */
+
   padding: 0;
   background: rgba(255,255,255,0.25) !important;
   box-shadow: none !important;
@@ -175,6 +368,8 @@ main.product-detail-container {
 
 @media (max-width: 700px) {
   .product-detail-info-panel {
+  /* margin-left moved to desktop media query only */
+
     min-height: 600px;
     height: auto;
     padding: 0 0.5em;
@@ -184,6 +379,8 @@ main.product-detail-container {
 
 @media (min-width: 2000px) {
   .product-detail-info-panel {
+  /* margin-left moved to desktop media query only */
+
     max-width: 1200px;
     flex-basis: 1200px;
   }
@@ -235,8 +432,7 @@ html, body {
     z-index: 0 !important;
     pointer-events: none !important;
     display: block !important;
-  }
-
+  }}
   .product-detail-main-row {
     display: flex;
     flex-direction: column;
@@ -245,6 +441,8 @@ html, body {
     margin: 0;
   }
   .product-detail-info-panel {
+  /* margin-left moved to desktop media query only */
+
     width: 100vw;
     max-width: 100vw;
     margin: 0;
@@ -321,6 +519,8 @@ html, body {
 }
 
 .product-detail-info-panel {
+  /* margin-left moved to desktop media query only */
+
   background: var(--color-bg);
   border-radius: 2.2em 2.2em 1.2em 1.2em;
   box-shadow: var(--shadow-soft);
@@ -352,6 +552,7 @@ html, body {
   transform: translateY(18px);
   animation: fadeUp 0.6s cubic-bezier(0.4,0,0.2,1) 0.25s forwards;
 }
+
 .product-detail-cta:hover, .product-detail-cta:focus {
   background: transparent;
   color: #7B4F7B;
@@ -508,6 +709,8 @@ html, body {
   }
 
   .product-detail-info-panel {
+  /* margin-left moved to desktop media query only */
+
     padding: 1.5em 1em 1em 1em;
     max-width: 98vw;
   }
@@ -523,6 +726,8 @@ html, body {
 }
 @media (max-width: 650px) {
   .product-detail-info-panel {
+  /* margin-left moved to desktop media query only */
+
     padding: 1.1em 0.5em 0.7em 0.5em;
     max-width: 100vw;
   }
@@ -864,5 +1069,5 @@ html, body {
   transition: background 0.15s, color 0.15s;
 }
 .product-detail-buy-now:hover {
-  background: #333;
+  background: #3343;
 }

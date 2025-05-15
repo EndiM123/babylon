@@ -161,11 +161,13 @@ export default function ProductDetail() {
         onCheckout={() => { setCartOpen(false); navigate('/checkout', { state: { product, quantity } }); }}
       />
       <main className="product-detail-container">
-      <div className="product-detail-main-row">
-        <div className="product-detail-media-container">
-          <img className="product-detail-media product-detail-media-tall" src={product.image} alt={product.name} />
-        </div>
-        <div className="product-detail-info-panel">
+  <div className="product-detail-main-row product-detail-split-layout">
+    <div className="product-detail-image-side">
+      <div className="product-detail-image-box">
+        <img className="product-detail-media product-detail-media-tall" src={product.image} alt={product.name} />
+      </div>
+    </div>
+    <div className="product-detail-info-panel">
         <div className="product-detail-price-row">
   <h1 className="product-detail-title">{product.name}</h1>
   <span className="product-detail-price">${product.price}</span>
@@ -233,17 +235,10 @@ export default function ProductDetail() {
             {PRODUCTS.filter(p => p.id !== product.id).slice(0, 3).map((suggested) => (
               <Link to={`/product/${suggested.id}`} className="more-for-you-card" key={suggested.id}>
                 <div className="more-for-you-img-wrap">
-                  <img src={suggested.image} alt={suggested.name} className="more-for-you-img" />
-                </div>
-                <div className="more-for-you-info">
-                  <div className="more-for-you-name">{suggested.name}</div>
-                  <div className="more-for-you-prices">
-                    <span className="more-for-you-price">${suggested.price}</span>
-                    {suggested.oldPrice && (
-                      <span className="more-for-you-oldprice">${suggested.oldPrice}</span>
-                    )}
-                  </div>
-                </div>
+  <img src={suggested.image} alt={suggested.name} className="more-for-you-img" />
+  <div className="more-for-you-name">{suggested.name}</div>
+  <span className="more-for-you-price">${suggested.price}</span>
+</div>
               </Link>
             ))}
           </div>
