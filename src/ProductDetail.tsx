@@ -155,98 +155,81 @@ export default function ProductDetail() {
       <CartPanel
         open={cartOpen}
         product={product}
-        quantity={quantity}
+        quantity={1}
         onClose={handleCartPanelAdd}
-        onQuantityChange={setQuantity}
-        onCheckout={() => { setCartOpen(false); navigate('/checkout', { state: { product, quantity } }); }}
+        onQuantityChange={() => {}}
+        onCheckout={() => { setCartOpen(false); navigate('/checkout', { state: { product, quantity: 1 } }); }}
       />
       <main className="product-detail-container">
-  <div className="product-detail-main-row product-detail-split-layout">
-    <div className="product-detail-image-side">
-      <div className="product-detail-image-box">
-        <img className="product-detail-media product-detail-media-tall" src={product.image} alt={product.name} />
-      </div>
-    </div>
-    <div className="product-detail-info-panel">
-        <div className="product-detail-price-row">
-  <h1 className="product-detail-title">{product.name}</h1>
-  <span className="product-detail-price">${product.price}</span>
-</div>
-        <div className="product-detail-sizes">
-          {product.sizes.map(size => (
-            <button
-              key={size}
-              className={`product-detail-size-btn${selectedSize === size ? ' selected' : ''}`}
-              onClick={() => setSelectedSize(size)}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-        <div className="product-detail-color-row">
-          <span className="product-detail-color-label">Color</span>
-          <div className="product-detail-color-options" role="radiogroup" aria-label="Select color">
-            {COLOR_OPTIONS.map(opt => (
-              <button
-                key={opt.name}
-                className={`product-detail-color-option${selectedColor === opt.name ? ' selected' : ''}`}
-                style={{ color: selectedColor === opt.name ? '#222' : '#888' }}
-                aria-label={opt.name}
-                tabIndex={0}
-                onClick={() => setSelectedColor(opt.name)}
-                onKeyPress={e => (e.key === 'Enter' || e.key === ' ') && setSelectedColor(opt.name)}
-                type="button"
-              >
-                {opt.name}
-              </button>
-            ))}
+        <div className="product-detail-main-row product-detail-split-layout">
+          <div className="product-detail-image-side">
+            <img className="product-detail-media product-detail-media-tall" src={product.image} alt={product.name} />
           </div>
-        </div>
-        <p className="product-detail-description">{product.description}</p>
-        <div className="product-detail-qty-row">
-          <button className="product-detail-qty-btn" onClick={() => setQuantity(q => Math.max(1, q - 1))}>−</button>
-          <span className="product-detail-qty">{quantity}</span>
-          <button className="product-detail-qty-btn" onClick={() => setQuantity(q => q + 1)}>+</button>
-        </div>
-        <div className="product-detail-cta-row">
-          <button className="product-detail-cta add-to-cart" onClick={handleAddToCart}>Add to Cart</button>
-          <button className="product-detail-cta buy-now" onClick={handleBuyNow}>Buy Now</button>
-        </div>
-        <div className="product-detail-dropdowns">
-          {[
-            { label: 'Materials & Care', content: product.materials },
-            { label: 'Shipping Info', content: product.shipping },
-            { label: 'Returns Policy', content: product.returns }
-          ].map(({ label, content }) => (
-            <div className="product-detail-dropdown" key={label}>
-              <div className="product-detail-dropdown-toggle-static">
-                {label}
-              </div>
-              <div className="product-detail-dropdown-content open" style={{ maxHeight: 200 }}>
-                {content}
+          <div className="product-detail-info-panel">
+            <h1 className="product-detail-title">{product.name}</h1>
+            <div className="product-detail-volume">450 ML</div>
+            <div className="product-detail-price-row">
+              <span className="product-detail-price">${product.price}</span>
+            </div>
+            <div className="product-detail-sizes">
+              {product.sizes.map(size => (
+                <button
+                  key={size}
+                  className={`product-detail-size-btn${selectedSize === size ? ' selected' : ''}`}
+                  onClick={() => setSelectedSize(size)}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+            <div className="product-detail-color-row">
+              <span className="product-detail-color-label">Color</span>
+              <div className="product-detail-color-options" role="radiogroup" aria-label="Select color">
+                {COLOR_OPTIONS.map(opt => (
+                  <button
+                    key={opt.name}
+                    className={`product-detail-color-option${selectedColor === opt.name ? ' selected' : ''}`}
+                    style={{ color: selectedColor === opt.name ? '#222' : '#888' }}
+                    aria-label={opt.name}
+                    tabIndex={0}
+                    onClick={() => setSelectedColor(opt.name)}
+                    onKeyPress={e => (e.key === 'Enter' || e.key === ' ') && setSelectedColor(opt.name)}
+                    type="button"
+                  >
+                    {opt.name}
+                  </button>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
-        {/* More For You Section */}
-        <div className="more-for-you-section">
-          <div className="more-for-you-title">More For You</div>
-          <div className="more-for-you-row">
-            {PRODUCTS.filter(p => p.id !== product.id).slice(0, 3).map((suggested) => (
-              <Link to={`/product/${suggested.id}`} className="more-for-you-card" key={suggested.id}>
-                <div className="more-for-you-img-wrap">
-  <img src={suggested.image} alt={suggested.name} className="more-for-you-img" />
-  <div className="more-for-you-name">{suggested.name}</div>
-  <span className="more-for-you-price">${suggested.price}</span>
-</div>
-              </Link>
-            ))}
+            <div className="product-detail-description-block">
+              <div className="product-detail-description-label">DESCRIPTION</div>
+              <p className="product-detail-description">{product.description}</p>
+            </div>
+            <div className="product-detail-qty-row">
+              <button className="product-detail-qty-btn" onClick={() => setQuantity(q => Math.max(1, q - 1))}>−</button>
+              <span className="product-detail-qty">{quantity}</span>
+              <button className="product-detail-qty-btn" onClick={() => setQuantity(q => q + 1)}>+</button>
+            </div>
+            <div className="product-detail-cta-row">
+              <button className="product-detail-add-to-cart" onClick={handleAddToCart}>Add to Cart</button>
+              <button className="product-detail-buy-now" onClick={handleBuyNow}>Buy Now</button>
+            </div>
+            <div className="product-detail-dropdowns">
+              {[
+                { label: 'Materials & Care', content: product.materials },
+                { label: 'Shipping Info', content: product.shipping },
+                { label: 'Returns Policy', content: product.returns }
+              ].map(({ label, content }) => (
+                <div className="product-detail-dropdown" key={label}>
+                  <div className="product-detail-dropdown-toggle-static">{label}</div>
+                  <div className="product-detail-dropdown-content open" style={{ maxHeight: 200 }}>{content}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </div>
       </main>
-    <Footer />
+      <Footer />
     </>
   );
 }

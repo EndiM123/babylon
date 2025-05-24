@@ -13,6 +13,8 @@ import MediaShowcaseSection from './MediaShowcaseSection';
 import Footer from './Footer';
 import BlogSection from './BlogSection';
 import BlogPost from './BlogPost';
+import RooftopBlogPost from './RooftopBlogPost';
+import PrishtinaPoolsideBlogPost from './PrishtinaPoolsideBlogPost';
 import CheckoutPage from './components/CheckoutPage';
 import SeaStarLoop from './SeaStarLoop';
 
@@ -37,6 +39,8 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/about" element={<Solira />} />
       <Route path="/blog" element={<BlogSection />} />
+      <Route path="/blog/rooftop" element={<RooftopBlogPost />} />
+      <Route path="/blog/prishtina-poolside" element={<PrishtinaPoolsideBlogPost />} />
       <Route path="/blog/:id" element={<BlogPost />} />
     </Routes>
   );

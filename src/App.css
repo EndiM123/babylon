@@ -54,7 +54,23 @@ body, html, #root, .babylon-root {
   color: #F7EFE5;
   transition: opacity 0.6s cubic-bezier(.77,0,.18,1);
   opacity: 1;
+  text-transform: uppercase;
 }
+
+@media (min-width: 1200px) {
+  .babylon-header-inner {
+    padding-left: 0 !important;
+  }
+  .babylon-header-logo {
+    font-size: 3.6rem;
+    letter-spacing: -0.06em;
+    padding-left: 0;
+    padding-right: 0.6em;
+    line-height: 1.1;
+    margin-left: 0;
+  }
+}
+
 .babylon-nav {
   display: flex;
   gap: 2.5vw;
@@ -224,25 +240,24 @@ body, html, #root, .babylon-root {
   .babylon-header-inner {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0 0 0 2vw;
+    justify-content: center;
+    padding: 0;
     width: 100vw;
     min-height: 54px;
     height: 54px;
     box-sizing: border-box;
   }
   .babylon-header-logo-space {
-    min-width: 50px;
-    width: 50px;
-    justify-content: flex-start;
-    display: block;
+    display: none;
+    min-width: 0;
+    width: 0;
   }
   .babylon-nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.3vw;
+    justify-content: center;
+    gap: 2vw;
     width: auto;
     margin: 0;
     padding: 0;
@@ -274,25 +289,24 @@ body, html, #root, .babylon-root {
   .babylon-header-inner {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0 0 0 2vw;
+    justify-content: center;
+    padding: 0;
     width: 100vw;
     min-height: 54px;
     height: 54px;
     box-sizing: border-box;
   }
   .babylon-header-logo-space {
-    min-width: 50px;
-    width: 50px;
-    justify-content: flex-start;
-    display: block;
+    display: none;
+    min-width: 0;
+    width: 0;
   }
   .babylon-nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.3vw;
+    justify-content: center;
+    gap: 2vw;
     width: auto;
     margin: 0;
     padding: 0;
@@ -479,25 +493,24 @@ body, html, #root, .babylon-root {
   .babylon-header-inner {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0 0 0 2vw;
+    justify-content: center;
+    padding: 0;
     width: 100vw;
     min-height: 54px;
     height: 54px;
     box-sizing: border-box;
   }
   .babylon-header-logo-space {
-    min-width: 50px;
-    width: 50px;
-    justify-content: flex-start;
-    display: block;
+    display: none;
+    min-width: 0;
+    width: 0;
   }
   .babylon-nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.3vw;
+    justify-content: center;
+    gap: 2vw;
     width: auto;
     margin: 0;
     padding: 0;
@@ -529,25 +542,24 @@ body, html, #root, .babylon-root {
   .babylon-header-inner {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0 0 0 2vw;
+    justify-content: center;
+    padding: 0;
     width: 100vw;
     min-height: 54px;
     height: 54px;
     box-sizing: border-box;
   }
   .babylon-header-logo-space {
-    min-width: 50px;
-    width: 50px;
-    justify-content: flex-start;
-    display: block;
+    display: none;
+    min-width: 0;
+    width: 0;
   }
   .babylon-nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.3vw;
+    justify-content: center;
+    gap: 2vw;
     width: auto;
     margin: 0;
     padding: 0;
@@ -814,25 +826,24 @@ body, html, #root, .babylon-root {
   .babylon-header-inner {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0 0 0 2vw;
+    justify-content: center;
+    padding: 0;
     width: 100vw;
     min-height: 54px;
     height: 54px;
     box-sizing: border-box;
   }
   .babylon-header-logo-space {
-    min-width: 50px;
-    width: 50px;
-    justify-content: flex-start;
-    display: block;
+    display: none;
+    min-width: 0;
+    width: 0;
   }
   .babylon-nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.3vw;
+    justify-content: center;
+    gap: 2vw;
     width: auto;
     margin: 0;
     padding: 0;
@@ -864,25 +875,24 @@ body, html, #root, .babylon-root {
   .babylon-header-inner {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0 0 0 2vw;
+    justify-content: center;
+    padding: 0;
     width: 100vw;
     min-height: 54px;
     height: 54px;
     box-sizing: border-box;
   }
   .babylon-header-logo-space {
-    min-width: 50px;
-    width: 50px;
-    justify-content: flex-start;
-    display: block;
+    display: none;
+    min-width: 0;
+    width: 0;
   }
   .babylon-nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.3vw;
+    justify-content: center;
+    gap: 2vw;
     width: auto;
     margin: 0;
     padding: 0;
@@ -1158,25 +1168,24 @@ body, html, #root, .babylon-root {
   .babylon-header-inner {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0 0 0 2vw;
+    justify-content: center;
+    padding: 0;
     width: 100vw;
     min-height: 54px;
     height: 54px;
     box-sizing: border-box;
   }
   .babylon-header-logo-space {
-    min-width: 50px;
-    width: 50px;
-    justify-content: flex-start;
-    display: block;
+    display: none;
+    min-width: 0;
+    width: 0;
   }
   .babylon-nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.3vw;
+    justify-content: center;
+    gap: 2vw;
     width: auto;
     margin: 0;
     padding: 0;
@@ -1208,25 +1217,24 @@ body, html, #root, .babylon-root {
   .babylon-header-inner {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0 0 0 2vw;
+    justify-content: center;
+    padding: 0;
     width: 100vw;
     min-height: 54px;
     height: 54px;
     box-sizing: border-box;
   }
   .babylon-header-logo-space {
-    min-width: 50px;
-    width: 50px;
-    justify-content: flex-start;
-    display: block;
+    display: none;
+    min-width: 0;
+    width: 0;
   }
   .babylon-nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.3vw;
+    justify-content: center;
+    gap: 2vw;
     width: auto;
     margin: 0;
     padding: 0;
