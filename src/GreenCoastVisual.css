@@ -1,0 +1,563 @@
+/* Green Coast Visual Blog Post Styles */
+
+:root {
+  --coast-sand: #f7efe5;
+  --coast-sea: #3A7D60;
+  --coast-sky: #a9ddd6;
+  --coast-sunset: #e8a87c;
+  --coast-night: #1e3932;
+  --coast-stone: #d1c7b7;
+}
+
+/* Main container */
+.visual-blog-container {
+  width: 100vw;
+  overflow-x: hidden;
+  background: transparent;
+  color: var(--coast-night);
+  font-family: 'Wolmer', serif;
+}
+
+/* Hero video/image section */
+.coast-hero-section {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.coast-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.coast-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.coast-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(30,57,50,0.2) 0%, rgba(30,57,50,0.6) 100%);
+  z-index: 2;
+}
+
+.coast-hero-title {
+  font-size: 5rem;
+  font-weight: 900;
+  color: white;
+  text-align: center;
+  max-width: 80%;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.coast-hero-subtitle {
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+  max-width: 70%;
+  margin-top: 1rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.8;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) translateX(-50%);
+  }
+  40% {
+    transform: translateY(-20px) translateX(-50%);
+  }
+  60% {
+    transform: translateY(-10px) translateX(-50%);
+  }
+}
+
+/* Content sections */
+.coast-content-section {
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Poetic section */
+.coast-poetic-section {
+  padding: 6rem 2rem;
+  background: transparent;
+  text-align: center;
+}
+
+.coast-poetic-text {
+  font-size: 2.2rem;
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--coast-sea);
+}
+
+/* Quote overlays */
+.coast-quote-container {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  margin: 4rem 0;
+  overflow: hidden;
+}
+
+.coast-quote-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coast-quote-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.coast-quote-decoration {
+  width: 120px;
+  height: auto;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.coast-quote {
+  font-size: 1.8rem;
+  font-weight: 300;
+  font-style: italic;
+  color: white;
+  text-align: center;
+  max-width: 60%;
+  line-height: 1.4;
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.coast-product-description {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--coast-sea);
+  text-align: center;
+  max-width: 70%;
+  margin: 2rem auto 0;
+  line-height: 1.6;
+  padding: 0 1rem;
+  font-style: italic;
+}
+
+.quote-with-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 80%;
+}
+
+.coast-quote-decoration {
+  width: 80px;
+  height: auto;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+/* Slideshow */
+.coast-slideshow {
+  width: 100%;
+  height: 80vh;
+  position: relative;
+  overflow: hidden;
+  margin: 3rem 0;
+}
+
+.coast-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.coast-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.coast-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coast-slide-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+  padding: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  background: rgba(30,57,50,0.9);
+  backdrop-filter: blur(4px);
+  word-wrap: break-word;
+  word-break: keep-all;
+  box-sizing: border-box;
+  hyphens: none;
+}
+
+/* Shop the look section */
+.shop-look-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 4rem 2rem;
+  background: white;
+}
+
+.shop-look-item {
+  width: 300px;
+  text-align: center;
+}
+
+.shop-look-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.shop-look-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--coast-sea);
+}
+
+.shop-look-price {
+  font-size: 1.2rem;
+  color: var(--coast-night);
+  margin-bottom: 1rem;
+}
+
+.shop-look-button {
+  padding: 0.8rem 1.5rem;
+  background: var(--coast-sea);
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.shop-look-button:hover {
+  background: var(--coast-night);
+}
+
+/* Map section */
+.coast-map-section {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+}
+
+.coast-map-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coast-map-pin {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: var(--coast-sunset);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 3;
+  box-shadow: 0 0 0 5px rgba(232, 168, 124, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(232, 168, 124, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(232, 168, 124, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(232, 168, 124, 0);
+  }
+}
+
+.coast-map-tooltip {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 200px;
+  text-align: left;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  left: 30px;
+  top: 0;
+  pointer-events: none;
+}
+
+.desktop-only-pin {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .coast-map-section {
+    position: relative;
+    z-index: 20000;
+  }
+  .coast-map-tooltip,
+  .palasa-above-dhermi {
+    width: 250px;
+    left: 30px;
+    top: 0;
+    z-index: 20010 !important;
+    pointer-events: auto;
+    position: absolute;
+  }
+  /* Hide specific desktop pins */
+  .desktop-only-pin {
+    display: none !important;
+  }
+  /* Only show Palasa and Dhermi pins */
+  .coast-map-pin {
+    z-index: 3 !important;
+  }
+}
+
+.coast-map-pin:hover .coast-map-tooltip {
+  opacity: 1;
+}
+
+.palasa-special {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--coast-stone);
+}
+
+.palasa-special p, .palasa-special-note {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--coast-sea);
+}
+
+.palasa-special-note {
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--coast-stone);
+  padding-top: 0.5rem;
+}
+
+@media (min-width: 1200px) {
+  .palasa-special {
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+  
+  .palasa-special p, .palasa-special-note {
+    font-size: 1rem;
+  }
+  
+  .palasa-special-note {
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+  }
+}
+
+/* Call to action */
+.coast-cta-section {
+  padding: 6rem 2rem;
+  background: var(--coast-night);
+  color: white;
+  text-align: center;
+}
+
+.coast-cta-title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+}
+
+.coast-collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.coast-collection-item {
+  background: rgba(255,255,255,0.1);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+}
+
+.coast-collection-item:hover {
+  transform: translateY(-10px);
+  background: rgba(255,255,255,0.2);
+}
+
+.coast-collection-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Handwritten style text */
+.handwritten-text {
+  font-family: 'Satisfy', cursive;
+  font-size: 2rem;
+  line-height: 1.4;
+  color: var(--coast-sea);
+  margin: 2rem 0;
+  text-align: center;
+}
+
+/* One-liner */
+.coast-one-liner {
+  font-size: 2.5rem;
+  font-weight: 300;
+  text-align: center;
+  margin: 4rem 0;
+  padding: 0 2rem;
+  color: var(--coast-sea);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .coast-hero-title {
+    font-size: 3rem;
+  }
+  
+  .coast-hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .coast-poetic-text {
+    font-size: 1.8rem;
+  }
+  
+  .coast-quote {
+    font-size: 1.8rem;
+  }
+  
+  .coast-one-liner {
+    font-size: 1.8rem;
+  }
+  
+  .coast-slide-caption {
+    font-size: 1rem;
+    bottom: 0;
+    padding: 1rem;
+    width: 100%;
+    left: 0;
+    right: 0;
+    white-space: normal;
+    overflow: visible;
+    display: block;
+    line-height: 1.5;
+    max-height: none;
+    word-break: normal;
+    hyphens: none;
+  }
+  
+  .coast-cta-title {
+    font-size: 2.2rem;
+  }
+  
+  .handwritten-text {
+    font-size: 1.6rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .coast-hero-title {
+    font-size: 6rem;
+  }
+  
+  .coast-hero-subtitle {
+    font-size: 2.2rem;
+  }
+  
+  .coast-content-section {
+    padding: 6rem 4rem;
+  }
+  
+  .coast-poetic-text {
+    font-size: 2.5rem;
+  }
+  
+  .coast-quote {
+    font-size: 3rem;
+  }
+  
+  .coast-one-liner {
+    font-size: 3rem;
+  }
+  
+  .coast-quote-container {
+    height: 100vh;
+  }
+}

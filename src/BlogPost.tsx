@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import './BlogSection.css';
+import "./BlogSection.css";
+import "./immersive-blog-responsive.css";
 
 // Example blog data (should be replaced with real fetch in production)
 const BLOGS = [
@@ -12,6 +13,15 @@ const BLOGS = [
     subtitle: 'Exploring the timeless elegance of linen in contemporary fashion.',
     date: 'April 18, 2025',
     content: 'Full article content for blog 1...'
+  },
+  {
+    id: 7,
+    image: '/coffee-culture-hero.jpg',
+    category: 'Feature',
+    title: 'Espresso & Elegance: How Kosovo’s Coffee Culture Became the New Fashion Runway',
+    subtitle: 'A look at how the café ritual became Kosovo’s daily stage for fashion and identity.',
+    date: 'May 24, 2025',
+    content: '', // Custom immersive layout below
   },
   {
     id: 2,
@@ -123,6 +133,47 @@ export default function BlogPost() {
     );
   }
 
+  // Custom immersive layout for 'Espresso & Elegance: How Kosovo’s Coffee Culture Became the New Fashion Runway' (id: 7)
+  if (blog.id === 7) {
+    return (
+      <section className="blog-post-section immersive-blog-post">
+        <nav className="blog-breadcrumbs">
+          <Link to="/" className="blog-breadcrumb">Home</Link>
+          <span className="blog-breadcrumb-sep">/</span>
+          <Link to="/blog" className="blog-breadcrumb">Blog & Journal</Link>
+          <span className="blog-breadcrumb-sep">/</span>
+          <span className="blog-breadcrumb-current">{blog.title}</span>
+        </nav>
+        {/* Coffee Culture Blog Image */}
+        <img src="/kafe1.png" alt="Kosovo coffee culture" className="immersive-hero-image" />
+        {/* Immersive full-width hero image with overlays/textures */}
+                <article className="immersive-blog-content">
+          <div className="immersive-intro">
+            Terrazzo café tables shimmer in the late-morning sun. Velvet chairs cradle the city’s early risers and afternoon dreamers alike. In Prishtina, the gentle clink of ceramic cups and the rhythmic click of heels on cobbled streets are more than background—they’re the overture to a daily spectacle. Here, cafés are never just stops. They are showcases. People don’t arrive to disappear into coffee—they arrive to be seen: hair freshly styled, sunglasses chosen with intent, a crisp blazer thrown over a silk set, shoes polished but unbothered. Every entrance is a statement, every table a front row.
+          </div>
+          <div className="immersive-divider" />
+          <div className="immersive-article-body">
+            <p><strong>In Kosovo, the coffee break is not a pause—it’s a presence.</strong> Across generations, the ritual of “drinking coffee” is a cornerstone of daily life: from business meetings and best-friend catchups to solo journaling sessions and quick breaks between errands. The act is as much about the aesthetic of arrival as it is about caffeine. A cappuccino becomes a symbol of composure. A macchiato is confidence in a cup. Each café is a micro-stage for personal branding, a place where style is lived, not reserved for special occasions.</p>
+            <p>This culture has transformed the city’s fashion DNA. People don’t dress down for a latte—they elevate. The rise of café-ready essentials is unmistakable: oversized sunglasses, minimalist gold jewelry, linen sets, crisp white shirts, cashmere drapes, structured bags, neutral-toned loafers. Our boutique’s edit is inspired by these moments—capsule pieces that transition effortlessly from boardroom to café bar stool. Imagine pleated trousers and a silk tank set, or a soft leather crossbody that balances casual ease with couture precision.</p>
+            <blockquote className="immersive-quote">“Style is not reserved for special occasions here—it’s lived daily, espresso in hand.”</blockquote>
+            <p><strong>Coffee Moment Vignettes:</strong></p>
+            <ul>
+              <li><em>Post-work espresso martini:</em> Soft tailoring, kitten heels, and a structured bag—perfect for unwinding in style as dusk settles over the city.</li>
+              <li><em>10 a.m. macchiato meeting:</em> Wide-leg trousers, a tucked-in silk tank, and tinted eyewear—effortless polish for sealing deals or sharing dreams.</li>
+              <li><em>Sunday cappuccino:</em> A flowing summer dress, platform sandals, and gold earrings catching the sun—relaxed elegance for slow mornings and people-watching.</li>
+            </ul>
+            <p>Each vignette is a reflection of our boutique’s “Café-Ready Essentials”—pieces curated to move with you, wherever your day (and coffee) takes you.</p>
+            <p>In Kosovo, coffee is more than a beverage—it’s identity, rhythm, and reflection. It’s a moment of stillness paired with silent self-expression, a ritual that binds strangers and defines friends. It’s a mirror of how we choose to show up in the world. Here, the city’s most iconic catwalk is the café chair—and style is always in session.</p>
+          </div>
+          <div className="immersive-divider" />
+          <div className="immersive-article-body">
+            <p><strong>Ready to embrace the ritual?</strong> Explore our boutique’s “Café-Ready Essentials” edit—curated to complement Kosovo’s vibrant coffee culture and your most stylish moments.</p>
+          </div>
+        </article>
+      </section>
+    );
+  }
+
   // Custom immersive layout for 'Travel & Texture: Inspirations Abroad' (id: 5)
   if (blog.id === 5) {
     return (
@@ -135,16 +186,7 @@ export default function BlogPost() {
           <span className="blog-breadcrumb-current">{blog.title}</span>
         </nav>
         {/* Immersive full-width hero image with overlays/textures */}
-        <div className="immersive-hero-wrap">
-          <img src={blog.image} alt={blog.title} className="immersive-hero-image" />
-          <div className="immersive-hero-overlay" />
-          <div className="immersive-hero-meta">
-            <span className="immersive-hero-category">{blog.category}</span>
-            <h1 className="immersive-hero-title">{blog.title}</h1>
-            <div className="immersive-hero-date">{blog.date}</div>
-          </div>
-        </div>
-        <article className="immersive-blog-content">
+                <article className="immersive-blog-content">
           <div className="immersive-intro">
             Wanderlust meets tactile beauty. Our journeys abroad are not just about destinations, but about the textures, colors, and stories we collect along the way. In this editorial, we unravel how global adventures inspire the fabrics, palettes, and spirit of our latest collection. Let yourself be transported.
           </div>

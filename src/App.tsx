@@ -66,6 +66,13 @@ function App() {
     }
   }, [pendingLandingScroll, location.pathname]);
 
+  // Scroll to top on blog page/post navigation
+  React.useEffect(() => {
+    if (location.pathname.startsWith('/blog')) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+  }, [location.pathname]);
+
   React.useEffect(() => {
     function handleResize() {
       setIsDesktop(window.innerWidth > 900);

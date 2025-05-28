@@ -1,0 +1,544 @@
+/* Color Psychology Blog Post Styles */
+
+:root {
+  --color-red: #d63031;
+  --color-orange: #e17055;
+  --color-blue: #0984e3;
+  --color-green: #00b894;
+  --color-yellow: #fdcb6e;
+  --color-text: #232323;
+  --color-text-light: #555;
+  --color-background: #f7efe5;
+}
+
+.immersive-hero-meta,
+.immersive-hero-meta .immersive-hero-category,
+.immersive-hero-meta .immersive-hero-title,
+.immersive-hero-meta .immersive-hero-date {
+  color: #fff !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.35), 0 0px 30px rgba(0,0,0,0.25);
+}
+
+
+.immersive-hero-wrap {
+  position: relative;
+  width: 120vw;
+  min-height: 54vh;
+  max-height: 66vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 8px 48px 0 rgba(30,57,50,0.13);
+  background: linear-gradient(120deg, #f7efe5 60%, #e5d8c7 100%);
+  margin-left: -10vw;
+}
+
+.immersive-hero-image,
+.immersive-hero-video {
+  width: 120vw;
+  height: 100%;
+  left: 0;
+  object-fit: contain;
+  object-position: center;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  background: #000;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Mobile-specific video crop */
+@media (max-width: 1199px) {
+  .immersive-hero-video {
+    width: 115vw;
+    height: 98%;
+    left: 2.5vw;
+    top: 1%;
+    object-fit: cover;
+    transform: scale(0.97);
+  }
+}
+
+
+/* Flowing layout styles */
+.colors-row {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  gap: 2rem;
+}
+
+.color-column {
+  flex: 1;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.color-title {
+  font-family: 'Wolmer', serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.color-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: currentColor;
+}
+
+.color-psychology {
+  margin: 1.5rem 0;
+}
+
+.color-perception {
+  font-style: italic;
+  margin-top: 1rem;
+  opacity: 0.9;
+}
+
+.scenario-text {
+  font-family: 'Wolmer', serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-style: italic;
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid currentColor;
+}
+
+.color-product {
+  font-weight: 600;
+  margin: 1.5rem 0;
+}
+
+/* Color-specific styles */
+.red-column {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(214, 48, 49, 0.1));
+  color: var(--color-red);
+}
+
+.orange-column {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(225, 112, 85, 0.1));
+  color: var(--color-orange);
+}
+
+.blue-column {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(9, 132, 227, 0.1));
+  color: var(--color-blue);
+}
+
+.green-column {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(0, 184, 148, 0.1));
+  color: var(--color-green);
+}
+
+.color-single {
+  margin: 3rem 0;
+  padding: 2rem;
+}
+
+.yellow-single {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(253, 203, 110, 0.1));
+  color: var(--color-yellow);
+  text-align: center;
+}
+
+.single-color-image {
+  max-width: 100%;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+}
+
+/* Interlude sections */
+.color-interlude {
+  margin: 4rem 0;
+  text-align: center;
+}
+
+.interlude-image {
+  max-width: 100%;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.immersive-hero-image {
+  width: 200vw; /* Even wider on mobile */
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: -50vw;
+  z-index: 1;
+  max-width: none;
+  transform: scale(1.3);
+  transform-origin: center;
+}
+
+/* Adjust hero image width for larger screens */
+@media (min-width: 768px) {
+  .immersive-hero-image {
+    width: 160vw;
+    left: -30vw;
+    transform: scale(1.15);
+  }
+}
+
+.color-fact {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.color-fact h3 {
+  font-family: 'Wolmer', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+/* Flowing text styles */
+.color-intro-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 1.5rem 0;
+  max-width: 90%;
+  color: var(--color-text);
+}
+
+.identity-title {
+  font-family: 'Wolmer', serif;
+  font-size: 2.2rem;
+  margin: 3rem 0 1.5rem;
+  text-align: center;
+}
+
+.identity-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 1.5rem 0;
+  max-width: 90%;
+}
+
+/* Quiz styles */
+.quiz-title {
+  font-family: 'Wolmer', serif;
+  font-size: 2.2rem;
+  margin: 3rem 0 1rem;
+  text-align: center;
+}
+
+.quiz-intro {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.quiz-question {
+  margin: 2rem 0;
+}
+
+.quiz-question h3 {
+  font-family: 'Wolmer', serif;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.quiz-options button {
+  padding: 1rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quiz-options button:hover {
+  background: #f7f7f7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-color-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.color-option {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.color-option.red { background-color: var(--color-red); }
+.color-option.orange { background-color: var(--color-orange); }
+.color-option.blue { background-color: var(--color-blue); }
+.color-option.green { background-color: var(--color-green); }
+.color-option.yellow { background-color: var(--color-yellow); }
+
+.quiz-results {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 1rem;
+}
+
+.quiz-product-recommendation {
+  font-weight: 600;
+  margin: 1.5rem 0;
+}
+
+.reset-quiz {
+  padding: 0.8rem 1.5rem;
+  background: var(--color-text);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.reset-quiz:hover {
+  background: #444;
+}
+
+/* Call to action */
+.cta-title {
+  font-family: 'Wolmer', serif;
+  font-size: 2.2rem;
+  margin: 4rem 0 1.5rem;
+  text-align: center;
+}
+
+.cta-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 1.5rem auto;
+  max-width: 90%;
+  text-align: center;
+}
+
+.color-shop-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 1rem 2rem;
+  background: var(--color-text);
+  color: white;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-family: 'Wolmer', sans-serif;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.color-shop-link:hover {
+  background: #444;
+  transform: translateY(-2px);
+}
+
+/* Emotional layer section */
+.emotional-layer {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 1rem;
+}
+
+.emotional-layer h2 {
+  font-family: 'Wolmer', serif;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Desktop styles */
+@media (min-width: 1200px) {
+  /* Make hero section cover the full landing screen */
+  .immersive-hero-wrap {
+    height: 85vh;
+    min-height: 85vh;
+    max-height: 85vh;
+    margin-top: -50px; /* Compensate for header */
+    padding-top: 50px;
+  }
+  
+  .immersive-hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  /* Make interlude image full width and thinner */
+  .interlude-image {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    height: 40vh;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Prevent play button from appearing by adding a transparent overlay */
+  .immersive-hero-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .immersive-hero-meta {
+    width: 100vw;
+    max-width: 100vw;
+    left: 6vw;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .immersive-hero-category,
+  .immersive-hero-date {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .colors-row {
+    flex-direction: row;
+    margin: 5rem 0;
+    gap: 3rem;
+  }
+  
+  .color-column {
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .color-column:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .color-title {
+    font-size: 2.8rem;
+  }
+  
+  .color-title::after {
+    width: 60px;
+    height: 4px;
+  }
+  
+  .color-psychology {
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+  
+  .color-perception {
+    font-size: 1.1rem;
+  }
+  
+  .scenario-text {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    padding-left: 1.5rem;
+    border-left-width: 5px;
+  }
+  
+  .color-product {
+    font-size: 1.3rem;
+  }
+  
+  .color-single {
+    padding: 4rem;
+    border-radius: 1rem;
+    max-width: 800px;
+    margin: 5rem auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  
+  .color-quiz-section {
+    margin: 5rem 0;
+    padding: 3rem;
+  }
+  
+  .quiz-options {
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .quiz-options button {
+    min-width: 200px;
+  }
+  
+  .color-option {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .emotional-layer {
+    margin: 5rem 0;
+    padding: 3rem;
+  }
+  
+  .emotional-layer h2 {
+    font-size: 2.8rem;
+  }
+  
+  .color-cta {
+    margin: 6rem 0 3rem;
+    padding: 3rem;
+  }
+  
+  .color-cta h2 {
+    font-size: 2.8rem;
+  }
+  
+  .color-shop-link {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.2rem;
+  }
+}

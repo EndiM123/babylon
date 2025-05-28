@@ -1,18 +1,35 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import './ProductDetail.css';
 import Footer from './Footer';
 import CartPanel from './components/CartPanel';
 import { CartContext } from './App';
+import { supabase } from './lib/supabase';
 
-// Example product data. In real use, fetch from backend or context.
-export const PRODUCTS = [
-  {
-    id: 1,
-    name: 'Sculpted Linen Dress',
+// Product interface combining Supabase data and local metadata
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+  tag?: string;
+  video?: string;
+  oldPrice?: number;
+  rating?: number;
+  reviews?: number;
+  sizes?: string[];
+  materials?: string;
+  shipping?: string;
+  returns?: string;
+}
+
+// Local product metadata that won't change frequently
+const PRODUCT_METADATA = {
+  1: {
     image: '/media1.png',
     video: '',
-    price: 420,
     oldPrice: 520,
     rating: 4.7,
     reviews: 32,
@@ -23,12 +40,9 @@ export const PRODUCTS = [
     returns: 'Returns accepted within 30 days. Free return shipping.',
     category: 'Dresses',
   },
-  {
-    id: 2,
-    name: 'Curved Edge Blazer',
+  2: {
     image: '/media2.png',
     video: '',
-    price: 690,
     oldPrice: 790,
     rating: 4.9,
     reviews: 18,
@@ -37,14 +51,11 @@ export const PRODUCTS = [
     materials: 'Wool blend. Dry clean only.',
     shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
     returns: 'Returns accepted within 30 days. Free return shipping.',
-    category: 'Blazers',
+    category: 'Outerwear',
   },
-  {
-    id: 3,
-    name: 'Minimalist Silk Top',
+  3: {
     image: '/media3.png',
     video: '',
-    price: 240,
     oldPrice: 280,
     rating: 4.6,
     reviews: 21,
@@ -55,12 +66,9 @@ export const PRODUCTS = [
     returns: 'Returns accepted within 30 days. Free return shipping.',
     category: 'Tops',
   },
-  {
-    id: 4,
-    name: 'Soft Trapeze Skirt',
+  4: {
     image: '/media4.png',
     video: '',
-    price: 310,
     oldPrice: 350,
     rating: 4.5,
     reviews: 15,
@@ -71,12 +79,9 @@ export const PRODUCTS = [
     returns: 'Returns accepted within 30 days. Free return shipping.',
     category: 'Bottoms',
   },
-  {
-    id: 5,
-    name: 'Tiffany Bikini',
+  5: {
     image: '/media5.png',
     video: '',
-    price: 195,
     oldPrice: 220,
     rating: 4.3,
     reviews: 11,
@@ -87,12 +92,9 @@ export const PRODUCTS = [
     returns: 'Returns accepted within 30 days. Free return shipping.',
     category: 'Swimwear',
   },
-  {
-    id: 6,
-    name: 'Linen Mini Bag',
+  6: {
     image: '/media6.png',
     video: '',
-    price: 160,
     oldPrice: 180,
     rating: 4.8,
     reviews: 8,
@@ -102,9 +104,23 @@ export const PRODUCTS = [
     shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
     returns: 'Returns accepted within 30 days. Free return shipping.',
     category: 'Accessories',
-  },
-  // ...Add more products as needed
-];
+  }
+};
+
+// Default product details for fields not in the database
+const DEFAULT_PRODUCT_DETAILS = {
+  image: '/media1.png',
+  video: '',
+  oldPrice: 0,
+  rating: 4.5,
+  reviews: 0,
+  sizes: ['S', 'M', 'L'],
+  materials: 'Please see product description for materials information.',
+  shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
+  returns: 'Returns accepted within 30 days. Free return shipping.',
+  category: 'Uncategorized',
+  description: 'Product description not available'
+};
 
 const COLOR_OPTIONS = [
   { name: 'Navy', value: '#222' },
@@ -114,12 +130,72 @@ const COLOR_OPTIONS = [
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const product = PRODUCTS.find(p => p.id === Number(id));
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState(COLOR_OPTIONS[0].name);
-  const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || '');
+  const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [cartOpen, setCartOpen] = useState(false);
   const navigate = useNavigate();
+
+  // Fetch product details from Supabase and combine with local metadata
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!id) return;
+      
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('products')
+          .select('id, name, price')
+          .eq('id', id)
+          .single();
+          
+        if (error) {
+          throw error;
+        }
+        
+        if (data) {
+          // Get metadata for this product ID
+          const metadata = PRODUCT_METADATA[data.id as keyof typeof PRODUCT_METADATA];
+          
+          if (metadata) {
+            // Product exists in our local metadata
+            const mergedProduct = {
+              ...data,
+              ...metadata
+            };
+            
+            setProduct(mergedProduct);
+            // Set initial selected size if available
+            if (mergedProduct.sizes && mergedProduct.sizes.length > 0) {
+              setSelectedSize(mergedProduct.sizes[0]);
+            }
+          } else {
+            // Product exists in Supabase but not in our local metadata
+            const productWithDefaults = {
+              ...DEFAULT_PRODUCT_DETAILS,
+              ...data
+            };
+            
+            setProduct(productWithDefaults);
+            // Set initial selected size
+            if (productWithDefaults.sizes && productWithDefaults.sizes.length > 0) {
+              setSelectedSize(productWithDefaults.sizes[0]);
+            }
+          }
+        }
+      } catch (error: any) {
+        setError(error.message);
+        console.error('Error fetching product:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchProduct();
+  }, [id]);
 
   const { setCart } = useContext(CartContext);
 
@@ -145,10 +221,35 @@ export default function ProductDetail() {
     setCartOpen(false);
   }
   function handleBuyNow() {
-    navigate('/checkout', { state: { product, quantity } });
+    // Ensure product has all required properties for checkout
+    if (product) {
+      const checkoutProduct = {
+        ...product,
+        // Ensure image is always defined
+        image: product.image || DEFAULT_PRODUCT_DETAILS.image
+      };
+      navigate('/checkout', { state: { product: checkoutProduct, quantity, selectedSize, selectedColor } });
+    }
   }
 
-  if (!product) return <div>Product not found.</div>;
+  if (loading) {
+    return (
+      <div className="product-loading">
+        <div className="product-loading-spinner"></div>
+        <p>Loading product details...</p>
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div className="product-error">
+        <h2>Product not found</h2>
+        <p>{error || 'The requested product could not be found.'}</p>
+        <Link to="/shop" className="return-to-shop">Return to Shop</Link>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -162,8 +263,11 @@ export default function ProductDetail() {
       />
       <main className="product-detail-container">
         <div className="product-detail-main-row product-detail-split-layout">
-          <div className="product-detail-image-side">
+          <div className="product-detail-mobile-image">
             <img className="product-detail-media product-detail-media-tall" src={product.image} alt={product.name} />
+          </div>
+          <div className="product-detail-desktop-image">
+            <img src={product.image} alt={product.name} className="desktop-product-image" />
           </div>
           <div className="product-detail-info-panel">
             <h1 className="product-detail-title">{product.name}</h1>
@@ -172,15 +276,19 @@ export default function ProductDetail() {
               <span className="product-detail-price">${product.price}</span>
             </div>
             <div className="product-detail-sizes">
-              {product.sizes.map(size => (
-                <button
-                  key={size}
-                  className={`product-detail-size-btn${selectedSize === size ? ' selected' : ''}`}
-                  onClick={() => setSelectedSize(size)}
-                >
-                  {size}
-                </button>
-              ))}
+              {product.sizes && product.sizes.length > 0 ? (
+                product.sizes.map(size => (
+                  <button
+                    key={size}
+                    className={`product-detail-size-btn${selectedSize === size ? ' selected' : ''}`}
+                    onClick={() => setSelectedSize(size)}
+                  >
+                    {size}
+                  </button>
+                ))
+              ) : (
+                <div className="product-detail-no-sizes">One size fits all</div>
+              )}
             </div>
             <div className="product-detail-color-row">
               <span className="product-detail-color-label">Color</span>
@@ -225,6 +333,18 @@ export default function ProductDetail() {
                   <div className="product-detail-dropdown-content open" style={{ maxHeight: 200 }}>{content}</div>
                 </div>
               ))}
+            </div>
+            
+            {/* More for You Section - Will be populated with related products from Supabase in future update */}
+            <div className="more-for-you-section">
+              <h2 className="section-title">More for You</h2>
+              <div className="product-grid">
+                {/* Related products will be dynamically loaded here */}
+                <div className="related-products-placeholder">
+                  <p>Discover more products in our collection</p>
+                  <Link to="/shop" className="view-all-products">View All Products</Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

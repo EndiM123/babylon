@@ -5,6 +5,18 @@ import { Link } from 'react-router-dom';
 // Example blog data (replace with real data/fetch in production)
 const BLOGS = [
 
+  // Green Coast Visual blog card
+  {
+    id: 'green-coast-visual',
+    image: '/green.png',
+    category: 'Visual Feature',
+    title: "Escape to Green Coast: What to Wear, What to Feel, What to Remember",
+    subtitle: "An immersive visual journey through Albania's most luxurious coastal retreat.",
+    date: 'May 26, 2025',
+    href: '/blog/green-coast-visual',
+  },
+  // Green Coast Riviera blog card
+  
   {
     id: 2,
     image: '/news2.png',
@@ -13,40 +25,29 @@ const BLOGS = [
     subtitle: 'A designer’s journey in crafting understated luxury.',
     date: 'March 29, 2025',
   },
+
   {
-    id: 3,
-    image: '/news3.png',
-    category: 'Editorial',
-    title: 'Color Stories: Mountbatten Pink',
-    subtitle: 'How a single hue became this season’s signature accent.',
-    date: 'March 10, 2025',
+    id: 'color-psychology',
+    image: '/ngjyra.png',
+    category: 'Style Psychology',
+    title: 'The Color of Identity: How Your Palette Shapes Your Presence',
+    subtitle: 'Discover how the colors we wear silently shape how the world sees us and how we feel in our own skin.',
+    date: 'May 26, 2025',
+    href: '/blog/color-psychology',
   },
+  // Immersive Rooftop Editorial Experience
   {
-    id: 4,
-    image: '/news4.png',
-    category: 'Interview',
-    title: 'In Conversation with Luca',
-    subtitle: 'Insights from a leading voice in modern fashion.',
-    date: 'February 22, 2025',
-  },
-  {
-    id: 5,
-    image: '/news5.png',
-    category: 'Journal',
-    title: 'Travel & Texture: Inspirations Abroad',
-    subtitle: 'How global journeys shape our editorial vision.',
-    date: 'February 2, 2025',
+    id: 'immersive-rooftop',
+    image: '/rooftop.png',
+    category: 'Editorial Experience',
+    title: 'Skyline Statements: How Prishtina’s Rooftop Nightlife is Rewriting Summer Fashion',
+    subtitle: 'An immersive journey through golden hour, blue hour, and midnight on the city\'s most exclusive rooftops.',
+    date: 'May 27, 2025',
+    href: '/blog/immersive-rooftop',
+    featured: true
   },
   // Rooftop nightlife blog card
-  {
-    id: 'rooftop',
-    image: 'rooftop.png',
-    category: 'Feature',
-    title: 'Skyline Statements: How Prishtina’s Rooftop Nightlife is Rewriting Summer Fashion',
-    subtitle: 'A look at how exclusive rooftops like Nova, 13 Rooftop, and Noya are shaping the city’s fashion identity.',
-    date: 'May 23, 2025',
-    href: '/blog/rooftop',
-  },
+ 
   // Luxury Swimwear blog card
   {
     id: 'prishtina-poolside',
@@ -56,6 +57,16 @@ const BLOGS = [
     subtitle: 'Inside the city’s most exclusive pools, a new era of summer fashion and aspirational living emerges.',
     date: 'May 24, 2025',
     href: '/blog/prishtina-poolside',
+  },
+  {
+    id: 'editorial-coffee',
+    image: '/kafe.png',
+    category: 'Editorial Experience',
+    title: 'Espresso & Elegance: Kosovo\'s Coffee Ritual as Performance Art',
+    subtitle: 'An immersive exploration of how coffee becomes the stage for personal style and identity.',
+    date: 'May 24, 2025',
+    href: '/blog/editorial-coffee',
+    featured: true
   },
 ];
 

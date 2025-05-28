@@ -36,6 +36,171 @@
 }
 
 @media (min-width: 1200px) {
+  /* Rooftop Blog Post Desktop Enhancements */
+  .rooftop-immersive-blog-post {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1100px;
+    border-radius: 2.8em;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.13);
+    background: linear-gradient(120deg, #fff5f8 60%, #f7efe5 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .rooftop-hero-wrap {
+    min-height: 62vh;
+    max-height: 72vh;
+    border-radius: 2.8em 2.8em 0 0;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.10);
+    overflow: hidden;
+  }
+  .rooftop-hero-image {
+    width: 100vw;
+    height: 72vh;
+    min-height: 440px;
+    max-height: 600px;
+    border-radius: 2.8em 2.8em 0 0;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+  .rooftop-hero-meta {
+    min-width: 600px;
+    max-width: 900px;
+    padding: 0 2vw;
+    bottom: 4vw;
+  }
+  .rooftop-blog-content {
+    max-width: 900px;
+    margin: -4vw auto 0 auto;
+    padding: 4vw 0 6vw 0;
+    border-radius: 2.8em;
+    background: #fff;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.13);
+  }
+  .rooftop-blocks {
+    gap: 4.5em;
+  }
+  .rooftop-block {
+    flex-direction: row;
+    gap: 3vw;
+    min-height: 340px;
+    align-items: center;
+  }
+  .rooftop-block-image {
+    width: 46%;
+    min-width: 340px;
+    max-width: 480px;
+    border-radius: 1.7em;
+  }
+  .rooftop-block-text {
+    width: 54%;
+    padding: 1.2em 2em;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .rooftop-block-text h2 {
+    font-size: 2.4rem;
+    margin-bottom: 0.5em;
+  }
+  .rooftop-block-text p {
+    font-size: 1.15rem;
+  }
+  .rooftop-quote {
+    font-size: 1.6rem;
+    font-family: 'Wolmer', serif;
+    color: #a14b7c;
+    padding: 2.2em 2.5em 2.2em 2.8em;
+    margin: 2.5em 0 2.7em 0;
+    background: linear-gradient(120deg, #f7efe5 70%, #fff5f8 100%);
+    border-radius: 1.6em;
+    font-weight: 600;
+    box-shadow: 0 6px 32px 0 rgba(166,120,153,0.13);
+    border-left: 8px solid #a14b7c;
+    position: relative;
+    text-align: left;
+    line-height: 1.5;
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 0.01em;
+  }
+  .rooftop-divider {
+    width: 120px;
+    height: 4px;
+    margin: 0 auto 3em auto;
+  }
+
+  /* Immersive Blog Post Desktop Enhancements */
+  .immersive-blog-post {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1100px;
+    border-radius: 2.5em;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.11);
+    background: linear-gradient(120deg, #f7efe5 60%, #e5d8c7 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .immersive-hero-wrap {
+    min-height: 60vh;
+    max-height: 72vh;
+    border-radius: 2.5em 2.5em 0 0;
+    box-shadow: 0 8px 48px 0 rgba(30,57,50,0.13);
+    overflow: hidden;
+  }
+  .immersive-hero-image {
+    width: 100vw;
+    height: 72vh;
+    min-height: 440px;
+    max-height: 600px;
+    border-radius: 2.5em 2.5em 0 0;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+  .immersive-hero-meta {
+    min-width: 600px;
+    max-width: 900px;
+    padding: 0 2vw;
+    bottom: 3vw;
+  }
+  .immersive-blog-content {
+    max-width: 820px;
+    margin: -4vw auto 0 auto;
+    padding: 4vw 0 6vw 0;
+    border-radius: 2.5em;
+    background: #fff;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.11);
+  }
+  .immersive-divider {
+    width: 120px;
+    height: 4px;
+    margin: 0 auto 3em auto;
+  }
+  .immersive-article-body {
+    font-size: 1.22rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .immersive-intro {
+    font-size: 1.42rem;
+    max-width: 720px;
+    margin-bottom: 3em;
+    margin-top: 1.2em;
+  }
+  .immersive-quote {
+    font-size: 1.55rem;
+    padding: 1.5em 3.2em;
+    margin: 2.7em 0;
+    border-radius: 1.4em;
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 8px solid #A67899;
+  }
+}
+
   .poolside-hero-image {
     width: 100%;
     height: 48vw;
@@ -45,7 +210,6 @@
     border-radius: 1.7em;
     margin: 2em auto;
   }
-}
 
 
 
@@ -62,6 +226,171 @@
 }
 
 @media (min-width: 1200px) {
+  /* Rooftop Blog Post Desktop Enhancements */
+  .rooftop-immersive-blog-post {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1100px;
+    border-radius: 2.8em;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.13);
+    background: linear-gradient(120deg, #fff5f8 60%, #f7efe5 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .rooftop-hero-wrap {
+    min-height: 62vh;
+    max-height: 72vh;
+    border-radius: 2.8em 2.8em 0 0;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.10);
+    overflow: hidden;
+  }
+  .rooftop-hero-image {
+    width: 100vw;
+    height: 72vh;
+    min-height: 440px;
+    max-height: 600px;
+    border-radius: 2.8em 2.8em 0 0;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+  .rooftop-hero-meta {
+    min-width: 600px;
+    max-width: 900px;
+    padding: 0 2vw;
+    bottom: 4vw;
+  }
+  .rooftop-blog-content {
+    max-width: 900px;
+    margin: -4vw auto 0 auto;
+    padding: 4vw 0 6vw 0;
+    border-radius: 2.8em;
+    background: #fff;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.13);
+  }
+  .rooftop-blocks {
+    gap: 4.5em;
+  }
+  .rooftop-block {
+    flex-direction: row;
+    gap: 3vw;
+    min-height: 340px;
+    align-items: center;
+  }
+  .rooftop-block-image {
+    width: 46%;
+    min-width: 340px;
+    max-width: 480px;
+    border-radius: 1.7em;
+  }
+  .rooftop-block-text {
+    width: 54%;
+    padding: 1.2em 2em;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .rooftop-block-text h2 {
+    font-size: 2.4rem;
+    margin-bottom: 0.5em;
+  }
+  .rooftop-block-text p {
+    font-size: 1.15rem;
+  }
+  .rooftop-quote {
+    font-size: 1.6rem;
+    font-family: 'Wolmer', serif;
+    color: #a14b7c;
+    padding: 2.2em 2.5em 2.2em 2.8em;
+    margin: 2.5em 0 2.7em 0;
+    background: linear-gradient(120deg, #f7efe5 70%, #fff5f8 100%);
+    border-radius: 1.6em;
+    font-weight: 600;
+    box-shadow: 0 6px 32px 0 rgba(166,120,153,0.13);
+    border-left: 8px solid #a14b7c;
+    position: relative;
+    text-align: left;
+    line-height: 1.5;
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 0.01em;
+  }
+  .rooftop-divider {
+    width: 120px;
+    height: 4px;
+    margin: 0 auto 3em auto;
+  }
+
+  /* Immersive Blog Post Desktop Enhancements */
+  .immersive-blog-post {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1100px;
+    border-radius: 2.5em;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.11);
+    background: linear-gradient(120deg, #f7efe5 60%, #e5d8c7 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .immersive-hero-wrap {
+    min-height: 60vh;
+    max-height: 72vh;
+    border-radius: 2.5em 2.5em 0 0;
+    box-shadow: 0 8px 48px 0 rgba(30,57,50,0.13);
+    overflow: hidden;
+  }
+  .immersive-hero-image {
+    width: 100vw;
+    height: 72vh;
+    min-height: 440px;
+    max-height: 600px;
+    border-radius: 2.5em 2.5em 0 0;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+  .immersive-hero-meta {
+    min-width: 600px;
+    max-width: 900px;
+    padding: 0 2vw;
+    bottom: 3vw;
+  }
+  .immersive-blog-content {
+    max-width: 820px;
+    margin: -4vw auto 0 auto;
+    padding: 4vw 0 6vw 0;
+    border-radius: 2.5em;
+    background: #fff;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.11);
+  }
+  .immersive-divider {
+    width: 120px;
+    height: 4px;
+    margin: 0 auto 3em auto;
+  }
+  .immersive-article-body {
+    font-size: 1.22rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .immersive-intro {
+    font-size: 1.42rem;
+    max-width: 720px;
+    margin-bottom: 3em;
+    margin-top: 1.2em;
+  }
+  .immersive-quote {
+    font-size: 1.55rem;
+    padding: 1.5em 3.2em;
+    margin: 2.7em 0;
+    border-radius: 1.4em;
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 8px solid #A67899;
+  }
+}
+
   .poolside-block-image {
     width: 100%;
     height: 48vw;
@@ -71,7 +400,7 @@
     border-radius: 1.7em;
     margin: 2em auto;
   }
-}
+
 
 
 
@@ -235,6 +564,171 @@
 
 
 @media (min-width: 1200px) {
+  /* Rooftop Blog Post Desktop Enhancements */
+  .rooftop-immersive-blog-post {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1100px;
+    border-radius: 2.8em;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.13);
+    background: linear-gradient(120deg, #fff5f8 60%, #f7efe5 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .rooftop-hero-wrap {
+    min-height: 62vh;
+    max-height: 72vh;
+    border-radius: 2.8em 2.8em 0 0;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.10);
+    overflow: hidden;
+  }
+  .rooftop-hero-image {
+    width: 100vw;
+    height: 72vh;
+    min-height: 440px;
+    max-height: 600px;
+    border-radius: 2.8em 2.8em 0 0;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+  .rooftop-hero-meta {
+    min-width: 600px;
+    max-width: 900px;
+    padding: 0 2vw;
+    bottom: 4vw;
+  }
+  .rooftop-blog-content {
+    max-width: 900px;
+    margin: -4vw auto 0 auto;
+    padding: 4vw 0 6vw 0;
+    border-radius: 2.8em;
+    background: #fff;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.13);
+  }
+  .rooftop-blocks {
+    gap: 4.5em;
+  }
+  .rooftop-block {
+    flex-direction: row;
+    gap: 3vw;
+    min-height: 340px;
+    align-items: center;
+  }
+  .rooftop-block-image {
+    width: 46%;
+    min-width: 340px;
+    max-width: 480px;
+    border-radius: 1.7em;
+  }
+  .rooftop-block-text {
+    width: 54%;
+    padding: 1.2em 2em;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .rooftop-block-text h2 {
+    font-size: 2.4rem;
+    margin-bottom: 0.5em;
+  }
+  .rooftop-block-text p {
+    font-size: 1.15rem;
+  }
+  .rooftop-quote {
+    font-size: 1.6rem;
+    font-family: 'Wolmer', serif;
+    color: #a14b7c;
+    padding: 2.2em 2.5em 2.2em 2.8em;
+    margin: 2.5em 0 2.7em 0;
+    background: linear-gradient(120deg, #f7efe5 70%, #fff5f8 100%);
+    border-radius: 1.6em;
+    font-weight: 600;
+    box-shadow: 0 6px 32px 0 rgba(166,120,153,0.13);
+    border-left: 8px solid #a14b7c;
+    position: relative;
+    text-align: left;
+    line-height: 1.5;
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 0.01em;
+  }
+  .rooftop-divider {
+    width: 120px;
+    height: 4px;
+    margin: 0 auto 3em auto;
+  }
+
+  /* Immersive Blog Post Desktop Enhancements */
+  .immersive-blog-post {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1100px;
+    border-radius: 2.5em;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.11);
+    background: linear-gradient(120deg, #f7efe5 60%, #e5d8c7 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .immersive-hero-wrap {
+    min-height: 60vh;
+    max-height: 72vh;
+    border-radius: 2.5em 2.5em 0 0;
+    box-shadow: 0 8px 48px 0 rgba(30,57,50,0.13);
+    overflow: hidden;
+  }
+  .immersive-hero-image {
+    width: 100vw;
+    height: 72vh;
+    min-height: 440px;
+    max-height: 600px;
+    border-radius: 2.5em 2.5em 0 0;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+  .immersive-hero-meta {
+    min-width: 600px;
+    max-width: 900px;
+    padding: 0 2vw;
+    bottom: 3vw;
+  }
+  .immersive-blog-content {
+    max-width: 820px;
+    margin: -4vw auto 0 auto;
+    padding: 4vw 0 6vw 0;
+    border-radius: 2.5em;
+    background: #fff;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.11);
+  }
+  .immersive-divider {
+    width: 120px;
+    height: 4px;
+    margin: 0 auto 3em auto;
+  }
+  .immersive-article-body {
+    font-size: 1.22rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .immersive-intro {
+    font-size: 1.42rem;
+    max-width: 720px;
+    margin-bottom: 3em;
+    margin-top: 1.2em;
+  }
+  .immersive-quote {
+    font-size: 1.55rem;
+    padding: 1.5em 3.2em;
+    margin: 2.7em 0;
+    border-radius: 1.4em;
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 8px solid #A67899;
+  }
+}
+
   .rooftop-hero-image {
     margin-top: -4em;
     margin-bottom: 2.2em;
@@ -521,7 +1015,7 @@
     opacity: 0.93;
     border-left: 6px solid #a14b7c;
   }
-}
+
 
   .immersive-blog-post {
     background: #f7efe5;
@@ -807,6 +1301,171 @@
 }
 
 @media (min-width: 1200px) {
+  /* Rooftop Blog Post Desktop Enhancements */
+  .rooftop-immersive-blog-post {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1100px;
+    border-radius: 2.8em;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.13);
+    background: linear-gradient(120deg, #fff5f8 60%, #f7efe5 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .rooftop-hero-wrap {
+    min-height: 62vh;
+    max-height: 72vh;
+    border-radius: 2.8em 2.8em 0 0;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.10);
+    overflow: hidden;
+  }
+  .rooftop-hero-image {
+    width: 100vw;
+    height: 72vh;
+    min-height: 440px;
+    max-height: 600px;
+    border-radius: 2.8em 2.8em 0 0;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+  .rooftop-hero-meta {
+    min-width: 600px;
+    max-width: 900px;
+    padding: 0 2vw;
+    bottom: 4vw;
+  }
+  .rooftop-blog-content {
+    max-width: 900px;
+    margin: -4vw auto 0 auto;
+    padding: 4vw 0 6vw 0;
+    border-radius: 2.8em;
+    background: #fff;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.13);
+  }
+  .rooftop-blocks {
+    gap: 4.5em;
+  }
+  .rooftop-block {
+    flex-direction: row;
+    gap: 3vw;
+    min-height: 340px;
+    align-items: center;
+  }
+  .rooftop-block-image {
+    width: 46%;
+    min-width: 340px;
+    max-width: 480px;
+    border-radius: 1.7em;
+  }
+  .rooftop-block-text {
+    width: 54%;
+    padding: 1.2em 2em;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .rooftop-block-text h2 {
+    font-size: 2.4rem;
+    margin-bottom: 0.5em;
+  }
+  .rooftop-block-text p {
+    font-size: 1.15rem;
+  }
+  .rooftop-quote {
+    font-size: 1.6rem;
+    font-family: 'Wolmer', serif;
+    color: #a14b7c;
+    padding: 2.2em 2.5em 2.2em 2.8em;
+    margin: 2.5em 0 2.7em 0;
+    background: linear-gradient(120deg, #f7efe5 70%, #fff5f8 100%);
+    border-radius: 1.6em;
+    font-weight: 600;
+    box-shadow: 0 6px 32px 0 rgba(166,120,153,0.13);
+    border-left: 8px solid #a14b7c;
+    position: relative;
+    text-align: left;
+    line-height: 1.5;
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 0.01em;
+  }
+  .rooftop-divider {
+    width: 120px;
+    height: 4px;
+    margin: 0 auto 3em auto;
+  }
+
+  /* Immersive Blog Post Desktop Enhancements */
+  .immersive-blog-post {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1100px;
+    border-radius: 2.5em;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.11);
+    background: linear-gradient(120deg, #f7efe5 60%, #e5d8c7 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .immersive-hero-wrap {
+    min-height: 60vh;
+    max-height: 72vh;
+    border-radius: 2.5em 2.5em 0 0;
+    box-shadow: 0 8px 48px 0 rgba(30,57,50,0.13);
+    overflow: hidden;
+  }
+  .immersive-hero-image {
+    width: 100vw;
+    height: 72vh;
+    min-height: 440px;
+    max-height: 600px;
+    border-radius: 2.5em 2.5em 0 0;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+  .immersive-hero-meta {
+    min-width: 600px;
+    max-width: 900px;
+    padding: 0 2vw;
+    bottom: 3vw;
+  }
+  .immersive-blog-content {
+    max-width: 820px;
+    margin: -4vw auto 0 auto;
+    padding: 4vw 0 6vw 0;
+    border-radius: 2.5em;
+    background: #fff;
+    box-shadow: 0 8px 48px 0 rgba(166,120,153,0.11);
+  }
+  .immersive-divider {
+    width: 120px;
+    height: 4px;
+    margin: 0 auto 3em auto;
+  }
+  .immersive-article-body {
+    font-size: 1.22rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .immersive-intro {
+    font-size: 1.42rem;
+    max-width: 720px;
+    margin-bottom: 3em;
+    margin-top: 1.2em;
+  }
+  .immersive-quote {
+    font-size: 1.55rem;
+    padding: 1.5em 3.2em;
+    margin: 2.7em 0;
+    border-radius: 1.4em;
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 8px solid #A67899;
+  }
+}
+
   .rooftop-hero-image {
     margin-top: -4em;
     margin-bottom: 2.2em;
@@ -856,7 +1515,6 @@
     width: 100%;
     display: grid;
   }
-}
 
 
 .blog-section-title {

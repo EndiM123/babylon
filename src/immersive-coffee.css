@@ -1,0 +1,360 @@
+/* Immersive Coffee Culture Blog Post Styles */
+
+:root {
+  --coffee-cream: #f7efe5;
+  --coffee-light: #e6d9cc;
+  --coffee-medium: #b18f6e;
+  --coffee-dark: #5d4037;
+  --coffee-espresso: #3e2723;
+  --coffee-accent: #a14b7c;
+  --coffee-text: #232323;
+}
+
+/* Base styles */
+.immersive-coffee-post {
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: var(--coffee-cream);
+  color: var(--coffee-text);
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.serif {
+  font-family: 'Wolmer', serif;
+}
+
+.sans {
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+/* Opening scene */
+.coffee-opening-scene {
+  position: relative;
+  width: 100vw;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coffee-scene-image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.coffee-scene-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.9);
+}
+
+.coffee-opening-caption {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.coffee-opening-caption.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.coffee-opening-caption p {
+  font-size: 2.5rem;
+  line-height: 1.4;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Introduction */
+.coffee-intro {
+  padding: 8rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.coffee-intro p {
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: var(--coffee-espresso);
+}
+
+/* Coffee moments navigation */
+.coffee-moments-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  position: sticky;
+  top: 0;
+  background: var(--coffee-cream);
+  z-index: 10;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.moment-nav-item {
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 1.2rem;
+  cursor: pointer;
+  position: relative;
+  color: var(--coffee-text);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.moment-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--coffee-medium);
+  transition: width 0.3s ease;
+}
+
+.moment-nav-item.active {
+  opacity: 1;
+  color: var(--coffee-dark);
+}
+
+.moment-nav-item.active::after {
+  width: 80%;
+}
+
+.moment-nav-item:hover {
+  opacity: 1;
+}
+
+.moment-nav-item:hover::after {
+  width: 60%;
+}
+
+/* Coffee moments content */
+.coffee-moments {
+  padding: 4rem 0;
+}
+
+.coffee-moment {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.5s ease;
+}
+
+.coffee-moment.active {
+  opacity: 1;
+}
+
+.moment-image-container {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+.moment-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.moment-poetic-caption {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  color: white;
+  font-size: 1.8rem;
+  line-height: 1.4;
+  max-width: 60%;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  font-style: italic;
+}
+
+.moment-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.moment-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: var(--coffee-dark);
+}
+
+.moment-description {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  color: var(--coffee-espresso);
+}
+
+/* Style item */
+.moment-style-item {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 4rem 0;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0.5rem;
+}
+
+.style-item-image-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.style-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.moment-style-item:hover .style-item-image {
+  transform: scale(1.05);
+}
+
+.style-item-details {
+  flex-grow: 1;
+}
+
+.style-item-name {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--coffee-dark);
+}
+
+.style-item-note {
+  font-size: 1.2rem;
+  color: var(--coffee-medium);
+  font-style: italic;
+}
+
+.moment-transition {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 4rem 0 2rem;
+  color: var(--coffee-accent);
+  font-style: italic;
+}
+
+/* Closing section */
+.coffee-closing {
+  padding: 6rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.closing-image-container {
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  border-radius: 0.5rem;
+}
+
+.closing-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.closing-text {
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: var(--coffee-espresso);
+}
+
+/* Morning moment specific styles */
+#morning-statement {
+  background: linear-gradient(to bottom, rgba(230, 217, 204, 0.3), rgba(255, 255, 255, 0));
+}
+
+/* Midday moment specific styles */
+#midday-interlude {
+  background: linear-gradient(to bottom, rgba(177, 143, 110, 0.1), rgba(255, 255, 255, 0));
+}
+
+/* Afternoon moment specific styles */
+#post-work-pause {
+  background: linear-gradient(to bottom, rgba(93, 64, 55, 0.1), rgba(255, 255, 255, 0));
+}
+
+/* Evening moment specific styles */
+#evening-ritual {
+  background: linear-gradient(to bottom, rgba(62, 39, 35, 0.1), rgba(255, 255, 255, 0));
+}
+
+/* Desktop-specific enhancements */
+@media (min-width: 1200px) {
+  .coffee-opening-caption p {
+    font-size: 3.5rem;
+  }
+  
+  .coffee-intro p {
+    font-size: 2.2rem;
+  }
+  
+  .moment-title {
+    font-size: 4rem;
+  }
+  
+  .moment-description {
+    font-size: 1.8rem;
+  }
+  
+  .moment-poetic-caption {
+    font-size: 2.5rem;
+  }
+  
+  .moment-style-item {
+    padding: 3rem;
+  }
+  
+  .style-item-image-container {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .style-item-name {
+    font-size: 2.2rem;
+  }
+  
+  .style-item-note {
+    font-size: 1.5rem;
+  }
+  
+  .closing-text {
+    font-size: 2.2rem;
+  }
+}

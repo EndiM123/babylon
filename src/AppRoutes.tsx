@@ -14,9 +14,14 @@ import Footer from './Footer';
 import BlogSection from './BlogSection';
 import BlogPost from './BlogPost';
 import RooftopBlogPost from './RooftopBlogPost';
+import ImmersiveRooftopBlogPost from './ImmersiveRooftopBlogPost';
+import ImmersiveCoffeeCultureBlogPost from './ImmersiveCoffeeCultureBlogPost';
+import EditorialCoffeeBlogPost from './EditorialCoffeeBlogPost';
 import PrishtinaPoolsideBlogPost from './PrishtinaPoolsideBlogPost';
+import GreenCoastBlogPost from './GreenCoastBlogPost';
+import GreenCoastVisualBlogPost from './GreenCoastVisualBlogPost';
+import ColorPsychologyBlogPost from './ColorPsychologyBlogPost';
 import CheckoutPage from './components/CheckoutPage';
-import SeaStarLoop from './SeaStarLoop';
 
 export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
@@ -40,7 +45,13 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
       <Route path="/about" element={<Solira />} />
       <Route path="/blog" element={<BlogSection />} />
       <Route path="/blog/rooftop" element={<RooftopBlogPost />} />
+      <Route path="/blog/immersive-rooftop" element={<ImmersiveRooftopBlogPost />} />
+      <Route path="/blog/coffee-culture" element={<ImmersiveCoffeeCultureBlogPost />} />
+      <Route path="/blog/editorial-coffee" element={<EditorialCoffeeBlogPost />} />
       <Route path="/blog/prishtina-poolside" element={<PrishtinaPoolsideBlogPost />} />
+      <Route path="/blog/green-coast" element={<GreenCoastBlogPost />} />
+      <Route path="/blog/green-coast-visual" element={<GreenCoastVisualBlogPost />} />
+      <Route path="/blog/color-psychology" element={<ColorPsychologyBlogPost />} />
       <Route path="/blog/:id" element={<BlogPost />} />
     </Routes>
   );

@@ -1,99 +1,135 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Shop.css';
 import './App.css';
+import { supabase } from './lib/supabase';
 
-const CATEGORIES = ['Dresses', 'Outerwear', 'Tops', 'Bottoms', 'Swimwear', 'Accessories'];
+const PRODUCTS_PER_PAGE = 3; // Number of products to show per page
 
-const PRODUCTS = [
-  {
-    id: 1,
-    name: 'Sculpted Linen Dress',
+// Local product metadata that won't change frequently
+const PRODUCT_METADATA = {
+  1: {
     category: 'Dresses',
     image: '/media1.png',
     tag: 'New',
-    price: 420,
+    description: 'A modern linen dress with sculpted lines and editorial silhouette.'
   },
-  {
-    id: 2,
-    name: 'Curved Edge Blazer',
+  2: {
     category: 'Outerwear',
     image: '/media2.png',
     tag: 'Limited',
-    price: 690,
+    description: 'A luxury blazer with a curved-edge design, crafted from premium wool blend.'
   },
-  {
-    id: 3,
-    name: 'Minimalist Silk Top',
+  3: {
     category: 'Tops',
     image: '/media3.png',
     tag: '',
-    price: 240,
+    description: 'A sleek, minimalist silk top perfect for layering or wearing solo.'
   },
-  {
-    id: 4,
-    name: 'Soft Trapeze Skirt',
+  4: {
     category: 'Bottoms',
     image: '/media4.png',
     tag: 'Sold Out',
-    price: 310,
+    description: 'A soft, flowing trapeze skirt with a flattering silhouette.'
   },
-  {
-    id: 5,
-    name: 'Tiffany Bikini',
+  5: {
     category: 'Swimwear',
     image: '/media5.png',
     tag: '',
-    price: 195,
+    description: 'A stylish bikini set in a signature Tiffany blue.'
   },
-  {
-    id: 6,
-    name: 'Linen Mini Bag',
+  6: {
     category: 'Accessories',
     image: '/media6.png',
     tag: 'New',
-    price: 160,
-  },
-];
+    description: 'A compact linen mini bag, perfect for summer outings and essentials.'
+  }
+};
+
+// Define product interface combining Supabase data and local metadata
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  image: string;
+  tag: string;
+  description?: string;
+}
+
 
 
 export default function Shop() {
-  const location = useLocation();
-  // Filter state
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-  // On mount, check for category in query params
-  React.useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const cat = params.get('category');
-    if (cat && CATEGORIES.includes(cat)) {
-      setSelectedCategory(cat);
-    }
-  }, [location.search]);
-  const [showFilterDropdown, setShowFilterDropdown] = useState<boolean>(false);
-  const [dropdownPlacement, setDropdownPlacement] = useState<'left' | 'bottom'>('left');
-  const [searchText, setSearchText] = useState<string>('');
-  const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
-  const searchInputRef = React.useRef<HTMLInputElement>(null);
-  const filterIconRef = React.useRef<HTMLButtonElement>(null);
-  const filterDropdownRef = React.useRef<HTMLDivElement>(null);
-
-
-  React.useEffect(() => {
-    function handleResize() {
-      if (filterIconRef.current) {
-        const rect = filterIconRef.current.getBoundingClientRect();
-        const minLeft = 340;
-        if (rect.left < minLeft || window.innerWidth < 700) {
-          setDropdownPlacement('bottom');
-        } else {
-          setDropdownPlacement('left');
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  // Products state
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  // On mount, fetch products
+  useEffect(() => {
+    // Fetch products from Supabase
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('products')
+          .select('id, name, price, image');
+          
+        if (error) {
+          throw error;
         }
+        
+        if (!data || data.length === 0) {
+          console.log('No products returned from Supabase');
+          setProducts([]);
+          return;
+        }
+        
+        // Process products from Supabase
+        const processedProducts = data.map((product: any) => {
+          return {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            // Use image from Supabase with fallback
+            image: product.image || '/media1.png',
+            // Empty defaults for compatibility
+            tag: '',
+            description: '',
+            category: ''
+          };
+        });
+        
+        setProducts(processedProducts);
+        console.log(`Loaded ${processedProducts.length} products from Supabase`);
+      } catch (error: any) {
+        setError(error.message);
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
       }
-    }
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    };
+    
+    fetchProducts();
   }, []);
+  
+  // Calculate pagination
+  const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+  
+  // Get current products
+  const currentProducts = (() => {
+    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    return products.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+  })();
+  
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  // No search or filter state needed
 
   return (
     <div className="shop-video-frame">
@@ -126,125 +162,37 @@ export default function Shop() {
         {/* Unified Container for Filter/Sort Bar and Product Grid */}
         <div className="shop-main-container">
           <div className="shop-side-controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', gap: '0.5em' }}>
-            {/* Search Bar on the left */}
+            {/* Simple header with logo */}
             <div className="shop-side-search" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-              {/* Mobile: Only icon initially, show input on click */}
-              <button
-                className="shop-search-icon-btn"
-                aria-label="Open search"
-                style={{
-                  display: showSearchBar ? 'none' : 'flex',
-                  background: 'none',
-                  border: 'none',
-                  padding: '0.25em 0.45em 0.25em 0',
-                  cursor: 'pointer',
-                  alignItems: 'center',
-                  marginRight: 10,
-                }}
-                onClick={() => {
-                  setShowSearchBar(true);
-                  setTimeout(() => searchInputRef.current?.focus(), 80);
-                }}
-              >
-                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#A9DDD6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              </button>
-              {/* Show input if open (mobile), always show on desktop */}
-              <input
-                ref={searchInputRef}
-                type="text"
-                className="shop-search-input"
-                placeholder="Search products..."
-                value={searchText}
-                onChange={e => setSearchText(e.target.value)}
-                style={{
-                  width: '100%',
-                  maxWidth: 260,
-                  padding: '0.55em 1em',
-                  borderRadius: 16,
-                  border: '1.5px solid #A9DDD6',
-                  fontSize: '1.01em',
-                  outline: 'none',
-                  background: '#fff',
-                  color: '#232323',
-                  marginRight: 12,
-                  boxSizing: 'border-box',
-                  transition: 'border-color 0.18s',
-                  display: showSearchBar ? 'block' : 'none',
-                }}
-                aria-label="Search products"
-                onBlur={() => { if (window.innerWidth <= 700) setShowSearchBar(false); }}
-              />
+              {/* Empty space for layout balance */}
+              <div style={{ width: 40 }}></div>
             </div>
             {/* Babylon Logo Centered */}
             <span className="shop-side-logo">BABYLON</span>
-            {/* Filter Icon on the right */}
-            <div className="shop-side-filters" style={{ position: 'relative', marginLeft: 12 }}>
-              <button
-                className="shop-side-filter-icon"
-                aria-label="filters"
-                ref={filterIconRef}
-                style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-                onClick={() => {
-                  if (filterIconRef.current) {
-                    const rect = filterIconRef.current.getBoundingClientRect();
-                    const minLeft = 340; // px, matches max-width + offset
-                    if (rect.left < minLeft || window.innerWidth < 700) {
-                      setDropdownPlacement('bottom');
-                    } else {
-                      setDropdownPlacement('left');
-                    }
-                  }
-                  setShowFilterDropdown(v => !v);
-                }}
-              >
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="5" y="8" width="18" height="2" rx="1" fill="#888" />
-                  <rect x="5" y="18" width="18" height="2" rx="1" fill="#888" />
-                  <circle cx="9" cy="9" r="2" fill="#888" />
-                  <circle cx="19" cy="19" r="2" fill="#888" />
-                </svg>
-              </button>
-              {showFilterDropdown && (
-  <>
-    <div className="shop-filter-sidebar-overlay" onClick={() => setShowFilterDropdown(false)} />
-    <div
-      ref={filterDropdownRef}
-      className="shop-filter-sidebar"
-      onClick={e => e.stopPropagation()}
-    >
-      <button className="shop-filter-sidebar-close" onClick={() => setShowFilterDropdown(false)} aria-label="Close filter sidebar">&times;</button>
-      <div className="shop-filter-dropdown-section">
-        <div className="shop-filter-dropdown-label">Category</div>
-        <ul className="shop-filter-dropdown-options" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
-          {CATEGORIES.map(cat => (
-            <li key={cat}>
-              <button
-                className={`shop-filter-dropdown-pill${selectedCategory === cat ? ' selected' : ''}`}
-                style={{ width: '100%', textAlign: 'left' }}
-                onClick={() => { setSelectedCategory(cat); setShowFilterDropdown(false); }}
-              >
-                {cat}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </>
-)}
+            {/* Empty space on the right for layout balance */}
+            <div className="shop-side-filters" style={{ position: 'relative', marginLeft: 12, width: 40 }}>
+              {/* No filter button */}
             </div>
           </div>
             {/* Product Grid */}
-          <div className="shop-product-grid">
-            {PRODUCTS.filter(product => {
-              const search = searchText.trim().toLowerCase();
-              return (
-                (!search ||
-                  product.name.toLowerCase().includes(search) ||
-                  product.category.toLowerCase().includes(search)) &&
-                (!selectedCategory || product.category === selectedCategory)
-              );
-            }).map(product => (
+          {loading ? (
+            <div className="shop-loading">
+              <div className="shop-loading-spinner"></div>
+              <p>Loading products...</p>
+            </div>
+          ) : error ? (
+            <div className="shop-error">
+              <p>Error loading products: {error}</p>
+              <button onClick={() => window.location.reload()}>Try Again</button>
+            </div>
+          ) : (
+            <div className="shop-product-grid">
+              {currentProducts.length === 0 ? (
+                <div className="shop-no-products">
+                  <p>No products available at the moment.</p>
+                </div>
+              ) : (
+                currentProducts.map((product: Product) => (
               <Link to={`/product/${product.id}`} key={product.id} className="shop-product-card-link">
                 <div className="shop-product-card">
                   <span className="shop-product-price shop-product-price-corner" style={{ position: 'absolute', top: 8, right: 8, padding: '4px 12px', zIndex: 12 }}>${product.price}</span>
@@ -266,8 +214,114 @@ export default function Shop() {
                   </div>
                 </div>
               </Link>
-            ))}
-          </div>
+            )))}
+            </div>
+          )}
+          
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="shop-pagination" style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              marginTop: '2rem',
+              marginBottom: '3rem',
+              gap: '0.5rem'
+            }}>
+              <button 
+                onClick={() => handlePageChange(1)} 
+                disabled={currentPage === 1}
+                style={{
+                  padding: '0.5rem 1rem',
+                  border: '1px solid #A9DDD6',
+                  background: 'transparent',
+                  color: currentPage === 1 ? '#888' : '#333',
+                  cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                  borderRadius: '4px',
+                  margin: '0 0.25rem'
+                }}
+              >
+                &laquo;
+              </button>
+              <button 
+                onClick={() => handlePageChange(currentPage - 1)} 
+                disabled={currentPage === 1}
+                style={{
+                  padding: '0.5rem 1rem',
+                  border: '1px solid #A9DDD6',
+                  background: 'transparent',
+                  color: currentPage === 1 ? '#888' : '#333',
+                  cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                  borderRadius: '4px',
+                  margin: '0 0.25rem'
+                }}
+              >
+                &lsaquo;
+              </button>
+              
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum: number;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = currentPage - 2 + i;
+                }
+                
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    style={{
+                      padding: '0.5rem 1rem',
+                      border: '1px solid #A9DDD6',
+                      background: currentPage === pageNum ? '#A9DDD6' : 'transparent',
+                      color: currentPage === pageNum ? '#1E3932' : '#333',
+                      cursor: 'pointer',
+                      borderRadius: '4px',
+                      margin: '0 0.25rem',
+                      fontWeight: currentPage === pageNum ? 'bold' : 'normal'
+                    }}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+              
+              <button 
+                onClick={() => handlePageChange(currentPage + 1)} 
+                disabled={currentPage === totalPages}
+                style={{
+                  padding: '0.5rem 1rem',
+                  border: '1px solid #A9DDD6',
+                  background: 'transparent',
+                  color: currentPage === totalPages ? '#888' : '#333',
+                  cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                  borderRadius: '4px',
+                  margin: '0 0.25rem'
+                }}
+              >
+                &rsaquo;
+              </button>
+              <button 
+                onClick={() => handlePageChange(totalPages)} 
+                disabled={currentPage === totalPages}
+                style={{
+                  padding: '0.5rem 1rem',
+                  border: '1px solid #A9DDD6',
+                  background: 'transparent',
+                  color: currentPage === totalPages ? '#888' : '#333',
+                  cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                  borderRadius: '4px',
+                  margin: '0 0.25rem'
+                }}
+              >
+                &raquo;
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

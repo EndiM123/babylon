@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import './ReceiptModal.css';
 import { motion, Variants } from 'framer-motion';
 
-interface ReceiptModalProps {
+export interface ReceiptModalProps {
   items: any[];
   subtotal: number;
   shipping: number;
   total: number;
+  orderId?: number | null;
   onClose: () => void;
 }
 
@@ -34,9 +35,10 @@ const itemVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
 };
 
-export default function ReceiptModal({ items, subtotal, shipping, total, onClose }: ReceiptModalProps) {
+export default function ReceiptModal({ items, subtotal, shipping, total, orderId, onClose }: ReceiptModalProps) {
   const allLines = [
     'Payment Successful',
+    orderId ? `Order #${orderId}` : '',
     '',
     ...items.map(i => `${i.product.name} x${i.quantity} $${(i.product.price * i.quantity).toFixed(2)}`),
     '',
@@ -44,8 +46,8 @@ export default function ReceiptModal({ items, subtotal, shipping, total, onClose
     `Shipping: $${shipping.toFixed(2)}`,
     `Total: $${total.toFixed(2)}`,
     '',
-    'Have a nice day!',
-    `Subtotal (Again): $${subtotal.toFixed(2)}`
+    'Thank you for your order!',
+    'Have a nice day!'
   ];
 
   useEffect(() => {

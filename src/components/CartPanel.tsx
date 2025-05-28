@@ -4,7 +4,7 @@ import './CartPanel.css';
 export interface CartPanelProps {
   open: boolean;
   product: {
-    image: string;
+    image?: string;
     name: string;
     price: number;
   } | null;
@@ -23,7 +23,7 @@ export default function CartPanel({ open, product, quantity, onClose, onQuantity
         <button className="cart-panel-close" onClick={onClose} aria-label="Close cart">×</button>
         <div className="cart-panel-content">
           <div className="cart-panel-product-row">
-            <img src={product.image} alt={product.name} className="cart-panel-thumbnail" />
+            <img src={product.image || '/default-product.png'} alt={product.name} className="cart-panel-thumbnail" />
             <div className="cart-panel-product-info">
               <div className="cart-panel-product-name">{product.name}</div>
               <div className="cart-panel-product-price">${product.price.toFixed(2)}</div>
