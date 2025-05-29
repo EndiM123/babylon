@@ -1,0 +1,394 @@
+.receipt-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Elegant blurred gradient backdrop with subtle textures */
+  background: linear-gradient(135deg, rgba(253, 252, 251, 0.8) 0%, rgba(230, 225, 220, 0.8) 50%, rgba(245, 240, 235, 0.8) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 1000;
+  overflow: hidden;
+  opacity: 0;
+  animation: fade-in-overlay 0.5s ease-out forwards;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.2);
+}
+
+.receipt-container {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Space Mono', monospace;
+  color: #006400;
+  opacity: 0;
+  transform: scale(0.98);
+  animation: container-entrance 0.5s ease-out 0.2s forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.receipt-viewport {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (min-width: 900px) {
+  .receipt-viewport {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .receipt-stack {
+    width: 380px;
+    min-height: 480px;
+    max-width: 95vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 8px 32px #0002, 0 0 0 1px #e0e0e0;
+    border-radius: 18px;
+    background: #fff0;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  .printer-top {
+    width: 120%;
+    max-width: 456px;
+    min-width: 380px;
+    margin-left: -20px;
+    margin-right: -20px;
+    height: 38px;
+    font-size: 1.1rem;
+    border-radius: 24px 24px 8px 8px;
+    z-index: 2;
+    box-shadow: 0 6px 36px #AE862540, 0 2px 14px #F7EF8A33;
+  }
+  .receipt-roll {
+    width: 100%;
+    max-width: 380px;
+    min-height: 360px;
+    padding: 1.2rem 1.4rem;
+    border-radius: 0 0 18px 18px;
+    font-size: 1.05rem;
+    z-index: 1;
+  }
+}
+
+
+@media only screen and (max-width: 899px) {
+  .receipt-viewport, .receipt-stack, .printer-top, .receipt-roll {
+    width: 100vw !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+  }
+  .printer-top {
+    height: 48px;
+    font-size: 1.2rem;
+  }
+  .receipt-roll {
+    min-height: 320px;
+    padding: 1rem 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+
+/* Header is the gold gradient */
+.printer-top {
+  height: 60px;
+  background: linear-gradient(90deg, #AE8625 0%, #F7EF8A 33%, #D2AC47 66%, #EDC967 100%);
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5) 2%, transparent 0),
+    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.3) 2%, transparent 0);
+  background-size: 8px 8px, 8px 8px;
+  border-bottom: 4px solid #e0e0e0;
+  border-radius: 0;
+  box-shadow: 0 4px 24px 0 #AE862540, inset 0 -4px 12px #fff4, 0 4px 6px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Receipt paper is white with dark green text */
+.receipt-roll {
+  background: linear-gradient(90deg, #AE8625 0%, #F7EF8A 33%, #D2AC47 66%, #EDC967 100%);
+  color: #006400;
+  flex: 1;
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05) inset;
+  border-radius: 0 0 12px 12px;
+}
+
+.receipt-roll .receipt-line {
+  color: #006400;
+  background: none;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+
+.receipt-roll .receipt-line {
+  color: #006400;
+  background: none;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.printer-letter-container {
+  background: linear-gradient(90deg, #AE8625 0%, #F7EF8A 33%, #D2AC47 66%, #EDC967 100%);
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 2px 12px #AE862520, 0 1px 4px #F7EF8A33;
+  padding: 0.5rem 0 0.7rem 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  margin-bottom: -10px;
+  position: relative;
+  z-index: 2;
+}
+
+
+.printer-top {
+  height: 60px;
+  /* Luxury gold gradient for modal top */
+  background: linear-gradient(90deg, #AE8625 0%, #F7EF8A 33%, #D2AC47 66%, #EDC967 100%);
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5) 2%, transparent 0),
+    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.3) 2%, transparent 0);
+  background-size: 8px 8px, 8px 8px;
+  border-bottom: 4px solid #e0e0e0;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 4px 24px 0 #AE862540, inset 0 -4px 12px #fff4, 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.receipt-roll {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Luxury gold inner receipt */
+  background: linear-gradient(90deg, #AE8625 0%, #F7EF8A 33%, #D2AC47 66%, #EDC967 100%);
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.4) 2%, transparent 0),
+    radial-gradient(circle at 90% 90%, rgba(255,255,255,0.18) 2%, transparent 0);
+  background-size: 10px 10px, 10px 10px;
+  flex: 1;
+  width: 100%;
+  padding: 2rem;
+  /* fill remaining container height */
+  overflow-y: auto;
+  transform: translateY(-100%);
+  animation: roll-down 7s linear forwards;
+  clip-path: polygon(
+    0 0, 100% 0, 100% 90%, 98% 100%, 95% 90%, 90% 100%, 85% 90%, 80% 100%, 75% 90%, 0 90%
+  );
+  box-shadow: inset 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.paid-badge {
+  /* Luxury PAID badge with shimmer */
+  position: absolute;
+  top: 50%;
+  right: 32px;
+  transform: translateY(-50%);
+  background: #004d00;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  overflow: hidden;
+  z-index: 10;
+}
+
+@media only screen and (max-width: 899px) {
+  .paid-badge {
+    top: 16px;
+    right: 16px;
+    transform: none;
+  }
+}
+
+.printer-top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 60px;
+  padding-right: 32px;
+}
+
+@media only screen and (max-width: 899px) {
+  .printer-top {
+    justify-content: center;
+    padding-right: 0;
+  }
+  .paid-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    margin-left: 0;
+    margin-top: 0;
+    align-self: unset;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .paid-badge {
+    position: static;
+    margin-left: 0;
+    margin-top: 0;
+    transform: none;
+    align-self: center;
+  }
+}
+
+
+@media only screen and (min-width: 900px) {
+  .paid-badge {
+    position: static;
+    margin-left: 18px;
+    margin-top: 0;
+    transform: none;
+    align-self: center;
+  }
+}
+
+@media only screen and (max-width: 899px) {
+  .paid-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    margin-left: 0;
+    margin-top: 0;
+    align-self: unset;
+  }
+}
+
+
+/* Shimmer effect */
+.paid-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: skewX(-20deg);
+  animation: shimmer 2s infinite;
+}
+
+.receipt-line {
+  opacity: 0;
+  animation: fade-in 0.4s forwards;
+  color: #006400;
+}
+
+.receipt-close {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #006400;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.receipt-close:hover {
+  color: #004d00;
+}
+
+@media only screen and (max-width: 768px) {
+  .receipt-container {
+    width: 95vw;
+    max-width: none;
+    height: 85vh;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  .printer-top {
+    height: 50px;
+    border-radius: 8px 8px 0 0;
+  }
+  .paid-badge {
+    top: 8px;
+    right: 8px;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+  .receipt-roll {
+    padding: 1rem;
+  }
+  .receipt-close {
+    bottom: 4px;
+    right: 4px;
+    font-size: 1.2rem;
+  }
+}
+
+@keyframes roll-down {
+  0% {
+    max-height: 0;
+    transform: translateY(-100%);
+  }
+  20% {
+    max-height: 400px;
+    transform: translateY(0);
+  }
+  100% {
+    max-height: 1000px;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-overlay {
+  to { opacity: 1; }
+}
+
+@keyframes container-entrance {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-20deg); }
+  100% { transform: translateX(100%) skewX(-20deg); }
+}

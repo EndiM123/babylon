@@ -1,0 +1,118 @@
+/* Fullscreen Solira Slideshow Styles */
+.solira-slideshow {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+  overflow: hidden;
+  background: #F7EFE5;
+  margin: 0;
+  padding: 0;
+  border: none;
+  z-index: 1;
+}
+.solira-slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
+  will-change: opacity;
+  pointer-events: none;
+  background: #F7EFE5;
+}
+.solira-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+.solira-slide-img {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  background: #F7EFE5;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+@media (max-width: 700px) {
+  .solira-slide-img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center top;
+  }
+}
+
+/* Overlay styles for slideshow */
+.solira-slide-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+}
+.solira-slide-intro {
+  font-family: 'Wolmer', serif;
+  font-size: 7vw;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.06em;
+  text-shadow: 0 4px 28px rgba(0,0,0,0.19), 0 1px 0 #fff2;
+  text-transform: uppercase;
+  line-height: 1.05;
+}
+.solira-slide-overlay-2 {
+  gap: 1.5vw;
+}
+.solira-slide-collection {
+  font-family: 'Wolmer', serif;
+  font-size: 2.6vw;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.11em;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.17);
+  text-transform: uppercase;
+  margin-top: 1vw;
+  opacity: 0.97;
+  line-height: 1.07;
+}
+@media (max-width: 800px) {
+  .solira-slide-collection {
+    font-size: 1.1rem;
+    margin-top: 3vw;
+  }
+}
+
+.solira-slide-babylon {
+  font-family: 'Wolmer', serif;
+  font-size: 2.6vw;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.11em;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.17);
+  text-transform: uppercase;
+  margin-bottom: 0.9vw;
+}
+.solira-slide-solira {
+  font-family: 'Wolmer', serif;
+  font-size: 7vw;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.06em;
+  text-shadow: 0 4px 28px rgba(0,0,0,0.19), 0 1px 0 #fff2;
+  line-height: 1.05;
+}
+@media (max-width: 800px) {
+  .solira-slide-intro, .solira-slide-solira {
+    font-size: 2.2rem;
+  }
+  .solira-slide-babylon {
+    font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,144 @@
+.babylon-footer {
+  width: 100%;
+  background: #1E3932;
+  color: #fff;
+  padding: 2.5em 5% 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3vw;
+  font-family: 'Wolmer', 'Inter', Arial, sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+  z-index: 10;
+  box-sizing: border-box;
+  margin-top: auto; /* Push footer to bottom */
+}
+
+.footer-col {
+  flex: 1 1 0;
+  min-width: 220px;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.footer-col--brand {
+  align-items: flex-start;
+}
+
+.footer-logo {
+  font-family: 'Wolmer', 'Inter', Arial, sans-serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.3em;
+  color: #fff;
+}
+
+.footer-desc {
+  font-size: 1.1rem;
+  color: #e3e3e3;
+  margin-bottom: 1.2em;
+  max-width: 340px;
+}
+
+.footer-subscribe {
+  display: flex;
+  width: 100%;
+  gap: 0;
+  margin-top: 1em;
+}
+.footer-subscribe input[type="email"] {
+  flex: 1 1 0;
+  padding: 0.9em 1em;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  border-radius: 0;
+  background: #232323;
+  color: #fff;
+}
+.footer-subscribe button {
+  background: #fff;
+  color: #1E3932;
+  font-weight: 700;
+  border: none;
+  padding: 0 2em;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.footer-subscribe button:hover {
+  background: #F3D6A4;
+  color: #232323;
+}
+
+.footer-col--links {
+  flex-direction: row;
+  gap: 2.5em;
+  justify-content: center;
+  align-items: flex-start;
+}
+.footer-col--links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+.footer-col--links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.03rem;
+  opacity: 0.88;
+  transition: opacity 0.2s;
+}
+.footer-col--links li a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer-col--contact {
+  align-items: flex-end;
+  gap: 0.7em;
+  font-size: 1.03rem;
+}
+.footer-contact-item {
+  margin-bottom: 0.2em;
+}
+.footer-socials {
+  display: flex;
+  gap: 0.9em;
+  margin-top: 0.7em;
+}
+.footer-socials a {
+  color: #fff;
+  font-size: 1.45rem;
+  opacity: 0.82;
+  transition: opacity 0.2s;
+}
+.footer-socials a:hover {
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .babylon-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2em;
+    padding: 2.5em 0 1.5em 0;
+  }
+  .footer-col {
+    max-width: 100vw;
+    min-width: 0;
+    width: 100%;
+  }
+  .footer-col--brand, .footer-col--contact {
+    align-items: flex-start;
+  }
+}
