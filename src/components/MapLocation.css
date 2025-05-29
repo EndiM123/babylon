@@ -1,0 +1,67 @@
+.map-location {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px; /* Increased from 300px */
+  margin-left: 2rem;
+}
+
+.map-heading {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 1rem 0.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  min-height: 1.5rem;
+  display: flex;
+  align-items: center;
+  padding-left: -1.5rem;
+}
+
+.map-container {
+  display: inline-block;
+  line-height: 0;
+  margin: 0 auto;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.map-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  transition: opacity 0.3s ease;
+}
+
+.map-image:hover {
+  opacity: 0.9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .map-location {
+    width: 100%;
+    margin: 2rem 0 0;
+    padding: 0;
+  }
+  
+  .map-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .map-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .map-heading {
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+  }
+}

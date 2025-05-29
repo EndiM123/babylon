@@ -1,0 +1,209 @@
+.blog-highlights {
+  padding: 4rem 2rem;
+  background-color: transparent;
+}
+
+.blog-highlights-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.blog-highlights-title {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.see-all-button {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  color: #1E3932;
+  text-decoration: none;
+  border: 1px solid #1E3932;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.see-all-button:hover {
+  background-color: #1E3932;
+  color: white;
+}
+
+.blog-highlights-container {
+  display: flex;
+  flex-wrap: nowrap; /* Changed from wrap to nowrap */
+  justify-content: center;
+  gap: 1rem; /* Reduced gap for mobile */
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem; /* Add some padding on the sides */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  scroll-snap-type: x mandatory; /* Enable snap scrolling */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.blog-highlights-container::-webkit-scrollbar {
+  display: none;
+}
+
+.blog-highlight-card {
+  flex: 1 1 300px;
+  max-width: 600px;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.desktop-only {
+  display: none;
+}
+
+.blog-highlight-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.blog-highlight-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+  position: relative;
+}
+
+.blog-highlight-card:hover .blog-highlight-image {
+  transform: scale(1.05);
+}
+
+.blog-highlight-content {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.blog-highlight-content h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+  color: #333;
+}
+
+.blog-highlight-content p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Desktop styles */
+@media (min-width: 1200px) {
+  .blog-highlights {
+    padding: 6rem 4rem;
+    background-color: transparent;
+  }
+  
+  .blog-highlights-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 4rem;
+    position: relative;
+  }
+  
+  .blog-highlights-title {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #1E3932;
+    text-align: center;
+    grid-column: 2;
+    justify-self: center;
+  }
+  
+  .see-all-button {
+    justify-self: end;
+    grid-column: 3;
+  }
+  
+  .blog-highlights-container {
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .blog-highlight-card {
+    flex: 0 0 calc(33.333% - 1.5rem);
+    max-width: 400px;
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  .desktop-only {
+    display: flex;
+  }
+  
+  .blog-highlight-image {
+    height: 300px;
+  }
+  
+  .blog-highlight-content h3 {
+    font-size: 1.5rem;
+    color: #1E3932;
+  }
+  
+  .blog-highlight-content p {
+    color: #1E3932;
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .blog-highlights {
+    padding: 2rem 1rem;
+    overflow: hidden;
+  }
+  
+  .blog-highlight-card {
+    flex: 0 0 calc(50% - 0.5rem);
+    min-width: 0;
+    margin: 0;
+  }
+  
+  .blog-highlight-image {
+    height: 150px;
+  }
+  
+  .blog-highlight-content {
+    padding: 1rem;
+  }
+  
+  .blog-highlight-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .blog-highlight-content p {
+    font-size: 0.8rem;
+  }
+}

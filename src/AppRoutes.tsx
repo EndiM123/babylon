@@ -24,6 +24,8 @@ import ColorPsychologyBlogPost from './ColorPsychologyBlogPost';
 import MonacoGrandPrixFashionBlogPost from './MonacoGrandPrixFashionBlogPost';
 import MonacoImmersiveExperience from './MonacoImmersiveExperience';
 import CheckoutPage from './components/CheckoutPage';
+import BlogHighlights from './components/BlogHighlights';
+import BrandValues from './components/BrandValues';
 
 export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
@@ -36,7 +38,9 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
           <FeaturedProductCarousel />
           <DualPromoSection />
           <ProductCarousel />
+          <BlogHighlights />
           <MediaShowcaseSection />
+          <BrandValues />
           <Footer />
         </>
       } />
