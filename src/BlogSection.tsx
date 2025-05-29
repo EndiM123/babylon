@@ -18,12 +18,13 @@ const BLOGS = [
   // Green Coast Riviera blog card
   
   {
-    id: 2,
-    image: '/news2.png',
-    category: 'Journal',
-    title: 'Behind the Collection: Minimalist Muse',
-    subtitle: 'A designer’s journey in crafting understated luxury.',
-    date: 'March 29, 2025',
+    id: 'monaco-immersive',
+    image: '/formula.png',
+    category: 'Interactive Experience',
+    title: 'MONACO 2025: Acceleration, Dressed',
+    subtitle: "An immersive journey through fashion, speed, and presence at Formula 1's most glamorous circuit.",
+    date: 'May 28, 2025',
+    href: '/blog/monaco-immersive',
   },
 
   {

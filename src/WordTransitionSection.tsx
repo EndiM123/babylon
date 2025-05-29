@@ -19,6 +19,7 @@ export default function WordTransitionSection() {
         />
         <div className="centered-title">
           <span className="word-transition-main">BABYLON</span>
+          <p className="subtitle">shaping the way the city looks since 2012</p>
         </div>
       </div>
     </section>

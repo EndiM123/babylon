@@ -85,39 +85,22 @@ function App() {
   return (
     <CartContext.Provider value={{ cart, setCart }}>
       <>
-        <img
-          src="/palm.gif"
-          alt="Palm Background"
-          className="background-gif-bg"
-          style={{
-            position: 'fixed',
-            width: '100vw',
-            height: '100vh',
-            left: 0,
-            top: 0,
-            transform: 'scaleX(-1)',
-            objectFit: 'cover',
-            zIndex: -1,
-            pointerEvents: 'none',
-          }}
-          aria-hidden="true"
-        />
         <GlitterParticlesPortal />
         <header className="babylon-header">
           <div className="babylon-header-inner">
             {isDesktop && (
-  <span
-    className="babylon-header-logo"
-    style={{ textDecoration: 'none', cursor: 'pointer' }}
-    onClick={handleLogoClick}
-    role="button"
-    tabIndex={0}
-    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleLogoClick(e); }}
-  >
-    Babylon
-  </span>
-)}
-<div className="babylon-header-logo-space"></div>
+              <span
+                className="babylon-header-logo"
+                style={{ textDecoration: 'none', cursor: 'pointer' }}
+                onClick={handleLogoClick}
+                role="button"
+                tabIndex={0}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleLogoClick(e); }}
+              >
+                Babylon
+              </span>
+            )}
+            <div className="babylon-header-logo-space"></div>
             <nav className="babylon-nav">
               <Link to="/" className="babylon-nav-item">HOME</Link>
               <Link to="/shop" className="babylon-nav-item">SHOP</Link>

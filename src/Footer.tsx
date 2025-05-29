@@ -1,45 +1,71 @@
 import React from 'react';
 import './Footer.css';
+import MapLocation from './components/MapLocation';
 
 export default function Footer() {
   return (
     <footer className="babylon-footer">
-      <div className="footer-col footer-col--brand">
-        <div className="footer-logo">BABYLON</div>
-        <p className="footer-desc">We create fashion intended to elevate and inspire, blending editorial minimalism with timeless elegance.</p>
-      </div>
-      <div className="footer-col footer-col--links">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/shop">Shop All</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/blog">Blog</a></li>
-        </ul>
-        <ul>
-          <li><a href="/faqs">FAQs</a></li>
-          <li><a href="/privacy">Privacy Policy</a></li>
-          <li><a href="/coming-soon">Coming Soon</a></li>
-          <li><a href="/password">Password Protected</a></li>
-          <li><a href="/error">Error 404</a></li>
-        </ul>
-        <ul>
-          <li><a href="/style-guide">Style Guide</a></li>
-          <li><a href="/instructions">Instructions</a></li>
-          <li><a href="/licenses">Licenses</a></li>
-          <li><a href="/changelog">Changelog</a></li>
-          <li><a href="/link-in-bio">Link In Bio</a></li>
-        </ul>
-      </div>
-      <div className="footer-col footer-col--contact">
-        <div className="footer-contact-item">+236 789 952</div>
-        <div className="footer-contact-item">hello@example.com</div>
-        <div className="footer-contact-item">London, UK</div>
-        <div className="footer-socials">
-          <a href="/" aria-label="Facebook"><i className="icon-facebook" /></a>
-          <a href="/" aria-label="Instagram"><i className="icon-instagram" /></a>
-          <a href="/" aria-label="Twitter"><i className="icon-twitter" /></a>
-          <a href="/" aria-label="Dribbble"><i className="icon-dribbble" /></a>
+      <div className="footer-container">
+        <div className="footer-col footer-col--brand">
+          <div className="footer-logo">BABYLON</div>
+          <p className="footer-desc">We create fashion intended to elevate and inspire, blending editorial minimalism with timeless elegance.</p>
+        </div>
+        <div className="footer-col footer-col--links">
+          <div className="footer-links-group">
+            <h4 className="footer-links-heading">Navigation</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/shop">Shop All</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/blog">Blog</a></li>
+            </ul>
+          </div>
+          <div className="footer-links-group">
+            <h4 className="footer-links-heading">Resources</h4>
+            <ul>
+              <li><a href="/style-guide">Style Guide</a></li>
+              <li><a href="/instructions">Instructions</a></li>
+              <li><a href="/faqs">FAQs</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="footer-col footer-col--contact">
+          <div className="contact-header">
+            <div className="contact-heading-row">
+              <h4 className="footer-contact-heading">Contact Us</h4>
+              <h4 className="footer-socials-heading">Follow Us</h4>
+            </div>
+          </div>
+          <div className="contact-details-row">
+            <div className="footer-contact-details">
+              <div className="footer-contact-item">
+                <i className="icon-phone" />
+                <span>+236 789 952</span>
+              </div>
+              <div className="footer-contact-item">
+                <i className="icon-envelope" />
+                <a href="mailto:hello@example.com">hello@example.com</a>
+              </div>
+              <div className="footer-contact-item">
+                <i className="icon-location" />
+                <span>London, UK</span>
+              </div>
+            </div>
+            <div className="footer-socials">
+              <div className="social-icons">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-icon">
+                  <i className="icon-instagram" />
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-icon">
+                  <i className="icon-twitter" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="mobile-map">
+            <MapLocation />
+          </div>
         </div>
       </div>
     </footer>

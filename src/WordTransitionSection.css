@@ -33,9 +33,63 @@
   z-index: 2;
   width: 100vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  text-align: center;
+}
+
+@keyframes shine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.centered-title .subtitle {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  margin-top: 1rem;
+  padding: 0 1rem;
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+.centered-title .subtitle::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shine 3s infinite;
+  pointer-events: none;
+}
+
+@media (min-width: 1200px) {
+  .centered-title .subtitle {
+    font-size: 1.8rem;
+    letter-spacing: 0.15em;
+    margin-top: 1.5rem;
+  }
 }
 
 

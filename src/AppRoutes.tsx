@@ -21,7 +21,11 @@ import PrishtinaPoolsideBlogPost from './PrishtinaPoolsideBlogPost';
 import GreenCoastBlogPost from './GreenCoastBlogPost';
 import GreenCoastVisualBlogPost from './GreenCoastVisualBlogPost';
 import ColorPsychologyBlogPost from './ColorPsychologyBlogPost';
+import MonacoGrandPrixFashionBlogPost from './MonacoGrandPrixFashionBlogPost';
+import MonacoImmersiveExperience from './MonacoImmersiveExperience';
 import CheckoutPage from './components/CheckoutPage';
+import BlogHighlights from './components/BlogHighlights';
+import BrandValues from './components/BrandValues';
 
 export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
@@ -34,7 +38,9 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
           <FeaturedProductCarousel />
           <DualPromoSection />
           <ProductCarousel />
+          <BlogHighlights />
           <MediaShowcaseSection />
+          <BrandValues />
           <Footer />
         </>
       } />
@@ -52,6 +58,8 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
       <Route path="/blog/green-coast" element={<GreenCoastBlogPost />} />
       <Route path="/blog/green-coast-visual" element={<GreenCoastVisualBlogPost />} />
       <Route path="/blog/color-psychology" element={<ColorPsychologyBlogPost />} />
+      <Route path="/blog/monaco-grand-prix-fashion" element={<MonacoGrandPrixFashionBlogPost />} />
+      <Route path="/blog/monaco-immersive" element={<MonacoImmersiveExperience />} />
       <Route path="/blog/:id" element={<BlogPost />} />
     </Routes>
   );

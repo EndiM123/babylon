@@ -4,31 +4,30 @@ import { supabase } from '../lib/supabase';
 import './CheckoutPage.css';
 import { CartContext } from '../App';
 import ReceiptModal from '../components/ReceiptModal';
-import { PostgrestError } from '@supabase/supabase-js';
 
 // Define interfaces for database tables
 interface Customer {
-  id?: string; // Using string for UUID compatibility
+  id?: number;
   name: string;
-  phone_number: string;
   email: string;
-  // Address components - removed main address field
-  country: string;
-  city: string;
-  street: string;
-  house_number: string;
+  phone_number: string;
+  address: string;
+  // Additional fields for UI that will be concatenated into address field
+  country?: string;
+  city?: string;
+  postal?: string;
 }
 
 interface Order {
-  id?: string; // Using string for UUID compatibility
-  customer_id: string;
+  id?: number;
+  customer_id: number;
   order_date: string;
   total_amount: number;
 }
 
 interface OrderItem {
-  id?: string; // Using string for UUID compatibility
-  order_id: string;
+  id?: number;
+  order_id: number;
   product_id: number;
   quantity: number;
   price_per_unit: number;
@@ -37,7 +36,7 @@ interface OrderItem {
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { cart, setCart } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
   
   // Get product from location state if coming from Buy Now
   const buyNowProduct = location.state?.product;
@@ -53,186 +52,135 @@ export default function CheckoutPage() {
   const shipping = subtotal > 0 ? 0 : 0;
   const total = subtotal + shipping;
 
-  // Form state with fields that match our Customer interface (divided address fields)
+  // Form state with fields that match our Customer interface
   const [form, setForm] = useState<Customer>({
     name: '',
-    phone_number: '',
     email: '',
+    phone_number: '',
+    address: '',
     country: '',
     city: '',
-    street: '',
-    house_number: ''
+    postal: ''
   });
   
   const [showReceipt, setShowReceipt] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [detailedError, setDetailedError] = useState<string | null>(null);
   const [orderId, setOrderId] = useState<number | null>(null);
+  const [orderDetails, setOrderDetails] = useState<{
+    customer_id: number | null;
+    order_id: number | null;
+    items: any[];
+  }>({
+    customer_id: null,
+    order_id: null,
+    items: []
+  });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     // Get the field name and value from the event
     const { name, value } = e.target;
     
+    // Map 'phone' input to 'phone_number' in the form state
+    const fieldName = name === 'phone' ? 'phone_number' : name;
+    
     // Update the form state with the new value
     setForm(prevForm => ({
       ...prevForm,
-      [name]: value
+      [fieldName]: value
     }));
-  }
-
-  function resetForm() {
-    setForm({
-      name: '',
-      phone_number: '',
-      email: '',
-      country: '',
-      city: '',
-      street: '',
-      house_number: ''
-    });
-  }
-
-  // Helper function to handle Supabase errors
-  function handleSupabaseError(error: PostgrestError | null): string {
-    if (!error) return 'Unknown error';
-    return error.details || error.message || 'Unknown error';
+    
+    // Log for debugging
+    console.log(`Field ${fieldName} updated to: ${value}`);
+    console.log('Current form state:', form);
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-    setDetailedError(null);
     
     try {
-      // 1. Insert customer data with exact fields matching the database schema
-      console.log('Submitting customer data:', {
-        name: form.name,
-        phone_number: form.phone_number,
-        email: form.email,
-        // Include individual address components
-        country: form.country,
-        city: form.city,
-        street: form.street,
-        house_number: form.house_number
-      });
+      // Format full address from form fields
+      const fullAddress = `${form.address}, ${form.city}, ${form.postal}, ${form.country}`;
       
+      // 1. Insert customer data
       const { data: customerData, error: customerError } = await supabase
         .from('customers')
         .insert([
           { 
             name: form.name, 
-            phone_number: form.phone_number,
             email: form.email,
-            // Send address components to Supabase
-            country: form.country,
-            city: form.city,
-            street: form.street,
-            house_number: form.house_number
+            phone_number: form.phone_number,
+            address: fullAddress
           }
         ])
         .select('id')
         .single();
       
-      if (customerError) {
-        console.error('Customer creation error:', customerError);
-        setDetailedError(handleSupabaseError(customerError));
-        throw new Error(`Customer creation failed: ${customerError.message}`);
-      }
+      if (customerError) throw new Error(`Customer creation failed: ${customerError.message}`);
+      if (!customerData) throw new Error('No customer data returned');
       
-      if (!customerData) {
-        console.error('No customer data returned');
-        throw new Error('No customer data returned');
-      }
-      
-      console.log('Customer created successfully:', customerData);
       const customerId = customerData.id;
+      setOrderDetails(prev => ({ ...prev, customer_id: customerId }));
       
       // 2. Insert order with customer ID
-      console.log('Creating order with customer_id:', customerId);
-      const orderData = {
-        customer_id: customerId,
-        order_date: new Date().toISOString(),
-        total_amount: total
-      };
-      
-      console.log('Submitting order data:', orderData);
-      const { data: createdOrder, error: orderError } = await supabase
+      const { data: orderData, error: orderError } = await supabase
         .from('orders')
-        .insert([orderData])
+        .insert([
+          { 
+            customer_id: customerId,
+            order_date: new Date().toISOString(),
+            total_amount: total
+          }
+        ])
         .select('id')
         .single();
       
-      if (orderError) {
-        console.error('Order creation error:', orderError);
-        setDetailedError(handleSupabaseError(orderError));
-        throw new Error(`Order creation failed: ${orderError.message}`);
-      }
+      if (orderError) throw new Error(`Order creation failed: ${orderError.message}`);
+      if (!orderData) throw new Error('No order data returned');
       
-      if (!createdOrder) {
-        console.error('No order data returned');
-        throw new Error('No order data returned');
-      }
-      
-      console.log('Order created successfully:', createdOrder);
-      const orderId = createdOrder.id;
-      setOrderId(Number(orderId)); // Convert to number for compatibility with ReceiptModal
+      const orderId = orderData.id;
+      setOrderId(orderId);
+      setOrderDetails(prev => ({ ...prev, order_id: orderId }));
       
       // 3. Insert order items
       if (isBuyNow) {
         // Handle Buy Now flow - insert single product
-        const orderItem = {
+        const orderItem: OrderItem = {
           order_id: orderId,
           product_id: buyNowProduct.id,
           quantity: buyNowQuantity,
           price_per_unit: buyNowProduct.price
         };
         
-        console.log('Submitting order item (Buy Now):', orderItem);
         const { error: itemError } = await supabase
           .from('order_items')
           .insert([orderItem]);
         
-        if (itemError) {
-          console.error('Order item creation error:', itemError);
-          setDetailedError(handleSupabaseError(itemError));
-          throw new Error(`Order item creation failed: ${itemError.message}`);
-        }
+        if (itemError) throw new Error(`Order item creation failed: ${itemError.message}`);
         
-        console.log('Order item created successfully (Buy Now)');
+        setOrderDetails(prev => ({ ...prev, items: [{ product: buyNowProduct, quantity: buyNowQuantity }] }));
       } else {
         // Handle Cart flow - insert all cart items
-        const orderItems = cart.map((item: any) => ({
+        const orderItems: OrderItem[] = cart.map((item: any) => ({
           order_id: orderId,
           product_id: item.product.id,
           quantity: item.quantity,
           price_per_unit: item.product.price
         }));
         
-        console.log('Submitting order items (Cart):', orderItems);
         const { error: itemsError } = await supabase
           .from('order_items')
           .insert(orderItems);
         
-        if (itemsError) {
-          console.error('Order items creation error:', itemsError);
-          setDetailedError(handleSupabaseError(itemsError));
-          throw new Error(`Order items creation failed: ${itemsError.message}`);
-        }
+        if (itemsError) throw new Error(`Order items creation failed: ${itemsError.message}`);
         
-        console.log('Order items created successfully (Cart)');
+        setOrderDetails(prev => ({ ...prev, items: [...cart] }));
       }
       
       // Order successfully completed
-      console.log('Checkout completed successfully!');
       setShowReceipt(true);
-      resetForm();
-      
-      // Clear cart if not in Buy Now mode
-      if (!isBuyNow) {
-        setCart([]);
-      }
       
     } catch (error: any) {
       console.error('Checkout error:', error);
@@ -262,11 +210,6 @@ export default function CheckoutPage() {
       {error && (
         <div className="checkout-error">
           <p>Error processing your order: {error}</p>
-          {detailedError && (
-            <div className="checkout-error-details">
-              <p><strong>Technical details:</strong> {detailedError}</p>
-            </div>
-          )}
           <button onClick={() => setError(null)}>Try Again</button>
         </div>
       )}
@@ -302,17 +245,11 @@ export default function CheckoutPage() {
               <h2>Contact & Delivery</h2>
               <input name="name" required placeholder="Full Name" value={form.name} onChange={handleChange} />
               <input name="email" required placeholder="Email" type="email" value={form.email} onChange={handleChange} />
-              <input name="phone_number" required placeholder="Phone Number" value={form.phone_number} onChange={handleChange} />
-              
-              {/* Address fields divided into components */}
-              <div className="address-fields">
-                <h3>Delivery Address</h3>
-                <input name="country" required placeholder="Country" value={form.country} onChange={handleChange} />
-                <input name="city" required placeholder="City" value={form.city} onChange={handleChange} />
-                <input name="street" required placeholder="Street Name" value={form.street} onChange={handleChange} />
-                <input name="house_number" required placeholder="House/Apartment Number" value={form.house_number} onChange={handleChange} />
-              </div>
-              
+              <input name="address" required placeholder="Street Address" value={form.address} onChange={handleChange} />
+              <input name="country" required placeholder="Country" value={form.country} onChange={handleChange} />
+              <input name="city" required placeholder="City" value={form.city} onChange={handleChange} />
+              <input name="postal" required placeholder="Postal Code" value={form.postal} onChange={handleChange} />
+              <input name="phone" required placeholder="Phone Number" value={form.phone_number} onChange={handleChange} />
               <button type="submit" className="checkout-form-submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Processing...' : 'Place Order'}
               </button>
@@ -324,17 +261,11 @@ export default function CheckoutPage() {
               <h2>Contact & Delivery</h2>
               <input name="name" required placeholder="Full Name" value={form.name} onChange={handleChange} />
               <input name="email" required placeholder="Email" type="email" value={form.email} onChange={handleChange} />
-              <input name="phone_number" required placeholder="Phone Number" value={form.phone_number} onChange={handleChange} />
-              
-              {/* Address fields divided into components */}
-              <div className="address-fields">
-                <h3>Delivery Address</h3>
-                <input name="country" required placeholder="Country" value={form.country} onChange={handleChange} />
-                <input name="city" required placeholder="City" value={form.city} onChange={handleChange} />
-                <input name="street" required placeholder="Street Name" value={form.street} onChange={handleChange} />
-                <input name="house_number" required placeholder="House/Apartment Number" value={form.house_number} onChange={handleChange} />
-              </div>
-              
+              <input name="address" required placeholder="Street Address" value={form.address} onChange={handleChange} />
+              <input name="country" required placeholder="Country" value={form.country} onChange={handleChange} />
+              <input name="city" required placeholder="City" value={form.city} onChange={handleChange} />
+              <input name="postal" required placeholder="Postal Code" value={form.postal} onChange={handleChange} />
+              <input name="phone" required placeholder="Phone Number" value={form.phone_number} onChange={handleChange} />
               <button type="submit" className="checkout-form-submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Processing...' : 'Place Order'}
               </button>

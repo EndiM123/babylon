@@ -1,0 +1,83 @@
+/* Monaco Grand Prix Fashion Blog Post Styles */
+
+.monaco-blog-post {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.monaco-featured-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 2rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.monaco-image-caption {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.monaco-section-title {
+  font-family: 'Wolmer', sans-serif;
+  font-weight: 900;
+  font-size: 1.8rem;
+  margin: 2.5rem 0 1.5rem;
+  color: #1E3932;
+}
+
+.monaco-paragraph {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.monaco-image-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.monaco-conclusion {
+  font-style: italic;
+  font-weight: 500;
+  margin: 2rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid #1E3932;
+}
+
+/* Desktop styles */
+@media (min-width: 1200px) {
+  .monaco-blog-post {
+    max-width: 900px;
+    padding: 0;
+  }
+  
+  .monaco-section-title {
+    font-size: 2.2rem;
+  }
+  
+  .monaco-paragraph {
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+  
+  .monaco-image-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .monaco-drop-cap::first-letter {
+    font-size: 4rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.5rem;
+    color: #1E3932;
+  }
+}

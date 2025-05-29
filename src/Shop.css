@@ -98,7 +98,7 @@
   max-width: 96vw;
   background: #fff;
   z-index: 12001;
-  box-shadow: -8px 0 32px 0 rgba(30,57,50,0.14);
+  box-shadow: -10px 0 50px 0 rgba(30,57,50,0.14);
   display: flex;
   flex-direction: column;
   padding: 2.2rem 2.2rem 1.2rem 2.2rem;
@@ -205,7 +205,362 @@
   to { opacity: 1; transform: translateX(-12px); }
 }
 
+/* Filter dropdown styles */
+.filter-dropdown {
+  background: white;
+  z-index: 1002;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.filter-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #1E3932;
+  font-weight: 600;
+}
+
+.filter-close-button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #666;
+  cursor: pointer;
+  padding: 8px;
+  line-height: 1;
+  margin-right: -8px;
+}
+
+/* Filter options */
+.filter-options {
+  max-height: calc(70vh - 80px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+.filter-option {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+.filter-option:hover {
+  background-color: #f8f8f8;
+}
+
+.filter-option.selected {
+  background-color: #f0f7f5;
+  font-weight: 600;
+  color: #1E3932;
+}
+
+.filter-checkmark {
+  color: #A67899;
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+/* Mobile filter overlay - removed for iPhone */
+.filter-overlay {
+  display: none;
+}
+
+/* Search icon styles */
+.search-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.search-icon-container:hover {
+  transform: scale(1.1);
+}
+
+/* Search modal styles */
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.search-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.search-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 8px 20px;
+  z-index: 2001;
+  position: absolute;
+  top: 60px; /* Position right below the header */
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom: 1px solid #eee;
+}
+
+.search-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.search-modal-input {
+  flex: 1;
+  padding: 6px 10px;
+  border: none;
+  border-bottom: 1px solid #eee;
+  border-radius: 0;
+  font-size: 14px;
+  outline: none;
+  background-color: transparent;
+}
+
+.search-modal-input:focus {
+  border-bottom-color: #1E3932;
+  box-shadow: none;
+}
+
+.search-modal-close {
+  background: transparent;
+  color: #666;
+  border: none;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: normal;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.search-results-count {
+  color: #999;
+  font-size: 12px;
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* Mobile styles */
 @media (max-width: 700px) {
+  /* Mobile search icon styles */
+  .search-icon-container svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Mobile filter button - ensure visibility */
+  .shop-filter-button {
+    background: #1E3932 !important;
+    color: white !important;
+    border: 1px solid #1E3932 !important;
+    border-radius: 20px !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-width: 80px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-left: auto; /* Push to the right */
+    position: relative;
+    z-index: 1001;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Mobile filter dropdown */
+  .filter-dropdown {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    padding: 60px 16px 20px; /* Added top padding to avoid header overlap */
+    z-index: 1002;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    will-change: transform;
+    overflow-x: hidden;
+    width: 100vw; /* Full viewport width */
+    height: 120vh; /* Extended viewport height to ensure full coverage */
+    min-height: 100%; /* Ensure it covers at least the full height */
+  }
+  
+  .filter-dropdown.visible {
+    transform: translateX(0);
+  }
+  
+  /* Mobile filter header */
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px; /* Increased spacing below header */
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+    margin-top: -40px; /* Pull header up to compensate for top padding */
+    padding-top: 10px;
+  }
+  
+  .filter-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #1E3932; /* Dark green from palette */
+    font-weight: 600;
+  }
+  
+  /* Filter overlay for desktop only */
+  .filter-overlay {
+    display: none;
+  }
+  
+  .filter-overlay.visible {
+    display: none;
+  }
+  
+  @media (min-width: 1200px) {
+    .filter-overlay {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1001;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+    
+    .filter-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  .filter-close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    padding: 8px;
+    line-height: 1;
+    margin-right: -8px;
+  }
+  
+  @media (max-width: 700px) {
+    .filter-close-button {
+      background: #1E3932;
+      color: white;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 0;
+      margin-right: 10px; /* Move X button to the left */
+      position: relative;
+      right: 10px;
+    }
+  }
+  
+  /* Mobile filter options */
+  .filter-options {
+    max-height: calc(80vh - 80px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 0 4px;
+    padding-top: 30px;
+  }
+  
+  .filter-option {
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    margin: 8px 0;
+    color: #1E3932; /* Dark green from palette */
+  }
+  
+  .filter-option:active {
+    background-color: #f0f7f5;
+  }
+  
+  .filter-option.selected {
+    background-color: #f0f7f5;
+    font-weight: 600;
+    color: #1E3932;
+  }
+  
+  .filter-checkmark {
+    color: #A67899;
+    margin-left: 8px;
+    font-weight: bold;
+  }
+  
+  /* Shop controls layout */
   .shop-side-controls {
     flex-direction: row;
     justify-content: center;
@@ -215,6 +570,147 @@
     padding: 1.3em 0 1.1em 0;
     position: relative;
     min-height: 4.5em;
+  }
+  
+  /* Filter button styling */
+  .shop-side-filters {
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 10px;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  
+  .shop-filter-button {
+    background: #1E3932 !important;
+    color: white !important;
+    border: 1px solid #1E3932 !important;
+    border-radius: 20px !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-width: 80px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-left: auto; /* Push to the right side */
+    position: relative;
+    z-index: 10;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1200px) {
+  /* Desktop search icon styles */
+  .search-icon-container svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Desktop search modal styles */
+  .search-modal-content {
+    max-width: 500px;
+    padding: 8px 20px;
+  }
+  
+  .search-modal-input {
+    padding: 12px 20px;
+    font-size: 18px;
+  }
+  
+  .search-modal-close {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  
+  /* Position shop controls lower below header */
+  .shop-side-controls {
+    margin-top: 30px;
+    padding-bottom: 20px;
+  }
+  
+  /* Desktop filter text color */
+  .filter-option {
+    color: #1E3932; /* Dark green from palette */
+  }
+  .filter-dropdown {
+    position: fixed;
+    top: 0; /* Start from the very top */
+    right: 0;
+    left: auto;
+    bottom: 0;
+    width: 350px;
+    border-radius: 0;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+    padding: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+    max-height: 100vh; /* Full viewport height */
+    height: 100vh;
+    background: white;
+    overflow-y: auto;
+  }
+  
+  .filter-dropdown.visible {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  /* Desktop filter header positioning */
+  .filter-header {
+    padding-top: 60px; /* Add padding to account for the main header */
+    margin-top: 0;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+  }
+  
+  .filter-header h3 {
+    color: #1E3932; /* Dark green from palette */
+    font-weight: 600;
+  }
+  
+  /* Keep the X button in the same position for desktop */
+  .filter-close-button {
+    color: #1E3932; /* Dark green from palette */
+    font-weight: 600;
+  }
+  
+  .filter-options {
+    max-height: 300px;
+    padding: 8px 0;
+  }
+  
+  .filter-option {
+    padding: 10px 20px;
+    margin: 2px 0;
+  }
+  
+  .shop-filter-button {
+    background: none !important;
+    color: #1E3932 !important;
+    border: 1px solid #1E3932 !important;
+    border-radius: 20px !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease;
+  }
+  
+  .shop-filter-button[aria-expanded="true"] {
+    background: #1E3932 !important;
+    color: white !important;
   }
   .shop-side-search, .shop-side-logo, .shop-side-filters {
     flex: 1 1 0;
@@ -1000,6 +1496,7 @@
   .shop-page {
     padding-bottom: 18px;
   }
+  
   .shop-product-name {
     position: absolute;
     top: 50%;
@@ -1017,5 +1514,20 @@
     line-height: 1.23;
     z-index: 2;
     pointer-events: none;
+  }
+  
+  .shop-product-gradient-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  
+  .shop-page {
+    padding-bottom: 18px;
   }
 }
