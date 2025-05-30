@@ -54,11 +54,11 @@ export default function Footer() {
             </div>
             <div className="footer-socials">
               <div className="social-icons">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-icon">
-                  <i className="icon-instagram" />
+                <a href="https://www.instagram.com/babylon_pr/" target="_blank" rel="noopener noreferrer nofollow" aria-label="Instagram" className="social-icon">
+                  <img src="/ig.png" alt="Instagram" className="social-icon-img" />
                 </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-icon">
-                  <i className="icon-twitter" />
+                <a href="https://www.facebook.com/babylonaccessoriesks" target="_blank" rel="noopener noreferrer nofollow" aria-label="Facebook" className="social-icon">
+                  <img src="/fb.png" alt="Facebook" className="social-icon-img" />
                 </a>
               </div>
             </div>
