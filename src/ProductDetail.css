@@ -22,7 +22,7 @@
     justify-content: flex-start;
     gap: 5%;
     max-width: 1400px;
-    margin: 0 0 0 30%;
+    margin: 120px 0 0 30%;
     padding: 2vw 2vw 4vw;
   }
   
@@ -1290,10 +1290,11 @@ html, body {
   flex: 1 1 60%;
   background: var(--color-bg-alt);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   min-height: 2vh;
-  padding: 0;
+  padding: 40px 0 0 0;
+  margin-top: 40px;
 }
 .product-detail-image-main {
   width: 12px;

@@ -16,8 +16,7 @@ export default function Footer() {
             <ul>
               <li><a href="/">Home</a></li>
               <li><a href="/shop">Shop All</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact</a></li>
+              <li><a href="/about">Solira</a></li>
               <li><a href="/blog">Blog</a></li>
             </ul>
           </div>
@@ -41,15 +40,15 @@ export default function Footer() {
             <div className="footer-contact-details">
               <div className="footer-contact-item">
                 <i className="icon-phone" />
-                <span>+236 789 952</span>
+                <a href="tel:+38349333040">+383 49 333 040</a>
               </div>
               <div className="footer-contact-item">
                 <i className="icon-envelope" />
-                <a href="mailto:hello@example.com">hello@example.com</a>
+                <a href="mailto:info@babylon-ks.com">info@babylon-ks.com</a>
               </div>
               <div className="footer-contact-item">
                 <i className="icon-location" />
-                <span>London, UK</span>
+                <span>Babylon, Nr.6 Rruga Lah Nimani, Prishtina 10000</span>
               </div>
             </div>
             <div className="footer-socials">

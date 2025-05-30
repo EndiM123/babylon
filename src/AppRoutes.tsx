@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Shop from './Shop';
 import Solira from './Solira';
+import SoliraProductDetail from './SoliraProductDetail';
 import ProductDetail from './ProductDetail';
 // Removed unused import PRODUCTS
 import WordTransitionSection from './WordTransitionSection';
@@ -49,6 +50,7 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
       <Route path="/product/:id" element={<ProductDetail />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/about" element={<Solira />} />
+      <Route path="/solira/product/:id" element={<SoliraProductDetail />} />
       <Route path="/blog" element={<BlogSection />} />
       <Route path="/blog/rooftop" element={<RooftopBlogPost />} />
       <Route path="/blog/immersive-rooftop" element={<ImmersiveRooftopBlogPost />} />

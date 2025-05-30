@@ -4,58 +4,11 @@ import './Shop.css';
 import './App.css';
 import { supabase } from './lib/supabase';
 
-const PRODUCTS_PER_PAGE = 3; // Number of products to show per page
+const INITIAL_PRODUCTS_COUNT = 6; // Number of products to show on first page
+const PRODUCTS_PER_PAGE = 3; // Number of products to show on subsequent pages
 
-// Categories for filtering
-const CATEGORIES = [
-  'All',
-  'Dresses',
-  'Tops',
-  'Bottoms',
-  'Outerwear',
-  'Swimwear',
-  'Accessories'
-];
-
-// Local product metadata that won't change frequently
-const PRODUCT_METADATA = {
-  1: {
-    category: 'Dresses',
-    image: '/media1.png',
-    tag: 'New',
-    description: 'A modern linen dress with sculpted lines and editorial silhouette.'
-  },
-  2: {
-    category: 'Outerwear',
-    image: '/media2.png',
-    tag: 'Limited',
-    description: 'A luxury blazer with a curved-edge design, crafted from premium wool blend.'
-  },
-  3: {
-    category: 'Tops',
-    image: '/media3.png',
-    tag: '',
-    description: 'A sleek, minimalist silk top perfect for layering or wearing solo.'
-  },
-  4: {
-    category: 'Bottoms',
-    image: '/media4.png',
-    tag: 'Sold Out',
-    description: 'A soft, flowing trapeze skirt with a flattering silhouette.'
-  },
-  5: {
-    category: 'Swimwear',
-    image: '/media5.png',
-    tag: '',
-    description: 'A stylish bikini set in a signature Tiffany blue.'
-  },
-  6: {
-    category: 'Accessories',
-    image: '/media6.png',
-    tag: 'New',
-    description: 'A compact linen mini bag, perfect for summer outings and essentials.'
-  }
-};
+// Default product image if none is provided
+const DEFAULT_PRODUCT_IMAGE = '/media1.png';
 
 // Define product interface combining Supabase data and local metadata
 interface Product {
@@ -64,8 +17,7 @@ interface Product {
   price: number;
   category: string;
   image: string;
-  tag: string;
-  description?: string;
+  description: string;
 }
 
 
@@ -74,6 +26,7 @@ export default function Shop() {
   // Filter state
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [categories, setCategories] = useState<string[]>(['All']);
   const filterRef = useRef<HTMLDivElement>(null);
   
   // Search state
@@ -125,39 +78,69 @@ export default function Shop() {
     );
   };
   
+  // Check if device is mobile
+  const isMobile = window.innerWidth <= 700;
+
   // Filter products when category or search query changes
   useEffect(() => {
-    let categoryFiltered = [];
+    let filtered = [...products];
     
-    // First filter by category
-    if (selectedCategory === 'All') {
-      categoryFiltered = products;
-    } else {
-      categoryFiltered = products.filter(product => 
-        product.category === selectedCategory
+    // Apply category filter if any category is selected
+    if (selectedCategory && selectedCategory !== 'All') {
+      filtered = filtered.filter(product => 
+        product.category.toLowerCase() === selectedCategory.toLowerCase()
       );
+      console.log(`Filtered by category '${selectedCategory}':`, filtered);
     }
     
-    // Then apply search filter
-    const searchFiltered = applySearch(categoryFiltered);
+    // Apply search filter if there's a search query
+    if (searchQuery.trim()) {
+      filtered = applySearch(filtered);
+      console.log(`After search '${searchQuery}':`, filtered);
+    }
     
-    // Update filtered products
-    setFilteredProducts(searchFiltered);
-    setCurrentPage(1); // Reset to first page when filter changes
+    // Update filtered products and reset to first page
+    setFilteredProducts(filtered);
+    setCurrentPage(1);
     
-    // Log for debugging
-    console.log(`Filtered to ${selectedCategory} category and search '${searchQuery}': ${searchFiltered.length} products`);
-  }, [selectedCategory, searchQuery, products]);
-  
-  // On mount, fetch products
+    // Close the filter menu on mobile after selection
+    if (isMobile && selectedCategory !== 'All') {
+      setIsFilterOpen(false);
+    }
+  }, [selectedCategory, searchQuery, products, isMobile]);
+
+  // On mount, fetch products and categories
   useEffect(() => {
-    // Fetch products from Supabase
+    const fetchCategories = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('category')
+          .not('category', 'is', null);
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          // Get unique categories and sort them
+          const uniqueCategories = Array.from(
+            new Set(data.map((item: any) => item.category).filter(Boolean))
+          ).sort() as string[];
+
+          setCategories(['All', ...uniqueCategories]);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        // Fetch all products with required columns
         const { data, error } = await supabase
           .from('products')
-          .select('id, name, price, image');
+          .select('id, name, description, price, image, category')
+          .order('id', { ascending: true });
           
         if (error) {
           throw error;
@@ -169,26 +152,20 @@ export default function Shop() {
           return;
         }
         
-        // Process products from Supabase and merge with metadata
+        // Process products from Supabase
         const processedProducts = data.map((product: any) => {
-          // Get metadata for this product if available
-          const metadata = PRODUCT_METADATA[product.id as keyof typeof PRODUCT_METADATA] || {};
-          
+          // Return product with default values if needed
           return {
             id: product.id,
             name: product.name,
             price: product.price,
-            // Use image from Supabase with fallback to metadata or default
-            image: product.image || metadata.image || '/media1.png',
-            // Use metadata values or defaults
-            tag: metadata.tag || '',
-            description: metadata.description || '',
-            category: metadata.category || 'Other'
+            image: product.image || DEFAULT_PRODUCT_IMAGE,
+            description: product.description || '',
+            category: product.category || 'Other'
           };
         });
         
         setProducts(processedProducts);
-        // Initialize filtered products with all products
         setFilteredProducts(processedProducts);
         console.log(`Loaded ${processedProducts.length} products from Supabase`);
       } catch (error: any) {
@@ -199,16 +176,31 @@ export default function Shop() {
       }
     };
     
-    fetchProducts();
+    // Fetch both products and categories in parallel
+    Promise.all([fetchProducts(), fetchCategories()]);
   }, []);
   
   // Calculate pagination
-  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+  const getProductsPerPage = (page: number) => {
+    return (page === 1 || page === 2) ? 6 : PRODUCTS_PER_PAGE;
+  };
+
+  const totalPages = (() => {
+    const remaining = filteredProducts.length - 12; // 6 for page 1, 6 for page 2
+    if (remaining <= 0) return Math.ceil(filteredProducts.length / 6);
+    return 2 + Math.ceil(remaining / PRODUCTS_PER_PAGE);
+  })();
   
   // Get current products
   const currentProducts = (() => {
-    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-    return filteredProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+    if (currentPage === 1) {
+      return filteredProducts.slice(0, 6);
+    } else if (currentPage === 2) {
+      return filteredProducts.slice(6, 12);
+    } else {
+      const startIndex = 12 + (currentPage - 3) * PRODUCTS_PER_PAGE;
+      return filteredProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+    }
   })();
   
   // Handle page change
@@ -221,16 +213,10 @@ export default function Shop() {
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
     
-    // Immediately filter products based on selected category
-    if (category === 'All') {
-      setFilteredProducts(products);
-    } else {
-      const filtered = products.filter(product => product.category === category);
-      setFilteredProducts(filtered);
-    }
-    
     // Reset to first page and close filter menu
     setCurrentPage(1);
+    
+    // The actual filtering will be handled by the useEffect that watches selectedCategory
     setIsFilterOpen(false);
     
     // Log for debugging
@@ -241,9 +227,6 @@ export default function Shop() {
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
   };
-
-  // Check if device is mobile
-  const isMobile = window.innerWidth <= 700;
 
   return (
     <div className="shop-video-frame">
@@ -402,7 +385,7 @@ export default function Shop() {
                 </button>
               </div>
               <div className="filter-options">
-                {CATEGORIES.map(category => (
+                {categories.map(category => (
                   <div 
                     key={category}
                     onClick={() => handleCategorySelect(category)}
@@ -440,9 +423,6 @@ export default function Shop() {
               <Link to={`/product/${product.id}`} key={product.id} className="shop-product-card-link">
                 <div className="shop-product-card">
                   <span className="shop-product-price shop-product-price-corner" style={{ position: 'absolute', top: 8, right: 8, padding: '4px 12px', zIndex: 12 }}>${product.price}</span>
-                  {product.tag && (
-                    <span className="shop-product-tag shop-product-tag-corner" style={{ position: 'absolute', top: 8, left: 8, padding: '4px 12px', borderRadius: '1em', background: '#A9DDD6', color: '#1E3932', fontWeight: 700, fontSize: 13, letterSpacing: '0.03em', zIndex: 12 }}>{product.tag}</span>
-                  )}
                   <div className="shop-product-content">
                     <div className="shop-product-img-wrap">
                       <img src={product.image} alt={product.name} className="shop-product-img" />

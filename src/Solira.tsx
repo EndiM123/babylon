@@ -1,51 +1,39 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import './Solira.css';
 import SoliraSlideshow from './SoliraSlideshow';
+import supabase from './supabaseClient';
 
-// Example Solira collection data
-const SOLIRA_PRODUCTS = [
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  limited: boolean;
+}
+
+// Example fallback data in case of API failure
+const FALLBACK_PRODUCTS = [
   {
     id: 1,
-    name: 'Salt Veil Dress',
+    name: 'Solara Maxi Dress',
+    price: 249,
+    description: 'Elegant maxi dress for summer',
+    category: 'Dresses',
     image: '/sol1.png',
-    price: 540,
-    limited: true,
+    limited: false,
   },
   {
     id: 2,
-    name: 'Luminance Top',
+    name: 'Aurelia Linen Set',
+    price: 349,
+    description: 'Comfortable linen set for warm days',
+    category: 'Sets',
     image: '/sol2.png',
-    price: 320,
     limited: false,
-  },
-  {
-    id: 3,
-    name: 'Sunlit Trench',
-    image: '/sol3.png',
-    price: 690, 
-    limited: true,
-  },
-  {
-    id: 4,
-    name: 'Mediterranean Skirt',
-    image: '/sol4.png',
-    price: 410,
-    limited: false,
-  },
-  {
-    id: 5,
-    name: 'Seafoam Bandeau',
-    image: '/sol5.png',
-    price: 220,
-    limited: false,
-  },
-  {
-    id: 6,
-    name: 'Radiant Linen Pants',
-    image: '/sol6.png',
-    price: 370,
-    limited: false,
-  },
+  }
 ];
 
 const SOLIRA_MOMENTS = [
@@ -56,17 +44,50 @@ const SOLIRA_MOMENTS = [
 ];
 
 export default function Solira() {
-  // Preload images and video for smooth experience
+  const [products, setProducts] = useState<Product[]>(FALLBACK_PRODUCTS);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    SOLIRA_PRODUCTS.forEach(p => {
-      const img = new window.Image();
-      img.src = p.image;
-    });
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('solira_products')
+          .select('*')
+          .order('id', { ascending: true });
+
+        if (error) throw error;
+        
+        if (data && data.length > 0) {
+          setProducts(data);
+        }
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError('Failed to load products. Showing sample data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Preload images for smooth experience
+  useEffect(() => {
+    if (products && products.length > 0) {
+      products.forEach(product => {
+        if (product.image) {
+          const img = new window.Image();
+          img.src = product.image;
+        }
+      });
+    }
     SOLIRA_MOMENTS.forEach(src => {
       const img = new window.Image();
       img.src = src;
     });
-  }, []);
+  }, [products]);
 
   // For horizontal scroll snap
   const momentsRef = useRef<HTMLDivElement>(null);
@@ -80,14 +101,21 @@ export default function Solira() {
       <div className="solira-page-title">Solira</div>
 <div className="solira-collection-description">Effortless summer elegance inspired by the Mediterranean.</div>
 
+      {loading && <div className="loading">Loading products...</div>}
+      {error && <div className="error-message">{error}</div>}
+      
       {/* Product Gallery */}
       <section className="solira-gallery">
-        {SOLIRA_PRODUCTS.map((product, idx) => (
-          <div
+        {products.map((product, idx) => (
+          <Link 
+            to={`/solira/product/${product.id}`}
             className={`solira-product-card${product.limited ? ' limited' : ''}`}
             key={product.id}
             style={{
               animationDelay: `${idx * 100}ms`,
+              textDecoration: 'none',
+              color: 'inherit',
+              display: 'block'
             }}
           >
             {product.limited && <span className="solira-limited-tag">Limited</span>}
@@ -104,7 +132,7 @@ export default function Solira() {
               <span className="solira-product-name">{product.name}</span>
               <span className="solira-product-price">${product.price}</span>
             </div>
-          </div>
+          </Link>
         ))}
       </section>
 
