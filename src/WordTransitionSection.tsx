@@ -6,18 +6,13 @@ const useResponsiveVideo = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Initial check
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    // Set initial value
     checkScreenSize();
-
-    // Add event listener for window resize
     window.addEventListener('resize', checkScreenSize);
 
-    // Clean up
     return () => {
       window.removeEventListener('resize', checkScreenSize);
     };
@@ -43,6 +38,7 @@ const useResponsiveVideo = () => {
 
 export default function WordTransitionSection() {
   const { isMobile, videoRef } = useResponsiveVideo();
+  
   return (
     <section className="word-transition-section">
       <div className="media-container">
@@ -69,6 +65,7 @@ export default function WordTransitionSection() {
             loading="eager"
           />
         )}
+        
         <div className="centered-title">
           <span className="word-transition-main">BABYLON</span>
           <p className="subtitle">Shaping the way the city looks since 2012</p>
