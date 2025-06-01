@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import supabase from './supabaseClient'; // Default import instead of named import
+import { supabase } from './lib/supabase';
+import { CartContext } from './App';
 import './SoliraProductDetail.css';
 
 type Product = {
@@ -22,6 +23,7 @@ interface RouteParams extends Record<string, string | undefined> {
 const SoliraProductDetail: React.FC = () => {
   const { id } = useParams<RouteParams>();
   const navigate = useNavigate();
+  const { addToCart } = useContext(CartContext);
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -74,20 +76,36 @@ const SoliraProductDetail: React.FC = () => {
   }, [id]);
 
   const handleAddToCart = () => {
+    if (!product) return;
+    
     if (!selectedSize) {
       alert('Please select a size');
       return;
     }
-    
-    // TODO: Implement add to cart logic
-    console.log('Adding to cart:', {
-      productId: id,
+
+    if (!selectedColor) {
+      alert('Please select a color');
+      return;
+    }
+
+    const cartItem = {
+      product: {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        category: product.category
+      },
       size: selectedSize,
       color: selectedColor,
-      quantity
-    });
+      quantity: quantity
+    };
+
+    addToCart(cartItem);
+    setShowSuccess(true);
     
-    alert('Added to cart!');
+    // Hide success message after 3 seconds
+    setTimeout(() => setShowSuccess(false), 3000);
   };
 
   if (loading) {

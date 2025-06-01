@@ -11,11 +11,10 @@ interface Customer {
   name: string;
   email: string;
   phone_number: string;
-  address: string;
-  // Additional fields for UI that will be concatenated into address field
-  country?: string;
-  city?: string;
-  postal?: string;
+  country: string;
+  city: string;
+  street: string;
+  house_number: string;
 }
 
 interface Order {
@@ -53,14 +52,14 @@ export default function CheckoutPage() {
   const total = subtotal + shipping;
 
   // Form state with fields that match our Customer interface
-  const [form, setForm] = useState<Customer>({
+  const [form, setForm] = useState<Omit<Customer, 'id'>>({
     name: '',
     email: '',
     phone_number: '',
-    address: '',
     country: '',
     city: '',
-    postal: ''
+    street: '',
+    house_number: ''
   });
   
   const [showReceipt, setShowReceipt] = useState(false);
@@ -101,10 +100,7 @@ export default function CheckoutPage() {
     setError(null);
     
     try {
-      // Format full address from form fields
-      const fullAddress = `${form.address}, ${form.city}, ${form.postal}, ${form.country}`;
-      
-      // 1. Insert customer data
+      // 1. Insert customer data with individual address fields
       const { data: customerData, error: customerError } = await supabase
         .from('customers')
         .insert([
@@ -112,7 +108,10 @@ export default function CheckoutPage() {
             name: form.name, 
             email: form.email,
             phone_number: form.phone_number,
-            address: fullAddress
+            country: form.country,
+            city: form.city,
+            street: form.street,
+            house_number: form.house_number
           }
         ])
         .select('id')
@@ -245,10 +244,10 @@ export default function CheckoutPage() {
               <h2>Contact & Delivery</h2>
               <input name="name" required placeholder="Full Name" value={form.name} onChange={handleChange} />
               <input name="email" required placeholder="Email" type="email" value={form.email} onChange={handleChange} />
-              <input name="address" required placeholder="Street Address" value={form.address} onChange={handleChange} />
-              <input name="country" required placeholder="Country" value={form.country} onChange={handleChange} />
+              <input name="street" required placeholder="Street" value={form.street} onChange={handleChange} />
+              <input name="house_number" required placeholder="House/Apartment Number" value={form.house_number} onChange={handleChange} />
               <input name="city" required placeholder="City" value={form.city} onChange={handleChange} />
-              <input name="postal" required placeholder="Postal Code" value={form.postal} onChange={handleChange} />
+              <input name="country" required placeholder="Country" value={form.country} onChange={handleChange} />
               <input name="phone" required placeholder="Phone Number" value={form.phone_number} onChange={handleChange} />
               <button type="submit" className="checkout-form-submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Processing...' : 'Place Order'}
@@ -261,10 +260,10 @@ export default function CheckoutPage() {
               <h2>Contact & Delivery</h2>
               <input name="name" required placeholder="Full Name" value={form.name} onChange={handleChange} />
               <input name="email" required placeholder="Email" type="email" value={form.email} onChange={handleChange} />
-              <input name="address" required placeholder="Street Address" value={form.address} onChange={handleChange} />
-              <input name="country" required placeholder="Country" value={form.country} onChange={handleChange} />
+              <input name="street" required placeholder="Street" value={form.street} onChange={handleChange} />
+              <input name="house_number" required placeholder="House/Apartment Number" value={form.house_number} onChange={handleChange} />
               <input name="city" required placeholder="City" value={form.city} onChange={handleChange} />
-              <input name="postal" required placeholder="Postal Code" value={form.postal} onChange={handleChange} />
+              <input name="country" required placeholder="Country" value={form.country} onChange={handleChange} />
               <input name="phone" required placeholder="Phone Number" value={form.phone_number} onChange={handleChange} />
               <button type="submit" className="checkout-form-submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Processing...' : 'Place Order'}

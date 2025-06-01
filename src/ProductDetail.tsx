@@ -1,5 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, A11y, EffectFade } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 import './ProductDetail.css';
 import Footer from './Footer';
 import CartPanel from './components/CartPanel';
@@ -261,15 +267,45 @@ export default function ProductDetail() {
         onQuantityChange={() => {}}
         onCheckout={() => { setCartOpen(false); navigate('/checkout', { state: { product, quantity: 1 } }); }}
       />
-      <main className="product-detail-container">
-        <div className="product-detail-main-row product-detail-split-layout">
-          <div className="product-detail-mobile-image">
-            <img className="product-detail-media product-detail-media-tall" src={product.image} alt={product.name} />
-          </div>
-          <div className="product-detail-desktop-image">
+      <main>
+        <div className="product-detail-mobile-image">
+          <Swiper
+            modules={[Navigation, Pagination, A11y, EffectFade]}
+            spaceBetween={0}
+            slidesPerView={1}
+            navigation={false}
+            pagination={{ clickable: true }}
+            effect="fade"
+            className="mobile-swiper"
+          >
+            {[1, 2, 3, 4].map((num) => (
+              <SwiperSlide key={num}>
+                <img 
+                  className="product-detail-media product-detail-media-tall" 
+                  src={product.image} 
+                  alt={`${product.name} view ${num}`} 
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+        {window.innerWidth >= 1200 && (
+          <div className="product-gallery">
+            <div className="thumbnail-container">
+              {[1, 2, 3, 4].map((num) => (
+                <div key={num} className="thumbnail">
+                  <img 
+                    src={product.image} 
+                    alt={`${product.name} view ${num}`} 
+                    className="thumbnail-image"
+                  />
+                </div>
+              ))}
+            </div>
             <img src={product.image} alt={product.name} className="desktop-product-image" />
           </div>
-          <div className="product-detail-info-panel">
+        )}
+        <div className="product-detail-info">
             <h1 className="product-detail-title">{product.name}</h1>
             <div className="product-detail-volume">450 ML</div>
             <div className="product-detail-price-row">
@@ -297,14 +333,12 @@ export default function ProductDetail() {
                   <button
                     key={opt.name}
                     className={`product-detail-color-option${selectedColor === opt.name ? ' selected' : ''}`}
-                    style={{ color: selectedColor === opt.name ? '#222' : '#888' }}
                     aria-label={opt.name}
                     tabIndex={0}
-                    onClick={() => setSelectedColor(opt.name)}
-                    onKeyPress={e => (e.key === 'Enter' || e.key === ' ') && setSelectedColor(opt.name)}
                     type="button"
+                    style={{ backgroundColor: opt.value }}
+                    onClick={() => setSelectedColor(opt.name)}
                   >
-                    {opt.name}
                   </button>
                 ))}
               </div>
@@ -346,7 +380,6 @@ export default function ProductDetail() {
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </main>
       <Footer />

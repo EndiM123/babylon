@@ -12,11 +12,13 @@ import FeaturedProductCarousel from './FeaturedProductCarousel';
 type CartContextType = {
   cart: any[];
   setCart: React.Dispatch<React.SetStateAction<any[]>>;
+  addToCart: (item: any) => void;
 };
 
 export const CartContext = createContext<CartContextType>({
   cart: [],
   setCart: () => {},
+  addToCart: () => {},
 });
 
 
@@ -28,6 +30,28 @@ function App() {
   const [cart, setCart] = useState<any[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const addToCart = (newItem: any) => {
+    setCart(prevCart => {
+      // Check if item with same product ID, size and color already exists in cart
+      const existingItemIndex = prevCart.findIndex(
+        item => 
+          item.product.id === newItem.product.id &&
+          item.size === newItem.size &&
+          item.color === newItem.color
+      );
+
+      if (existingItemIndex >= 0) {
+        // Update quantity if item exists
+        const updatedCart = [...prevCart];
+        updatedCart[existingItemIndex].quantity += newItem.quantity;
+        return updatedCart;
+      } else {
+        // Add new item to cart
+        return [...prevCart, newItem];
+      }
+    });
+  };
 
   // Used to trigger scroll after navigation
   const [pendingLandingScroll, setPendingLandingScroll] = useState(false);
@@ -83,7 +107,7 @@ function App() {
   }, []);
 
   return (
-    <CartContext.Provider value={{ cart, setCart }}>
+    <CartContext.Provider value={{ cart, setCart, addToCart }}>
       <>
         <GlitterParticlesPortal />
         <header className="babylon-header">
