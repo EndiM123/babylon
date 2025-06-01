@@ -1,0 +1,258 @@
+.summer-split-section {
+  width: 100%;
+  min-height: 100vh;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  padding: 2rem 0;
+}
+
+.summer-split-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: auto;
+}
+
+.summer-split-left {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  height: 50vh;
+  min-height: 320px;
+}
+
+.corner-label {
+  position: absolute;
+  font-family: 'Wolmer', sans-serif;
+  color: #FFFFFF;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 20;
+}
+
+.top-left {
+  top: 2rem;
+  left: 2rem;
+}
+
+.top-right {
+  top: 2rem;
+  right: 2rem;
+}
+
+.bottom-left {
+  bottom: 2rem;
+  left: 2rem;
+}
+
+.bottom-right {
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.summer-image-container {
+  width: 100%;
+  height: 100%;
+  background-color: #F7EFE5;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summer-scene-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.summer-split-right {
+  width: 100%;
+  padding: 2rem 0.5rem 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.summer-content {
+  width: 100%;
+  max-width: 540px;
+  margin: 0;
+  padding-left: 0.5rem;
+}
+
+.summer-heading {
+  font-family: 'Wolmer', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 0.06em;
+  color: #232323;
+  margin-bottom: 2rem;
+  text-transform: lowercase;
+}
+
+.summer-products-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 0.5rem;
+  width: calc(100% + 0.5rem);
+  margin-left: -0.25rem;
+}
+
+.summer-product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 0.6rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+}
+
+.summer-product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.summer-product-thumbnail {
+  width: 100px;
+  height: 100px;
+  min-width: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.summer-product-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.summer-product-info {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+}
+
+.summer-product-name {
+  font-family: 'Wolmer', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #232323;
+  margin: 0 0 0.25rem 0;
+}
+
+.summer-product-category {
+  font-family: 'Wolmer', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #666666;
+  margin: 0;
+}
+
+/* Desktop styles (min-width: 1200px) */
+@media (min-width: 1200px) {
+  .summer-split-container {
+    flex-direction: row;
+    height: 80vh;
+    min-height: 600px;
+  }
+  
+  .summer-split-left {
+    width: 50%;
+    height: 100%;
+  }
+  
+  .summer-split-right {
+    width: 50%;
+    padding: 3rem 4rem;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .summer-content {
+    margin: 0 auto;
+  }
+  
+  .summer-heading {
+    font-size: 3.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+  
+  .summer-products-container {
+    gap: 1.25rem;
+  }
+  
+  .summer-product-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem;
+    height: 100%;
+    text-align: center;
+  }
+  
+  .summer-product-thumbnail {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .summer-product-info {
+    text-align: center;
+  }
+  
+  .summer-product-name {
+    font-size: 1.25rem;
+  }
+  
+  .summer-product-category {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .summer-split-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .summer-split-left {
+    width: 100%;
+    height: 50vh;
+  }
+  
+  .summer-split-right {
+    width: 100%;
+    padding: 2.5rem 3rem;
+  }
+  
+  .summer-heading {
+    font-size: 3rem;
+  }
+  
+  .summer-products-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}

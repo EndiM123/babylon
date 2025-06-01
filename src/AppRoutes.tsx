@@ -6,7 +6,7 @@ import SoliraProductDetail from './SoliraProductDetail';
 import ProductDetail from './ProductDetail';
 // Removed unused import PRODUCTS
 import WordTransitionSection from './WordTransitionSection';
-import ScrollStorySection from './ScrollStorySection';
+import SummerSplitSection from './SummerSplitSection';
 import FeaturedProductCarousel from './FeaturedProductCarousel';
 import DualPromoSection from './DualPromoSection';
 import ProductCarousel from './ProductCarousel';
@@ -35,7 +35,7 @@ export default function AppRoutes({ contentRef }: { contentRef?: React.RefObject
         <>
           {/* Hero Section */}
           <WordTransitionSection />
-          <ScrollStorySection />
+          <SummerSplitSection />
           <FeaturedProductCarousel />
           <DualPromoSection />
           <ProductCarousel />
