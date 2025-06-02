@@ -1451,8 +1451,10 @@
   
   /* Center product name and category in mobile view */
   .shop-product-row {
-    justify-content: center !important;
-    text-align: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    margin-left: -8px !important;
+    padding-right: 3px !important;
   }
   .shop-side-controls {
     flex-wrap: nowrap;
@@ -1512,16 +1514,16 @@
   .shop-product-name {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
+    left: 0; /* Moved all the way to the left edge */
+    transform: translateY(-50%);
+    width: auto;
     font-size: 0.82em;
     padding: 0.08em 0.22em;
-    max-width: 90vw;
+    max-width: 100%; /* Full width since we're at the edge */
     word-break: break-word;
     white-space: normal;
     overflow-wrap: break-word;
-    text-align: center;
+    text-align: left;
     box-sizing: border-box;
     line-height: 1.23;
     z-index: 2;
@@ -1529,11 +1531,23 @@
   }
   
   .shop-product-cat {
-    text-align: center !important;
-    width: 100% !important;
-    display: block !important;
-    margin-left: 0 !important;
-    padding-left: 0 !important;
+    position: absolute;
+    top: 70%;
+    left: 6px; /* Slightly to the right of the product name */
+    transform: translateY(-50%);
+    width: auto;
+    font-size: 0.75em;
+    padding: 0.08em 0.22em;
+    max-width: calc(100% - 6px); /* Adjust width to account for left position */
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: left !important;
+    box-sizing: border-box;
+    line-height: 1.2;
+    z-index: 2;
+    pointer-events: none;
+    margin: 0 !important;
   }
   
   .shop-product-gradient-bg {

@@ -330,23 +330,6 @@ export default function ProductDetail() {
                       </div>
                     </Link>
                   </article>
-                  
-                  {/* Product 3 - Linen Two-Piece Set */}
-                  <article className="solira-more-card">
-                    <Link to="/product/linen-set" className="solira-more-link">
-                      <div className="solira-more-image-wrap">
-                        <img 
-                          src="/2linenpiece.png" 
-                          alt="Linen Two-Piece Set" 
-                          className="solira-more-image" 
-                        />
-                      </div>
-                      <div className="solira-more-details">
-                        <h3 className="solira-more-name">Linen Two-Piece Set</h3>
-                        <p className="solira-more-price">$120</p>
-                      </div>
-                    </Link>
-                  </article>
                 </div>
               </section>
             </div>

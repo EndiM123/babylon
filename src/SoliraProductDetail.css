@@ -2548,16 +2548,28 @@ html, body {
   width: 100%;
   padding: 0;
   background-color: #F7EFE5;
+  margin-top: 2rem;
+}
+
+.solira-more-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #333;
+  padding: 0 1rem;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
 
 .solira-more-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
   width: 100%;
   margin: 0 auto;
-  padding: 0;
-  max-width: 100%;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
 }
 
 .solira-more-card {
@@ -2568,6 +2580,7 @@ html, body {
   overflow: hidden;
   border: none;
   box-shadow: none;
+  position: relative;
 }
 
 .solira-more-card:active {
@@ -2585,11 +2598,12 @@ html, body {
 
 .solira-more-image-wrap {
   width: 100%;
-  padding-top: 133.33%; /* 3:4 aspect ratio */
+  padding-top: 125%;
   position: relative;
   overflow: hidden;
-  background-color: #fff;
+  background-color: #f8f8f8;
   border-radius: 0;
+  margin-bottom: 0.5rem;
 }
 
 .solira-more-image {
@@ -2600,6 +2614,7 @@ html, body {
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transition: transform 0.3s ease;
 }
 
 .solira-more-badge {
@@ -2609,35 +2624,35 @@ html, body {
   background-color: #fff;
   color: #000;
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 500;
-  padding: 0.2rem 0.6rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 2px;
   z-index: 1;
   letter-spacing: 0.05em;
 }
 
 .solira-more-details {
-  padding: 1rem 0.75rem 1rem 1rem; /* Reduce right padding to give more space on the right */
+  padding: 0.25rem 0.5rem 0.75rem;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-start;
   width: 100%;
   background-color: #fff;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  position: relative;
   box-sizing: border-box;
 }
 
 .solira-more-name {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 400;
   color: #333;
   margin: 0;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  max-width: 75%;
 }
 
 .solira-more-price {
@@ -2663,83 +2678,121 @@ html, body {
 /* Tablet and Desktop styles */
 @media (min-width: 1200px) {
   .solira-more-section {
-    padding: 3rem 0;
-    max-width: 1400px;
-    margin: 0 auto;
+    padding: 1.75rem 1.25rem 3rem;
+    max-width: 1150px;
+    margin: -3.5rem auto 0; /* Adjusted from -2.5rem to -3.5rem */
     background-color: #F7EFE5;
+    position: relative;
+    right: -100px;
+    width: calc(100% - 100px);
   }
   
   .solira-more-grid {
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 300px);
     gap: 2rem;
-    max-width: 1400px;
+    justify-content: center;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1rem;
+    max-width: 700px;
+  }
+  
+  /* Hide all but first two products on desktop */
+  .solira-more-card:nth-child(n+3) {
+    display: none;
   }
   
   .solira-more-title {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
+    font-size: 1.65rem;
     font-weight: 400;
     color: #333;
-    margin: 0 0 2.5rem 0;
+    margin: 0 0 2rem 0;
     text-align: center;
     letter-spacing: 0.02em;
+    text-transform: none;
   }
   
   .solira-more-card {
-    max-width: 33.333%;
+    width: 300px;
+    height: 400px;
     background-color: transparent;
-    box-shadow: none;
-    border-radius: 0;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+  }
+  
+  .solira-more-card:hover {
+    transform: translateY(-4px);
   }
   
   .solira-more-link {
-    background-color: transparent;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
   }
   
   .solira-more-image-wrap {
-    border-radius: 0;
-    background-color: transparent;
+    position: relative;
+    width: 100%;
+    height: 360px; /* 400px total - 40px for text */
+    overflow: hidden;
+    background-color: #f8f8f8;
   }
   
   .solira-more-image {
-    border-radius: 0;
+    position: absolute;
+    top: 19%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
   }
   
   .solira-more-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.5rem 0;
+    background: transparent;
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    padding: 1rem 0;
-    border-top: none;
+    align-items: flex-start;
   }
   
   .solira-more-name {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 400;
     color: #333;
     margin: 0;
-    line-height: 1.3;
-    letter-spacing: 0.02em;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    max-width: 80%;
   }
   
   .solira-more-price {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-size: 1rem;
+    font-weight: 500;
     color: #333;
     margin: 0;
     text-align: right;
+    position: relative;
+    right: 0;
   }
 }
 
 /* Larger desktop adjustments */
 @media (min-width: 1200px) {
   .solira-more-section {
-    padding: 3.5rem 5%;
+    padding: 4.0rem 5%;
   }
   
   .solira-more-title {

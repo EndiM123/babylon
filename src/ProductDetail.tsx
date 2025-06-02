@@ -431,6 +431,24 @@ export default function ProductDetail() {
                       </div>
                     </Link>
                   </article>
+                  
+                  {/* Product 4 - Linen Blazer */}
+                  <article className="solira-more-card">
+                    <Link to="/product/linen-blazer" className="solira-more-link">
+                      <div className="solira-more-image-wrap">
+                        <img 
+                          src="/sol5.png" 
+                          alt="Linen Blazer" 
+                          className="solira-more-image" 
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="solira-more-details">
+                        <h3 className="solira-more-name">Linen Blazer</h3>
+                        <p className="solira-more-price">$145.00</p>
+                      </div>
+                    </Link>
+                  </article>
                 </div>
               </section>
             </div>

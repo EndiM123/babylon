@@ -55,7 +55,16 @@
   }
   .more-for-you-section .product-grid,
   .more-for-you-section .related-products-grid {
-    justify-content: flex-end;
+    justify-content: flex-start;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Hide all but first two products on desktop */
+  .more-for-you-section .product-grid > *:nth-child(n+3) {
+    display: none;
   }
   
   /* Make product images in More for You section smaller */
