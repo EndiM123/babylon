@@ -2,6 +2,7 @@ import React, { useState, createContext } from 'react';
 import SoliraPreviewMenu from './components/SoliraPreviewMenu';
 import './App.css';
 import './global-video-override.css';
+import './desktop-styles.css';
 import AppRoutes from './AppRoutes';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import GlitterParticlesPortal from './GlitterParticlesPortal';

@@ -8,11 +8,16 @@ html, body, #root {
 
 body {
   background: #F7EFE5;
-  font-family: 'Wolmer', sans-serif;
+  font-family: 'Wolmer', 'Helvetica Neue', Arial, sans-serif !important;
   color: #F7EFE5;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* Ensure all text elements use Wolmer */
+* {
+  font-family: inherit !important;
 }
 
 #root {
@@ -48,6 +53,15 @@ main {
   flex-direction: column;
   min-height: 0;
   overflow: visible;
+}
+
+/* Navigation item styles */
+.babylon-nav-item {
+  color: #F7EFE5 !important; /* Cream color from palette */
+}
+
+.babylon-nav-item:hover {
+  color: #A9DDD6 !important; /* Teal color on hover */
 }
 
 .babylon-header {
@@ -109,6 +123,11 @@ main {
     padding-right: 0.6em;
     line-height: 1.1;
     margin-left: 0;
+  }
+  .babylon-nav-item {
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    color: #F7EFE5; /* Cream color from the palette */
   }
 }
 

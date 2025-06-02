@@ -205,9 +205,7 @@ const EditorialCoffeeBlogPost: React.FC = () => {
           "The ritual of coffee is as much about identity as it is about taste. It's a performance we perfect over time."
         </div>
         
-        <div className="closing-cta">
-          <Link to="/editorial" className="cta-link serif">Explore more editorials</Link>
-        </div>
+
       </div>
       
       {showStyleItemOverlay && selectedStyleItem && (

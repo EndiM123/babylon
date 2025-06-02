@@ -1,18 +1,24 @@
 /* SHOP PAGE: Modern Luxury Editorial Style */
 
-.shop-video-frame {
-  position: absolute;
-  width: 100vw;
-  max-width: 100vw;
-  min-height: 100vh;
-  margin: 0 auto 2vh auto;
+.shop-page-container {
   display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.shop-video-frame {
+  position: relative;
+  width: 100%;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: transparent;
-  border-radius: 0;
-  box-shadow: 0 4px 32px 0 rgba(30,57,50,0.09);
-  overflow: hidden;
+  overflow: visible;
+  min-height: 0;
 }
 
 .shop-video-frame-video {

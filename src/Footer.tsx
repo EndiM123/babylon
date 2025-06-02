@@ -1,6 +1,5 @@
 import React from 'react';
 import './Footer.css';
-import MapLocation from './components/MapLocation';
 
 export default function Footer() {
   return (
@@ -62,9 +61,7 @@ export default function Footer() {
               </div>
             </div>
           </div>
-          <div className="mobile-map">
-            <MapLocation />
-          </div>
+
         </div>
       </div>
     </footer>

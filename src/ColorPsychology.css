@@ -50,6 +50,14 @@
 
 /* Mobile-specific video crop */
 @media (max-width: 1199px) {
+  /* Base container adjustments */
+  .blog-post-section {
+    overflow-x: hidden;
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+  
   .immersive-hero-video {
     width: 115vw;
     height: 98%;
@@ -57,6 +65,33 @@
     top: 1%;
     object-fit: cover;
     transform: scale(0.97);
+  }
+  
+  /* Adjust all content containers */
+  .immersive-intro,
+  .color-intro-text,
+  .color-fact,
+  .color-outro {
+    width: 100%;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  /* Adjust color columns */
+  .colors-row {
+    margin: 0 -0.5rem;
+    width: calc(100% + 1rem);
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+  }
+  
+  .color-column {
+    margin: 0 0 1.5rem 0;
+    width: 100%;
+    padding: 1.5rem;
+    box-sizing: border-box;
   }
 }
 
@@ -121,23 +156,91 @@
 
 /* Color-specific styles */
 .red-column {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(214, 48, 49, 0.1));
-  color: var(--color-red);
+  background: #ff1a1a; /* Neon red */
+  color: #F7EFE5; /* Beige text */
+  box-shadow: 0 0 15px rgba(255, 26, 26, 0.7); /* Glow effect */
+}
+
+/* Ensure all text in red column is beige */
+.red-column,
+.red-column p,
+.red-column h2,
+.red-column .color-title,
+.red-column .color-perception,
+.red-column .scenario-text,
+.red-column .color-product,
+.color-title,
+.color-psychology,
+.color-psychology p,
+.color-product {
+  color: #F7EFE5 !important; /* Beige text */
+}
+
+.red-column .color-title::after {
+  background: #F7EFE5; /* Beige underline */
 }
 
 .orange-column {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(225, 112, 85, 0.1));
-  color: var(--color-orange);
+  background: #FF8C42; /* Orange background */
+  color: #F7EFE5; /* Beige text */
+  box-shadow: 0 0 15px rgba(255, 140, 66, 0.7); /* Glow effect */
+}
+
+/* Ensure all text in orange column is beige */
+.orange-column,
+.orange-column p,
+.orange-column h2,
+.orange-column .color-title,
+.orange-column .color-perception,
+.orange-column .scenario-text,
+.orange-column .color-product {
+  color: #F7EFE5 !important;
+}
+
+.orange-column .color-title::after {
+  background: #F7EFE5; /* Beige underline */
 }
 
 .blue-column {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(9, 132, 227, 0.1));
-  color: var(--color-blue);
+  background: #2A5CAA; /* Deep blue background */
+  color: #F7EFE5; /* Beige text */
+  box-shadow: 0 0 15px rgba(42, 92, 170, 0.7); /* Subtle glow effect */
+}
+
+/* Ensure all text in blue column is beige */
+.blue-column,
+.blue-column p,
+.blue-column h2,
+.blue-column .color-title,
+.blue-column .color-perception,
+.blue-column .scenario-text,
+.blue-column .color-product {
+  color: #F7EFE5 !important;
+}
+
+.blue-column .color-title::after {
+  background: #F7EFE5; /* Beige underline */
 }
 
 .green-column {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(0, 184, 148, 0.1));
-  color: var(--color-green);
+  background: #2E8B57; /* Forest green background */
+  color: #F7EFE5; /* Beige text */
+  box-shadow: 0 0 15px rgba(46, 139, 87, 0.7); /* Subtle glow effect */
+}
+
+/* Ensure all text in green column is beige */
+.green-column,
+.green-column p,
+.green-column h2,
+.green-column .color-title,
+.green-column .color-perception,
+.green-column .scenario-text,
+.green-column .color-product {
+  color: #F7EFE5 !important;
+}
+
+.green-column .color-title::after {
+  background: #F7EFE5; /* Beige underline */
 }
 
 .color-single {
@@ -146,9 +249,24 @@
 }
 
 .yellow-single {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(253, 203, 110, 0.1));
-  color: var(--color-yellow);
-  text-align: center;
+  background: #FFD700; /* Gold/yellow background */
+  color: #333; /* Dark text for better contrast */
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+/* Ensure all text in yellow section has good contrast */
+.yellow-single,
+.yellow-single p,
+.yellow-single h2,
+.yellow-single .color-title,
+.yellow-single .color-perception,
+.yellow-single .scenario-text,
+.yellow-single .color-product {
+  color: #333 !important;
+}
+
+.yellow-single .color-title::after {
+  background: #333; /* Dark underline for contrast */
 }
 
 .single-color-image {
@@ -213,7 +331,14 @@
   line-height: 1.7;
   margin: 1.5rem 0;
   max-width: 90%;
-  color: var(--color-text);
+  color: #F7EFE5; /* Beige text */
+}
+
+.scenario-text {
+  color: #F7EFE5; /* Beige text */
+  font-style: italic;
+  margin: 1.5rem 0;
+  line-height: 1.7;
 }
 
 .identity-title {

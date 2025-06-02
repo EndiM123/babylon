@@ -1,12 +1,179 @@
 /* Monaco Immersive Experience - Base Styles */
 
+/* New container for horizontal layout */
+.monaco-horizontal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+/* Unique container styles */
+.texture-container,
+.racing-suit-container,
+.split-screen-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+/* Desktop layout - Fixed Width */
+@media (min-width: 1200px) {
+  html, body {
+    overflow-x: auto;
+    width: 100%;
+  }
+  
+  .monaco-immersive-container {
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    overflow-x: visible;
+  }
+
+  .vignettes-grid {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .image-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .image-wrapper {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .hover-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+  
+  .image-wrapper:hover .hover-text {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .image-wrapper:hover img {
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    .image-container {
+      flex-direction: column;
+      height: auto;
+      gap: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 28vh;
+      border-radius: 4px;
+      margin: 5px 0;
+      overflow: hidden;
+    }
+    
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 4px;
+    }
+    
+    .hover-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      color: white;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    .hover-text p {
+      margin: 0;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+  }
+  
+  .vignette-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.5);
+    transform-origin: center;
+  }
+  
+  .vignette-item {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .vignette-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .split-screen {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .split-left, 
+  .split-right {
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .split-left img,
+  .split-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+
 .monaco-immersive-container {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #fff;
+  background-color: #F7EFE5; /* Exact beige color */
   color: #333;
   font-family: 'Wolmer', sans-serif;
   scroll-behavior: smooth;
@@ -84,6 +251,37 @@
   .background-image {
     object-fit: contain;
   }
+  
+  .dark-interface {
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+  
+  .monaco-map {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .map-title {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+    margin: 0 0 1rem 0;
+    padding: 0;
+  }
+  
+  .map-title h2 {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+  }
+  
+  .map-container {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .whisper-text {
@@ -107,6 +305,7 @@
   grid-template-columns: 1fr;
   gap: 1rem;
   padding: 1rem;
+  background-color: #F7EFE5; /* Exact beige color */
 }
 
 .vignette-item {
@@ -114,7 +313,7 @@
   width: 100%;
   height: 100vh; /* Full viewport height on mobile */
   overflow: hidden;
-  background-color: #f8f8f8;
+  background-color: #F7EFE5; /* Exact beige color */
   border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
@@ -136,7 +335,7 @@
 
 .vroom-text-container {
   padding: 2rem 1rem 1rem;
-  background-color: #f5f5f5;
+  background-color: #F7EFE5; /* Exact beige color */
   text-align: center;
 }
 
@@ -173,7 +372,7 @@
   bottom: 2rem;
   left: 2rem;
   right: 2rem;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(247, 239, 229, 0.9); /* Semi-transparent exact beige */
   padding: 1rem;
   border-radius: 4px;
   opacity: 0;
@@ -234,7 +433,7 @@
 /* Detail Carousel */
 .detail-carousel {
   padding: 4rem 1rem;
-  background-color: #f5f5f5;
+  background-color: #F7EFE5; /* Exact beige color */
 }
 
 .carousel-title {
@@ -243,6 +442,7 @@
   font-size: 1.2rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  background-color: #F7EFE5; /* Exact beige color */
 }
 
 .carousel-container {
@@ -299,28 +499,65 @@
 }
 
 /* Map Interface */
+.map-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+  padding: 1rem 0;
+  background-color: #F7EFE5; /* Match the background */
+}
+
+.map-title h2 {
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #333;
+  font-weight: 400;
+  margin: 0;
+}
+
 .dark-interface {
-  background-color: #f9f9f9;
-  padding: 2rem 1rem;
+  background-color: #F7EFE5; /* Exact beige color */
+  padding: 1rem 1rem 4rem; /* Reduced top padding */
   min-height: 80vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Align to top */
   justify-content: center;
+  position: relative; /* For absolute positioning of children */
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
+  margin-top: -2rem; /* Pull the section up */
 }
 
 .monaco-map {
   width: 100%;
-  max-width: 600px; /* Increased from 500px */
+  max-width: 1000px; /* Increased width for better visibility */
   position: relative;
   margin: 0 auto;
+  background-color: #F7EFE5;
+  padding-top: 3rem; /* Reduced space for title */
+  margin-top: 1rem; /* Additional spacing from top */
 }
 
 .map-container {
   position: relative;
   width: 100%;
-  padding-top: 66.67%; /* 3:2 Aspect Ratio for better visibility */
+  height: 0;
+  padding-bottom: 80%; /* Slightly shorter on mobile */
+  overflow: hidden;
+  background-color: #F7EFE5;
+  margin: 0;
+  padding-top: 0;
+}
+
+/* Desktop styles */
+@media (min-width: 1200px) {
+  .map-container {
+    padding-bottom: 25%; /* Slightly shorter on desktop */
+  }
 }
 
 .map-container img {
@@ -330,6 +567,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  display: block;
 }
 
 .hotspot {
@@ -378,7 +616,7 @@
 .hotspot-content {
   position: absolute;
   width: 250px;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(247, 239, 229, 0.95); /* Semi-transparent exact beige */
   border: 1px solid rgba(166, 120, 153, 0.5);
   border-radius: 4px;
   padding: 1rem;
@@ -410,7 +648,7 @@
 /* Vertical Collage */
 .vertical-collage {
   min-height: 100vh;
-  background-color: #f8f8f8;
+  background-color: #F7EFE5; /* Exact beige color */
   padding: 2rem 1rem;
 }
 
@@ -481,17 +719,27 @@
   text-align: center;
   font-size: 0.9rem;
   min-height: 3rem;
+  padding: 1.5rem;
+  background-color: rgba(247, 239, 229, 0.7); /* Semi-transparent exact beige */
+  backdrop-filter: blur(10px);
+  border-radius: 4px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333;
 }
 
 /* Ending Sequence */
 .ending-sequence {
   height: 100vh;
-  background-color: #fff;
+  background-color: #F7EFE5; /* Exact beige color */
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  overflow: hidden;
+  color: #333;
 }
 
 .tire-marks {
@@ -514,11 +762,18 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(166,120,153,0.05) 0%, transparent 70%);
-  opacity: 0.5;
-  animation: shimmer 3s infinite alternate;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to right,
+    rgba(247, 239, 229, 0) 0%,
+    rgba(247, 239, 229, 0.6) 50%,
+    rgba(247, 239, 229, 0) 100%
+  );
+  transform: translateX(-100%) skewX(-25deg);
+  animation: shimmer 3s infinite;
+  z-index: 1;
+  opacity: 0.8; /* Make it more visible */
 }
 
 @keyframes shimmer {
@@ -534,9 +789,13 @@
   letter-spacing: 0.1em;
   text-align: center;
   max-width: 80%;
-  opacity: 0;
+  opacity: 1; /* Always visible */
   color: #1E3932;
-  animation: fadeIn 1s ease forwards;
+  animation: none; /* Remove fade-in animation */
+  padding: 1.5rem;
+  background-color: rgba(247, 239, 229, 0.7); /* Semi-transparent beige background */
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
 }
 
 /* Hidden CTA */
@@ -555,7 +814,7 @@
 }
 
 .hidden-cta:hover {
-  background-color: rgba(30, 57, 50, 0.3);
+  background-color: rgba(247, 239, 229, 0.9); /* Semi-transparent exact beige */
 }
 
 .cta-symbol {
@@ -576,7 +835,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.98);
+  background-color: rgba(247, 239, 229, 0.98); /* Semi-transparent exact beige */
   z-index: 200;
   display: flex;
   flex-direction: column;
@@ -601,11 +860,16 @@
 }
 
 .close-button {
+  position: absolute;
+  right: 2rem;
+  top: 1.5rem;
   background: none;
   border: none;
   color: #1E3932;
   font-size: 2rem;
   cursor: pointer;
+  padding: 0.5rem 1rem;
+  margin: -0.5rem -1rem -0.5rem 0;
 }
 
 .emotion-filters {
@@ -634,19 +898,24 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+  padding-left: 0; /* Remove left padding */
+  margin-right: 0; /* Reset right margin */
+  width: 100%; /* Full width */
+  transform: translateX(-4%); /* Slightly less left shift for mobile */
 }
 
 .velocity-item {
   position: relative;
   overflow: hidden;
   border-radius: 4px;
-  background-color: #111;
+  background-color: #F7EFE5; /* Exact beige color */
 }
 
 .velocity-item img {
-  width: 100%;
+  width: 105%; /* Slightly wider than container */
   height: 300px;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.5s ease;
 }
 
@@ -776,5 +1045,9 @@
   
   .velocity-grid {
     grid-template-columns: repeat(3, 1fr);
+    padding: 0; /* No left padding */
+    margin: 0 0 0 -1%; /* Increased negative left margin */
+    width: 101%; /* Compensate for negative margin */
+    transform: none; /* Remove mobile transform */
   }
 }

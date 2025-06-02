@@ -6,6 +6,8 @@
   color: #222;
   width: 100%;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .solira-hero {
@@ -199,6 +201,19 @@
   margin-top: 7vw;
   padding-bottom: 4vw;
   background: none;
+}
+
+/* Desktop footer positioning */
+@media (min-width: 1200px) {
+  .solira-root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .solira-moments-section {
+    margin-bottom: 2rem;
+  }
 }
 .solira-moments-title {
   font-family: 'Wolmer', serif;

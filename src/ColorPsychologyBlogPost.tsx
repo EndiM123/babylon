@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './immersive-blog-responsive.css';
 import './ColorPsychology.css';
+import Footer from './Footer';
 
 // Color Psychology Blog Post
 const COLOR_SECTIONS = [
@@ -53,7 +54,7 @@ const COLOR_SECTIONS = [
     mood: 'Wearing yellow lifts your spirits, encouraging openness and connection.',
     scenario: 'She chose the buttercup silk camisole on the morning she needed courage disguised as joy. With each compliment came a conversation, with each conversation a connection. Yellow doesn\'t just reflect light—it generates it from within.',
     product: 'Our Buttercup Silk Camisole, €95 – when you need to both feel and spread joy',
-    image: '/yellow-moodboard.jpg'
+    image: '/mood.png'
   }
 ];
 
@@ -73,6 +74,7 @@ export default function ColorPsychologyBlogPost() {
   };
 
   return (
+    <>
     <section className="blog-post-section immersive-blog-post">
       <nav className="blog-breadcrumbs">
         <Link to="/" className="blog-breadcrumb">Home</Link>
@@ -298,7 +300,8 @@ export default function ColorPsychologyBlogPost() {
       <p className="cta-text">
         Color isn't just seen—it's felt. Wear what you want the world to know about you. Your wardrobe is more than fabric; it's your visual voice in a crowded world.
       </p>
-      <Link to="/shop" className="color-shop-link">Explore Our Color Your Identity Collection →</Link>
     </section>
+    <Footer />
+    </>
   );
 }

@@ -1,242 +1,358 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from './lib/supabase';
-import { CartContext } from './App';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, A11y, EffectFade } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 import './SoliraProductDetail.css';
+import Footer from './Footer';
+import ProductTestimonials from './components/ProductTestimonials';
+import CartPanel from './components/CartPanel';
+import { CartContext } from './App';
+import { supabase } from './lib/supabase';
 
-type Product = {
+// Product interface for Solira products from Supabase
+interface Product {
   id: number;
   name: string;
-  price: number;
   description: string;
-  category: string;
+  price: number;
   image: string;
-  sizes: string[];
-  colors: string[];
-  created_at?: string;
-};
-
-interface RouteParams extends Record<string, string | undefined> {
-  id: string;
+  category: string;
+  tag?: string;
+  video?: string;
+  oldPrice?: number;
+  rating?: number;
+  reviews?: number;
+  sizes?: string[];
+  materials?: string;
+  shipping?: string;
+  returns?: string;
 }
 
-const SoliraProductDetail: React.FC = () => {
-  const { id } = useParams<RouteParams>();
-  const navigate = useNavigate();
-  const { addToCart } = useContext(CartContext);
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string>('');
-  const [selectedColor, setSelectedColor] = useState<string>('');
-  const [quantity, setQuantity] = useState(1);
-  const [showSuccess, setShowSuccess] = useState(false);
+// Default values for product details
+const DEFAULT_PRODUCT: Product = {
+  id: 0,
+  name: 'Loading...',
+  description: 'Loading product details...',
+  price: 0,
+  image: '/placeholder-image.jpg',
+  category: '',
+  sizes: ['XS', 'S', 'M', 'L', 'XL'],
+  materials: 'Material information not available',
+  shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
+  returns: 'Returns accepted within 30 days. Free return shipping.',
+  rating: 4.5,
+  reviews: 0
+};
 
+// Color options for the product
+const COLOR_OPTIONS = [
+  { name: 'Navy', value: '#222' },
+  { name: 'Orange', value: '#FF9900' },
+  { name: 'Black', value: '#000' },
+];
+
+export default function ProductDetail() {
+  const { id } = useParams();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState(COLOR_OPTIONS[0].name);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [quantity, setQuantity] = useState(1);
+  const [cartOpen, setCartOpen] = useState(false);
+  const navigate = useNavigate();
+
+    // Fetch product details from solira_products in Supabase
   useEffect(() => {
     const fetchProduct = async () => {
-      if (!id) {
-        setError('No product ID provided');
-        setLoading(false);
-        return;
-      }
-
+      if (!id) return;
+      
       try {
         setLoading(true);
+        setError(null);
+        
+        // Fetch product from solira_products table
         const { data, error } = await supabase
           .from('solira_products')
-          .select('*')
+          .select('id, name, description, price, image, category')
           .eq('id', id)
           .single();
-
+          
         if (error) throw error;
         
         if (data) {
-          setProduct({
+          // Merge with default values and set the product
+          const productWithDefaults: Product = {
+            ...DEFAULT_PRODUCT,
             ...data,
-            // Ensure we have default values for optional fields
-            sizes: data.sizes || ['S', 'M', 'L', 'XL'],
-            colors: data.colors || ['Black', 'White', 'Beige']
-          });
+            // Ensure image URL is properly formatted
+            image: data.image || DEFAULT_PRODUCT.image,
+            // Add default values for missing fields
+            sizes: ['XS', 'S', 'M', 'L', 'XL'],
+            materials: 'Material information not specified',
+            rating: 4.5, // Default rating
+            reviews: Math.floor(Math.random() * 50), // Random reviews for demo
+            oldPrice: data.price ? Math.round(data.price * 1.2) : 0, // Add 20% to price for oldPrice
+          };
           
-          // Set default selections
-          if (data.sizes?.length) setSelectedSize(data.sizes[0]);
-          if (data.colors?.length) setSelectedColor(data.colors[0]);
+          setProduct(productWithDefaults);
+          setSelectedSize(productWithDefaults.sizes?.[0] || 'M');
         } else {
-          setError('Product not found');
+          throw new Error('Product not found');
         }
-      } catch (err) {
-        console.error('Error fetching product:', err);
-        setError('Failed to load product details');
+      } catch (error: any) {
+        console.error('Error fetching product:', error);
+        setError(error.message || 'Failed to load product details');
+        // Set default product with error state
+        setProduct({
+          ...DEFAULT_PRODUCT,
+          name: 'Product Not Found',
+          description: 'The requested product could not be found or loaded.',
+        });
       } finally {
         setLoading(false);
       }
     };
-
+    
     fetchProduct();
   }, [id]);
 
-  const handleAddToCart = () => {
+  const { setCart } = useContext(CartContext);
+
+  function handleAddToCart() {
+    setCartOpen(true);
+  }
+
+  function handleCartPanelAdd() {
+    // Add or update product in cart
     if (!product) return;
-    
-    if (!selectedSize) {
-      alert('Please select a size');
-      return;
+    setCart((prevCart: any[]) => {
+      const idx = prevCart.findIndex(item => item.product.id === product.id);
+      if (idx !== -1) {
+        // Update quantity if already in cart
+        const updated = [...prevCart];
+        updated[idx] = { ...updated[idx], quantity: updated[idx].quantity + quantity };
+        return updated;
+      } else {
+        // Add new product
+        return [...prevCart, { product, quantity }];
+      }
+    });
+    setCartOpen(false);
+  }
+  function handleBuyNow() {
+    // Ensure product has all required properties for checkout
+    if (product) {
+      const checkoutProduct = {
+        ...product,
+        // Ensure image is always defined
+        image: product.image || DEFAULT_PRODUCT.image
+      };
+      navigate('/checkout', { state: { product: checkoutProduct, quantity, selectedSize, selectedColor } });
     }
-
-    if (!selectedColor) {
-      alert('Please select a color');
-      return;
-    }
-
-    const cartItem = {
-      product: {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        category: product.category
-      },
-      size: selectedSize,
-      color: selectedColor,
-      quantity: quantity
-    };
-
-    addToCart(cartItem);
-    setShowSuccess(true);
-    
-    // Hide success message after 3 seconds
-    setTimeout(() => setShowSuccess(false), 3000);
-  };
+  }
 
   if (loading) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
+      <div className="product-loading">
+        <div className="product-loading-spinner"></div>
         <p>Loading product details...</p>
       </div>
     );
   }
 
-  if (error) {
+  if (error || !product) {
     return (
-      <div className="error-container">
-        <p className="error-message">{error}</p>
-        <button className="back-button" onClick={() => navigate(-1)}>
-          &larr; Back to Collection
-        </button>
-      </div>
-    );
-  }
-
-  if (!product) {
-    return (
-      <div className="not-found">
-        <p>Product not found</p>
-        <button className="back-button" onClick={() => navigate(-1)}>
-          &larr; Back to Collection
-        </button>
+      <div className="product-error">
+        <h2>Product not found</h2>
+        <p>{error || 'The requested product could not be found.'}</p>
+        <Link to="/shop" className="return-to-shop">Return to Shop</Link>
       </div>
     );
   }
 
   return (
-    <div className="solira-product-detail">
-      <button className="back-button" onClick={() => navigate(-1)}>
-        &larr; Back to Collection
-      </button>
-      
-      <div className="product-container">
-        <div className="product-image-container">
-          <img 
-            src={product.image} 
-            alt={product.name} 
-            className="product-image"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = '/placeholder.jpg';
-            }}
-          />
+    <>
+      <CartPanel
+        open={cartOpen}
+        product={product}
+        quantity={1}
+        onClose={handleCartPanelAdd}
+        onQuantityChange={() => {}}
+        onCheckout={() => { setCartOpen(false); navigate('/checkout', { state: { product, quantity: 1 } }); }}
+      />
+      <main>
+        <div className="product-detail-mobile-image">
+          <Swiper
+            modules={[Navigation, Pagination, A11y, EffectFade]}
+            spaceBetween={0}
+            slidesPerView={1}
+            navigation={false}
+            pagination={{ clickable: true }}
+            effect="fade"
+            className="mobile-swiper"
+          >
+            {[1, 2, 3, 4].map((num) => (
+              <SwiperSlide key={num}>
+                <img 
+                  className="product-detail-media product-detail-media-tall" 
+                  src={product.image} 
+                  alt={`${product.name} view ${num}`} 
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
-        
-        <div className="product-info">
-          <h1 className="product-name">{product.name}</h1>
-          <p className="product-category">{product.category}</p>
-          <p className="product-price">${product.price.toFixed(2)}</p>
-          
-          {product.colors && product.colors.length > 0 && (
-            <div className="product-option">
-              <label>Color</label>
-              <div className="color-options">
-                {product.colors.map((color) => (
-                  <button
-                    key={color}
-                    className={`color-option ${selectedColor === color ? 'selected' : ''}`}
-                    style={{ backgroundColor: color.toLowerCase() }}
-                    onClick={() => setSelectedColor(color)}
-                    aria-label={`Select color ${color}`}
+        {window.innerWidth >= 1200 && (
+          <div className="product-gallery">
+            <div className="thumbnail-container">
+              {[1, 2, 3, 4].map((num) => (
+                <div key={num} className="thumbnail">
+                  <img 
+                    src={product.image} 
+                    alt={`${product.name} view ${num}`} 
+                    className="thumbnail-image"
                   />
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          )}
-          
-          {product.sizes && product.sizes.length > 0 && (
-            <div className="product-option">
-              <label>Size</label>
-              <div className="size-options">
-                {product.sizes.map((size) => (
+            <img src={product.image} alt={product.name} className="desktop-product-image" />
+          </div>
+        )}
+        <div className="product-detail-info">
+            <h1 className="product-detail-title">{product.name}</h1>
+            <div className="product-detail-price-row">
+              <span className="product-detail-price">${product.price}</span>
+            </div>
+            <div className="product-detail-sizes">
+              {product.sizes && product.sizes.length > 0 ? (
+                product.sizes.map(size => (
                   <button
                     key={size}
-                    className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                    className={`product-detail-size-btn${selectedSize === size ? ' selected' : ''}`}
                     onClick={() => setSelectedSize(size)}
                   >
                     {size}
                   </button>
+                ))
+              ) : (
+                <div className="product-detail-no-sizes">One size fits all</div>
+              )}
+            </div>
+            <div className="product-detail-color-row">
+              <span className="product-detail-color-label">Color</span>
+              <div className="product-detail-color-options" role="radiogroup" aria-label="Select color">
+                {COLOR_OPTIONS.map(opt => (
+                  <button
+                    key={opt.name}
+                    className={`product-detail-color-option${selectedColor === opt.name ? ' selected' : ''}`}
+                    aria-label={opt.name}
+                    tabIndex={0}
+                    type="button"
+                    style={{ backgroundColor: opt.value }}
+                    onClick={() => setSelectedColor(opt.name)}
+                  >
+                  </button>
                 ))}
               </div>
             </div>
-          )}
-          <div className="price-container">
-            <span className="current-price">${product.price.toFixed(2)}</span>
-          </div>
-          
-          <p className="product-description">{product.description}</p>
-          
-          <div className="category">
-            <strong>Category:</strong> {product.category}
-          </div>
-          
-          <div className="quantity-selector">
-            <label>Quantity</label>
-            <div className="quantity-controls">
-              <button 
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                disabled={quantity <= 1}
-              >
-                -
-              </button>
-              <span>{quantity}</span>
-              <button onClick={() => setQuantity(quantity + 1)}>+</button>
+            <div className="product-detail-description-block">
+              <div className="product-detail-description-label">DESCRIPTION</div>
+              <p className="product-detail-description">{product.description}</p>
             </div>
-          </div>
-          
-          <button 
-            className="add-to-cart-btn"
-            onClick={handleAddToCart}
-          >
-            Add to Cart
-          </button>
-          
-          {showSuccess && (
-            <div className="success-message">
-              Added to cart successfully!
+            <div className="product-detail-qty-row">
+              <button className="product-detail-qty-btn" onClick={() => setQuantity(q => Math.max(1, q - 1))}>−</button>
+              <span className="product-detail-qty">{quantity}</span>
+              <button className="product-detail-qty-btn" onClick={() => setQuantity(q => q + 1)}>+</button>
             </div>
-          )}
+            <div className="product-detail-cta-row">
+              <button className="product-detail-add-to-cart" onClick={handleAddToCart}>Add to Cart</button>
+              <button className="product-detail-buy-now" onClick={handleBuyNow}>Buy Now</button>
+            </div>
+            <div className="product-detail-dropdowns">
+              {[
+                { label: 'Materials & Care', content: product.materials },
+                { label: 'Shipping Info', content: product.shipping },
+                { label: 'Returns Policy', content: product.returns }
+              ].map(({ label, content }) => (
+                <div className="product-detail-dropdown" key={label}>
+                  <div className="product-detail-dropdown-toggle-static">{label}</div>
+                  <div className="product-detail-dropdown-content open" style={{ maxHeight: 200 }}>{content}</div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Container for Product Info and More for You sections */}
+            <div className="product-additional-info-container">
+              {/* Testimonials section */}
+              <ProductTestimonials />
+              
+              {/* More for You Section with Related Products */}
+              <section className="solira-more-section">
+                <h2 className="solira-more-title">More for You</h2>
+                <div className="solira-more-grid">
+                  {/* Product 1 - Mediterranean Skirt */}
+                  <article className="solira-more-card">
+                    <Link to="/product/mediterranean-skirt" className="solira-more-link">
+                      <div className="solira-more-image-wrap">
+                        <img 
+                          src="/sol4.png" 
+                          alt="Mediterranean Skirt" 
+                          className="solira-more-image" 
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="solira-more-details">
+                        <h3 className="solira-more-name">Mediterranean Skirt</h3>
+                        <p className="solira-more-price">$410</p>
+                      </div>
+                    </Link>
+                  </article>
+                  
+                  {/* Product 2 - Sunlit Trench */}
+                  <article className="solira-more-card">
+                    <Link to="/product/sunlit-trench" className="solira-more-link">
+                      <div className="solira-more-image-wrap">
+                        <img 
+                          src="/sol2.png" 
+                          alt="Sunlit Trench" 
+                          className="solira-more-image" 
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="solira-more-details">
+                        <h3 className="solira-more-name">Sunlit Trench</h3>
+                        <p className="solira-more-price">$690</p>
+                      </div>
+                    </Link>
+                  </article>
+                  
+                  {/* Product 3 - Linen Two-Piece Set */}
+                  <article className="solira-more-card">
+                    <Link to="/product/linen-set" className="solira-more-link">
+                      <div className="solira-more-image-wrap">
+                        <img 
+                          src="/2linenpiece.png" 
+                          alt="Linen Two-Piece Set" 
+                          className="solira-more-image" 
+                        />
+                      </div>
+                      <div className="solira-more-details">
+                        <h3 className="solira-more-name">Linen Two-Piece Set</h3>
+                        <p className="solira-more-price">$120</p>
+                      </div>
+                    </Link>
+                  </article>
+                </div>
+              </section>
+            </div>
         </div>
-      </div>
-      
-      {/* You can add related products or other sections here */}
-    </div>
+      </main>
+      <Footer />
+    </>
   );
-};
-
-export default SoliraProductDetail;
+}

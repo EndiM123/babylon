@@ -1688,3 +1688,32 @@
 .blog-masonry {
   padding-bottom: 3vw;
 }
+
+/* Poolside Blog Post Desktop Enhancements */
+@media (min-width: 1200px) {
+  .poolside-main-title-desktop {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .poolside-main-title-desktop .poolside-hero-title {
+    font-family: 'Wolmer', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--brand-green);
+    line-height: 1.2;
+    display: block !important;
+  }
+  
+  /* Hide specific elements in desktop view */
+  .poolside-hero-meta .poolside-hero-title,
+  .blog-breadcrumb-current,
+  .blog-breadcrumbs {
+    display: none !important;
+  }
+}

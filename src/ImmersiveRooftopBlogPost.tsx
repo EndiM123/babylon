@@ -181,15 +181,34 @@ export default function ImmersiveRooftopBlogPost() {
               
               {/* Style Vignette */}
               <div className="phase-style-vignette">
-                {phase.lookItems.map((item, i) => (
-                  <div className="vignette-item" key={i}>
-                    <div className="vignette-image-container">
-                      <img src={item.image} alt={item.name} className="vignette-image" />
+                {phase.lookItems.map((item, i) => {
+                  // Generate a random price between 50 and 300
+                  const price = Math.floor(Math.random() * 250) + 50;
+                  // Sample product descriptions
+                  const descriptions = [
+                    'Crafted with premium materials for lasting comfort and style.',
+                    'Designed for both elegance and functionality in every detail.',
+                    'A timeless piece that complements any sophisticated look.'
+                  ];
+                  const randomDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
+                  
+                  return (
+                    <div className="vignette-item" key={i}>
+                      <div className="vignette-image-container">
+                        <img src={item.image} alt={item.name} className="vignette-image" />
+                        <div className="vignette-details">
+                          <h3 className="vignette-title serif">{item.name}</h3>
+                          <p className="vignette-emotion sans">{item.emotion}</p>
+                          <div className="vignette-price">€{price}</div>
+                          <p className="vignette-description">{randomDescription}</p>
+                          <button className="vignette-button">View Details</button>
+                        </div>
+                      </div>
+                      <h3 className="vignette-title serif">{item.name}</h3>
+                      <p className="vignette-emotion sans">{item.emotion}</p>
                     </div>
-                    <h3 className="vignette-title serif">{item.name}</h3>
-                    <p className="vignette-emotion sans">{item.emotion}</p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
               
               <div className="phase-transition serif">

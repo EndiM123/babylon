@@ -4,6 +4,13 @@
   width: 100vw;
   padding: 0;
   font-family: 'Wolmer', sans-serif !important;
+  padding-top: 80px; /* Add padding to account for fixed header */
+  box-sizing: border-box;
+}
+
+/* Ensure header stays on top */
+.babylon-header {
+  z-index: 1000 !important; /* Higher z-index to ensure it stays on top */
 }
 .checkout-main {
   display: flex;

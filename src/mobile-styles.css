@@ -1,0 +1,90 @@
+/* Mobile-specific styles for More for You section */
+@media (max-width: 700px) {
+  /* Make More for You section smaller */
+  .more-for-you-section {
+    padding: 0.8rem 0.2rem;
+    margin: 0.5rem auto;
+    width: 90%;
+    max-width: 280px;
+  }
+  
+  /* Make section title smaller */
+  .more-for-you-section .section-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  /* Make product grid smaller and centered */
+  .more-for-you-section .product-grid,
+  .more-for-you-section .related-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.3rem;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Make product cards tiny */
+  .more-for-you-section .related-product,
+  .related-product {
+    height: 70px !important;
+    max-width: 70px !important;
+    min-width: 0 !important;
+    width: 70px !important;
+    padding: 0.04rem !important;
+    margin: 0 auto !important;
+    border-radius: 3px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    overflow: hidden !important;
+  }
+  
+  /* Make product images tiny */
+  .more-for-you-section .related-product-image-container,
+  .related-product-image-container {
+    height: 28px !important;
+    max-height: 28px !important;
+    width: 28px !important;
+    max-width: 28px !important;
+    margin: 0 auto 0.03rem auto !important;
+    border-radius: 2px !important;
+    background: #fff !important;
+  }
+  
+  .more-for-you-section .related-product-image,
+  .related-product-image {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: contain !important;
+  }
+  
+  /* Make product names tiny */
+  .more-for-you-section .related-product-name,
+  .related-product-name {
+    font-size: 0.48rem !important;
+    padding: 0.01rem 0.02rem !important;
+    margin-bottom: 0.01rem !important;
+    background: rgba(255,255,255,0.85) !important;
+    text-align: center !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  
+  /* Make product prices tiny */
+  .more-for-you-section .related-product-price,
+  .related-product-price {
+    font-size: 0.41rem !important;
+    margin-top: 0.01rem !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+}

@@ -48,8 +48,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(0deg, rgba(18,18,18,0.4) 0%, rgba(18,18,18,0.2) 50%, rgba(18,18,18,0.6) 100%);
-  z-index: 1;
 }
 
 .rooftop-hero-content {
@@ -191,9 +189,43 @@
 }
 
 .phase-title {
-  font-size: 3rem;
-  margin-bottom: 2rem;
+  font-size: 2rem;
+  margin: 1rem 0;
   text-align: center;
+  color: white;
+  padding: 0 20px;
+  line-height: 1.2;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .phase-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: left;
+    position: relative;
+    left: 110px;
+    padding: 0;
+  }
+}
+
+/* Maintain position on desktop */
+@media (min-width: 768px) {
+  .phase-title {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 290px; /* Updated position for desktop */
+    padding-left: 0;
+  }
+}
+
+/* Add slight right shift on mobile */
+@media (max-width: 767px) {
+  .phase-title {
+    padding-left: 1rem;
+  }
 }
 
 .phase-description {
@@ -214,36 +246,157 @@
 }
 
 /* Style vignette */
+/* Base mobile-first styles */
 .phase-style-vignette {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 2rem;
-  margin-bottom: 4rem;
-  flex-wrap: wrap;
+  margin: 0 auto 4rem;
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
+/* Desktop styles */
+@media (min-width: 768px) {
+  .phase-style-vignette {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding: 0 2rem;
+    max-width: 1200px;
+  }
+}
+
+/* Base styles - container removed */
 .vignette-item {
-  width: 300px;
-  text-align: center;
+  display: contents;
+}
+
+/* Desktop styles - container visible */
+@media (min-width: 1200px) {
+  .vignette-item {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    margin: 0 0 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+  
+  /* Hide price and view details button on desktop */
+  .vignette-price,
+  .vignette-button {
+    display: none;
+  }
+  
+  /* Reset children styles for desktop */
+  .vignette-item > * {
+    display: block;
+    width: 100%;
+  }
+}
+
+/* Ensure direct children of vignette-item maintain layout on mobile */
+.vignette-item > * {
+  display: block;
+  max-width: 100%;
+}
+
+/* Desktop hover effects */
+@media (min-width: 1200px) {
+  .vignette-item {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .vignette-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    opacity: 0;
+  }
+  
+  .vignette-item:hover .vignette-details {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .vignette-item:hover .vignette-image {
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
+  }
+}
+
+/* Mobile hover effect */
+@media (max-width: 1199px) {
+  .vignette-item:hover .vignette-image {
+    transform: scale(1.03);
+  }
 }
 
 .vignette-image-container {
-  width: 100%;
-  height: 400px;
+  width: 90%;
+  max-width: 100%;
+  height: 180px;
   overflow: hidden;
-  margin-bottom: 1rem;
+  margin: 0 auto 0.5rem;
   position: relative;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Full width on desktop */
+@media (min-width: 1200px) {
+  .vignette-image-container {
+    width: 120%;
+    max-width: 120%;
+    height: 300px;
+    margin: 0 -10% 1.5rem;
+  }
+}
+
+/* Adjust height for even smaller mobile devices */
+@media (max-width: 480px) {
+  .vignette-image-container {
+    height: 160px;
+    width: 85%;
+  }
+}
+
+.vignette-image-container::before {
+  content: none; /* Remove gradient overlay */
 }
 
 .vignette-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: none;
 }
 
-.vignette-item:hover .vignette-image {
-  transform: scale(1.05);
+/* Mobile hover effects */
+@media (max-width: 1199px) {
+  .vignette-image {
+    transition: transform 0.5s ease;
+  }
+  
+  .vignette-item:hover .vignette-image {
+    transform: scale(1.03);
+  }
 }
 
 .vignette-title {
@@ -252,9 +405,57 @@
 }
 
 .vignette-emotion {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--rooftop-accent);
   font-style: italic;
+  margin: 0.25rem 0 0.5rem;
+  line-height: 1.3;
+}
+
+/* Adjust title spacing */
+.vignette-title {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 1.1rem;
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .vignette-item {
+    display: contents;
+  }
+  
+  .vignette-image-container {
+    margin-bottom: 0.5rem;
+  }
+  
+  .vignette-title, 
+  .vignette-emotion {
+    margin: 0.1rem 0;
+    text-align: center;
+  }
+  
+  .vignette-title {
+    font-size: 0.85rem; /* Slightly smaller */
+    margin: 0.1rem 0 0.02rem;
+  }
+  
+  .vignette-emotion {
+    font-size: 0.75rem; /* Slightly smaller */
+    margin: 0.02rem 0 0.1rem;
+    line-height: 1.1; /* Tighter line height */
+  }
+  
+  .vignette-image-container {
+    height: 250px;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Make sure images still look good */
+  .vignette-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .phase-transition {
@@ -312,7 +513,32 @@
 
 /* Midnight specific styles */
 #midnight {
-  background: linear-gradient(to bottom, rgba(18, 18, 18, 0.1), rgba(255, 255, 255, 0));
+  background: #0a0f1a; /* Solid dark blue */
+  color: #ffffff;
+  padding: 4rem 0;
+}
+
+#midnight .phase-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+  padding-left: 0.5rem; /* Slight right shift on mobile */
+  color: white !important; /* Force white text */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Add subtle glow if needed */
+}
+
+#midnight .phase-description {
+  max-width: 800px;
+  margin: 2rem auto;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+#midnight .phase-visual-note {
+  color: #cccccc;
+  font-style: italic;
+  margin-top: 1.5rem;
 }
 
 #midnight .phase-title {

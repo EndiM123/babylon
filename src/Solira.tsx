@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './Solira.css';
 import SoliraSlideshow from './SoliraSlideshow';
 import supabase from './supabaseClient';
+import Footer from './Footer';
 
 interface Product {
   id: number;
@@ -147,6 +148,9 @@ export default function Solira() {
           ))}
         </div>
       </section>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

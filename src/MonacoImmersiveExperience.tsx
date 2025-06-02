@@ -6,7 +6,7 @@ const MonacoImmersiveExperience: React.FC = () => {
   const [isExploring, setIsExploring] = useState(false);
   const [showVelocityEdit, setShowVelocityEdit] = useState(false);
   const [activeColorMode, setActiveColorMode] = useState('yacht-white');
-  const [showEndPhrase, setShowEndPhrase] = useState(false);
+  const [showEndPhrase, setShowEndPhrase] = useState(true);
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
 
   // Sound layer toggle handler
@@ -53,41 +53,41 @@ const MonacoImmersiveExperience: React.FC = () => {
         <div className="vroom-text">vruuuummm......</div>
       </div>
 
-      {/* Modular grid of vignettes */}
-      <section className="vignettes-grid">
-        <div 
-          className="vignette-item split-screen"
-          onMouseEnter={() => handleSectionHover('driver')}
-          onMouseLeave={() => handleSectionHover(null)}
-        >
-          <div className="split-left">
-            <img src="/lando.png" alt="Driver in racing gear" />
+      {/* Images with responsive container and hover text */}
+      <div className="image-container">
+        {window.innerWidth >= 768 && (
+          <div className="image-wrapper">
+            <img 
+              src="/mixi.png" 
+              alt="Racing texture closeup" 
+              onMouseEnter={() => handleSectionHover('texture')}
+              onMouseLeave={() => handleSectionHover(null)}
+            />
+            {hoveredSection === 'texture' && (
+              <div className="hover-text">
+                <p>Carbon fiber. Kevlar. Silk. Leather. The vocabulary of velocity.</p>
+              </div>
+            )}
           </div>
-          <div className="split-right">
-            <img src="/yacht.png" alt="Influencer by yacht" />
+        )}
+        {window.innerWidth >= 768 ? (
+          <div className="image-wrapper">
+            <img 
+              src="/lando.png" 
+              alt="Driver in racing gear" 
+              onMouseEnter={() => handleSectionHover('driver')}
+              onMouseLeave={() => handleSectionHover(null)}
+            />
+            {hoveredSection === 'driver' && (
+              <div className="hover-text">
+                <p>Where protection meets projection. Racing suits as second skin.</p>
+              </div>
+            )}
           </div>
-          {hoveredSection === 'driver' && (
-            <div className="hover-text">
-              <p>Where protection meets projection. Racing suits as second skin.</p>
-            </div>
-          )}
-        </div>
-
-        <div 
-          className="vignette-item"
-          onMouseEnter={() => handleSectionHover('texture')}
-          onMouseLeave={() => handleSectionHover(null)}
-        >
-          <img src="/mixi.png" alt="Racing texture closeup" />
-          {hoveredSection === 'texture' && (
-            <div className="hover-text">
-              <p>Carbon fiber. Kevlar. Silk. Leather. The vocabulary of velocity.</p>
-            </div>
-          )}
-        </div>
-
-
-      </section>
+        ) : (
+          <div className="mobile-placeholder" />
+        )}
+      </div>
 
       {/* Rotating carousel of detail shots */}
       <section className="detail-carousel">
@@ -112,6 +112,9 @@ const MonacoImmersiveExperience: React.FC = () => {
 
       {/* Dark mode interface with zoomable layers */}
       <section className="dark-interface">
+        <div className="map-title">
+          <h2>RACE MAP</h2>
+        </div>
         <div className="monaco-map">
           <div className="map-container">
             <img src="/map.png" alt="Monaco circuit map" />
@@ -171,14 +174,12 @@ const MonacoImmersiveExperience: React.FC = () => {
       </section>
 
       {/* Ending sequence */}
-      <section className="ending-sequence" onClick={revealEndPhrase}>
+      <section className="ending-sequence">
         <div className="tire-marks"></div>
         <div className="heat-shimmer"></div>
-        {showEndPhrase && (
-          <div className="end-phrase">
-            <p>Maybe fashion isn't walking anymore. It's cornering.</p>
-          </div>
-        )}
+        <div className="end-phrase">
+          <p>Maybe fashion isn't walking anymore. It's cornering.</p>
+        </div>
       </section>
 
       {/* Hidden call to action */}
@@ -200,21 +201,21 @@ const MonacoImmersiveExperience: React.FC = () => {
           </div>
           <div className="velocity-grid">
             <div className="velocity-item">
-              <img src="/velocity-item-1.jpg" alt="Fashion item inspired by racing" />
+              <img src="/f11.png" alt="Fashion item inspired by racing" />
               <div className="item-details">
                 <h3>Carbon Silk Drape</h3>
                 <p>Inspired by the aerodynamic flow of F1 bodywork</p>
               </div>
             </div>
             <div className="velocity-item">
-              <img src="/velocity-item-2.jpg" alt="Fashion item inspired by racing" />
+              <img src="/f22.png" alt="Fashion item inspired by racing" />
               <div className="item-details">
                 <h3>Titanium Weave Jacket</h3>
                 <p>Structural elements echo suspension geometry</p>
               </div>
             </div>
             <div className="velocity-item">
-              <img src="/velocity-item-3.jpg" alt="Fashion item inspired by racing" />
+              <img src="/f33.png" alt="Fashion item inspired by racing" />
               <div className="item-details">
                 <h3>Ceramic Accent Piece</h3>
                 <p>Heat-resistant materials from brake technology</p>

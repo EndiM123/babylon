@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import './ProductDetail.css';
 import Footer from './Footer';
+import ProductTestimonials from './components/ProductTestimonials';
 import CartPanel from './components/CartPanel';
 import { CartContext } from './App';
 import { supabase } from './lib/supabase';
@@ -307,7 +308,6 @@ export default function ProductDetail() {
         )}
         <div className="product-detail-info">
             <h1 className="product-detail-title">{product.name}</h1>
-            <div className="product-detail-volume">450 ML</div>
             <div className="product-detail-price-row">
               <span className="product-detail-price">${product.price}</span>
             </div>
@@ -369,16 +369,70 @@ export default function ProductDetail() {
               ))}
             </div>
             
-            {/* More for You Section - Will be populated with related products from Supabase in future update */}
-            <div className="more-for-you-section">
-              <h2 className="section-title">More for You</h2>
-              <div className="product-grid">
-                {/* Related products will be dynamically loaded here */}
-                <div className="related-products-placeholder">
-                  <p>Discover more products in our collection</p>
-                  <Link to="/shop" className="view-all-products">View All Products</Link>
+            {/* Container for Product Info and More for You sections */}
+            <div className="product-additional-info-container">
+              {/* Testimonials section */}
+              <ProductTestimonials />
+              
+              {/* More for You Section with Related Products */}
+              <section className="solira-more-section">
+                <h2 className="solira-more-title">More for You</h2>
+                <div className="solira-more-grid">
+                  {/* Product 1 */}
+                  <article className="solira-more-card">
+                    <Link to="/product/linen-set" className="solira-more-link">
+                      <div className="solira-more-image-wrap">
+                        <img 
+                          src="/2linenpiece.png" 
+                          alt="Linen Two-Piece Set" 
+                          className="solira-more-image" 
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="solira-more-details">
+                        <h3 className="solira-more-name">Linen Two-Piece Set</h3>
+                        <p className="solira-more-price">$120.00</p>
+                      </div>
+                    </Link>
+                  </article>
+                  
+                  {/* Product 2 */}
+                  <article className="solira-more-card">
+                    <Link to="/product/one-shoulder-swimsuit" className="solira-more-link">
+                      <div className="solira-more-image-wrap">
+                        <img 
+                          src="/onesided.png" 
+                          alt="One-Shoulder Swimsuit" 
+                          className="solira-more-image" 
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="solira-more-details">
+                        <h3 className="solira-more-name">One-Shoulder Swimsuit</h3>
+                        <p className="solira-more-price">$89.00</p>
+                      </div>
+                    </Link>
+                  </article>
+                  
+                  {/* Product 3 - Visible on all screen sizes */}
+                  <article className="solira-more-card">
+                    <Link to="/product/silk-scarf" className="solira-more-link">
+                      <div className="solira-more-image-wrap">
+                        <img 
+                          src="/silkscarf.png" 
+                          alt="Silk Scarf" 
+                          className="solira-more-image" 
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="solira-more-details">
+                        <h3 className="solira-more-name">Silk Scarf</h3>
+                        <p className="solira-more-price">$65.00</p>
+                      </div>
+                    </Link>
+                  </article>
                 </div>
-              </div>
+              </section>
             </div>
         </div>
       </main>

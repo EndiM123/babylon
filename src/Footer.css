@@ -20,6 +20,7 @@
   margin-top: auto;
   overflow: hidden;
   isolation: isolate;
+  flex: 0 0 auto; /* Prevent footer from growing or shrinking */
   
   /* Base gradient */
   background: linear-gradient(
@@ -319,7 +320,8 @@
   display: flex;
   gap: 2rem;
   align-items: flex-start;
-  margin: -3.5rem 0 0 -2.0rem; /* Increased left margin to move more to the left */
+  margin-top: -1.0rem;
+  margin: -3.5rem 0 0 -3.0rem; /* Increased left margin to move more to the left */
   padding: 0 0 1.0rem 0.5rem;
   width: 100%;
 }
@@ -346,6 +348,16 @@
   margin: 0 -0.5rem;
   width: auto;
   justify-content: flex-start;
+  
+  /* Move links slightly left on desktop */
+  @media (min-width: 1024px) {
+    margin-left: -0.75rem;
+  }
+  
+  /* Slight left adjustment on mobile */
+  @media (max-width: 1023px) {
+    margin-left: 0.1rem;
+  }
 }
 
 .footer-contact-item i {
@@ -393,6 +405,11 @@
 .social-icons {
   display: flex;
   gap: 1rem;
+  
+  /* Slight right adjustment on mobile */
+  @media (max-width: 767px) {
+    margin-left: 0.75rem;
+  }
 }
 
 .social-icon {
@@ -459,6 +476,24 @@
   .footer-contact-details {
     margin: -0.5rem 0 0 -1.5rem;
     padding: 0;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1201px) {
+  .footer-container {
+    margin-left: 5rem;
+    margin-right: 8rem;
+  }
+  
+  /* Move contact items more to the right */
+  .footer-contact-details {
+    padding-left: 2.5rem;
+  }
+  
+  /* Move contact heading slightly up */
+  .footer-contact-heading {
+    margin-top: -0.5rem;
   }
 }
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './Shop.css';
 import './App.css';
 import { supabase } from './lib/supabase';
+import Footer from './Footer';
 
 const INITIAL_PRODUCTS_COUNT = 6; // Number of products to show on first page
 const PRODUCTS_PER_PAGE = 3; // Number of products to show on subsequent pages
@@ -229,27 +230,28 @@ export default function Shop() {
   };
 
   return (
-    <div className="shop-video-frame">
-      {/* Overlay for mobile filter only */}
-      {isMobile && (
-        <div 
-          className={`filter-overlay ${isFilterOpen ? 'visible' : ''}`}
-          onClick={() => setIsFilterOpen(false)}
+    <div className="shop-page-container">
+      <div className="shop-video-frame">
+        {/* Overlay for mobile filter only */}
+        {isMobile && (
+          <div 
+            className={`filter-overlay ${isFilterOpen ? 'visible' : ''}`}
+            onClick={() => setIsFilterOpen(false)}
+          />
+        )}
+        <video
+          className="word-transition-video"
+          src="/endi.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          controls={false}
+          disablePictureInPicture
+          onContextMenu={e => e.preventDefault()}
         />
-      )}
-      <video
-        className="word-transition-video"
-        src="/endi.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        controls={false}
-        disablePictureInPicture
-        onContextMenu={e => e.preventDefault()}
-      />
-      <div className="shop-page">
+        <div className="shop-page">
         {/* Babylon Header (copied from App) */}
         <header className="babylon-header">
           <div className="babylon-header-inner">
@@ -546,8 +548,10 @@ export default function Shop() {
               </button>
             </div>
           )}
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Shop from './Shop';
 import Solira from './Solira';
 import SoliraProductDetail from './SoliraProductDetail';
 import ProductDetail from './ProductDetail';
+import './mobile-styles.css';
 // Removed unused import PRODUCTS
 import WordTransitionSection from './WordTransitionSection';
 import SummerSplitSection from './SummerSplitSection';

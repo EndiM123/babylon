@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import './CheckoutPage.css';
 import { CartContext } from '../App';
 import ReceiptModal from '../components/ReceiptModal';
+import Footer from '../Footer';
 
 // Define interfaces for database tables
 interface Customer {
@@ -297,6 +298,8 @@ export default function CheckoutPage() {
           </>
         )}
       </main>
+      
+      <Footer />
     </div>
   );
 }
