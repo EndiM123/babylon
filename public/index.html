@@ -6,6 +6,33 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Script to handle page refresh and maintain current page -->
+    <script>
+      // Store the current path before page refresh
+      window.addEventListener('beforeunload', function() {
+        localStorage.setItem('lastPath', window.location.pathname);
+      });
+      
+      // Check if we need to redirect on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        // If we're on the home page but we were previously on another page
+        if (window.location.pathname === '/' && localStorage.getItem('lastPath') && localStorage.getItem('lastPath') !== '/') {
+          // Redirect to the previous page
+          window.location.replace(localStorage.getItem('lastPath'));
+        } else {
+          // Always scroll to top on page load/refresh for all devices
+          window.scrollTo(0, 0);
+        }
+      });
+      
+      // Additional handler to ensure scroll position is at top after page has fully loaded
+      window.onload = function() {
+        // Short timeout to ensure everything is loaded
+        setTimeout(function() {
+          window.scrollTo(0, 0);
+        }, 100);
+      };
+    </script>
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"

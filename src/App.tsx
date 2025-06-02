@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import SoliraPreviewMenu from './components/SoliraPreviewMenu';
 import './App.css';
 import './global-video-override.css';
@@ -31,6 +31,29 @@ function App() {
   const [cart, setCart] = useState<any[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
+  
+  // Save current path to localStorage when it changes
+  useEffect(() => {
+    if (location.pathname) {
+      localStorage.setItem('lastPath', location.pathname);
+    }
+  }, [location.pathname]);
+  
+  // Restore last path on app initialization
+  useEffect(() => {
+    // Only redirect if we're on the home page and there's a saved path
+    if (location.pathname === '/' && location.pathname !== localStorage.getItem('lastPath')) {
+      const lastPath = localStorage.getItem('lastPath');
+      if (lastPath) {
+        console.log('Restoring last path:', lastPath);
+        // Use replace instead of navigate to avoid adding to history stack
+        navigate(lastPath, { replace: true });
+      }
+    }
+    
+    // Scroll to top on page load/refresh
+    window.scrollTo(0, 0);
+  }, [location.pathname, navigate]);
 
   const addToCart = (newItem: any) => {
     setCart(prevCart => {

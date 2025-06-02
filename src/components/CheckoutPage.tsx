@@ -5,6 +5,7 @@ import './CheckoutPage.css';
 import { CartContext } from '../App';
 import ReceiptModal from '../components/ReceiptModal';
 import Footer from '../Footer';
+import emailjs from '@emailjs/browser';
 
 // Define interfaces for database tables
 interface Customer {
@@ -76,6 +77,60 @@ export default function CheckoutPage() {
     order_id: null,
     items: []
   });
+  
+  // Function to send order notification email using EmailJS
+  const sendOrderEmail = async (orderData: {
+    customer_name: string;
+    customer_email: string;
+    total_amount: number;
+    order_id: number | null;
+  }) => {
+    try {
+      // EmailJS service, template, and user IDs (hardcoded as requested)
+      const serviceId = 'service_378zmls';
+      const templateId = 'template_ylw883v';
+    
+      const publicKey = 'SALww_CcwbXpsAYiC';
+      
+      // Create a detailed order summary for the email - using simple text format to avoid image reference issues
+      let orderItems = '';
+      if (isBuyNow && buyNowProduct) {
+        // Create a simple text representation without image references
+        const productName = buyNowProduct.name || 'Product';
+        const productPrice = buyNowProduct.price || 0;
+        orderItems = `${buyNowQuantity}x ${productName} - $${(productPrice * buyNowQuantity).toFixed(2)}`;
+      } else {
+        // Create simple text representations for cart items without image references
+        orderItems = cart.map(item => {
+          const productName = item.product?.name || 'Product';
+          const productPrice = item.product?.price || 0;
+          return `${item.quantity}x ${productName} - $${(productPrice * item.quantity).toFixed(2)}`;
+        }).join('\n');
+      }
+      
+      // Create template params that exactly match the Supabase customers table and EmailJS template variables
+      const templateParams = {
+        name: form.name,
+        email: form.email,
+        phone_number: form.phone_number,
+        country: form.country,
+        city: form.city,
+        street: form.street,
+        house_number: form.house_number,
+        order_items: orderItems,
+        total_amount: `$${orderData.total_amount.toFixed(2)}`,
+        order_id: orderData.order_id,
+        order_date: new Date().toLocaleDateString()
+      };
+      
+      const response = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      console.log('Email notification sent successfully:', response);
+    } catch (error) {
+      console.error('Failed to send order notification email:', error);
+      // Don't throw error here - we don't want to disrupt the checkout flow
+      // if email notification fails
+    }
+  };
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     // Get the field name and value from the event
@@ -181,6 +236,16 @@ export default function CheckoutPage() {
       
       // Order successfully completed
       setShowReceipt(true);
+      
+      // Send order notification email - wrap in setTimeout to prevent blocking UI
+      setTimeout(() => {
+        sendOrderEmail({
+          customer_name: form.name,
+          customer_email: form.email,
+          total_amount: total,
+          order_id: orderId
+        });
+      }, 100);
       
     } catch (error: any) {
       console.error('Checkout error:', error);

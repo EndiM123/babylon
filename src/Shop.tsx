@@ -59,7 +59,7 @@ export default function Shop() {
   // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
   // Products state
-  const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -84,21 +84,40 @@ export default function Shop() {
 
   // Filter products when category or search query changes
   useEffect(() => {
-    let filtered = [...products];
+    console.log('Filtering products...');
+    console.log('Selected category:', selectedCategory);
+    console.log('All products:', allProducts);
+    
+    let filtered = [...allProducts];
     
     // Apply category filter if any category is selected
     if (selectedCategory && selectedCategory !== 'All') {
-      filtered = filtered.filter(product => 
-        product.category.toLowerCase() === selectedCategory.toLowerCase()
-      );
-      console.log(`Filtered by category '${selectedCategory}':`, filtered);
+      console.log(`Filtering by category: ${selectedCategory}`);
+      filtered = filtered.filter(product => {
+        // Trim and normalize whitespace in category names for comparison
+        const productCategory = product.category?.trim().toLowerCase() || '';
+        const selectedCat = selectedCategory.trim().toLowerCase();
+        
+        const isMatch = productCategory === selectedCat;
+        if (!isMatch) {
+          console.log(`Product ${product.name} category '${productCategory}' doesn't match '${selectedCat}'`);
+        }
+        return isMatch;
+      });
+      console.log(`Found ${filtered.length} products in category '${selectedCategory}':`, filtered);
+    } else {
+      console.log('No category filter applied, showing all products');
     }
     
     // Apply search filter if there's a search query
     if (searchQuery.trim()) {
+      console.log(`Applying search filter: ${searchQuery}`);
       filtered = applySearch(filtered);
       console.log(`After search '${searchQuery}':`, filtered);
     }
+    
+    // Log the final filtered products before updating state
+    console.log('Final filtered products:', filtered);
     
     // Update filtered products and reset to first page
     setFilteredProducts(filtered);
@@ -108,7 +127,7 @@ export default function Shop() {
     if (isMobile && selectedCategory !== 'All') {
       setIsFilterOpen(false);
     }
-  }, [selectedCategory, searchQuery, products, isMobile]);
+  }, [selectedCategory, searchQuery, allProducts, isMobile]);
 
   // On mount, fetch products and categories
   useEffect(() => {
@@ -149,24 +168,32 @@ export default function Shop() {
         
         if (!data || data.length === 0) {
           console.log('No products returned from Supabase');
-          setProducts([]);
+          setAllProducts([]);
+          setFilteredProducts([]);
           return;
         }
         
         // Process products from Supabase
         const processedProducts = data.map((product: any) => {
-          // Return product with default values if needed
+          // Clean and normalize the category
+          const category = (product.category || 'Other').trim();
+          
           return {
             id: product.id,
             name: product.name,
             price: product.price,
             image: product.image || DEFAULT_PRODUCT_IMAGE,
             description: product.description || '',
-            category: product.category || 'Other'
+            category: category
           };
         });
         
-        setProducts(processedProducts);
+        // Log all unique categories for debugging
+        const uniqueCategories = Array.from(new Set(processedProducts.map(p => p.category)));
+        console.log('All product categories:', uniqueCategories);
+        
+        setAllProducts(processedProducts);
+        // Initially show all products
         setFilteredProducts(processedProducts);
         console.log(`Loaded ${processedProducts.length} products from Supabase`);
       } catch (error: any) {
@@ -209,9 +236,32 @@ export default function Shop() {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  
+
+  useEffect(() => {
+    // Set a flag in sessionStorage to indicate we're on the Shop page
+    sessionStorage.setItem('currentPage', 'shop');
+    
+    // Create a beforeunload handler to ensure we stay on Shop page
+    const handleBeforeUnload = () => {
+      sessionStorage.setItem('currentPage', 'shop');
+      sessionStorage.setItem('scrollPosition', '0');
+    };
+    
+    // Add event listener for page refresh
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    // Scroll to top on component mount
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    
+    return () => {
+      // Clean up event listener
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   // Handle category selection
   const handleCategorySelect = (category: string) => {
+    console.log('Category selected:', category);
     setSelectedCategory(category);
     
     // Reset to first page and close filter menu
@@ -220,8 +270,9 @@ export default function Shop() {
     // The actual filtering will be handled by the useEffect that watches selectedCategory
     setIsFilterOpen(false);
     
-    // Log for debugging
-    console.log(`Selected category: ${category}`);
+    // Log all unique categories for debugging
+    const uniqueCategories = Array.from(new Set(allProducts.map(p => p.category)));
+    console.log('Available categories in products:', uniqueCategories);
   };
 
   // Toggle filter dropdown
