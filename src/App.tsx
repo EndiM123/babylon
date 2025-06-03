@@ -8,6 +8,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import GlitterParticlesPortal from './GlitterParticlesPortal';
 import ScrollStorySection from './ScrollStorySection';
 import FeaturedProductCarousel from './FeaturedProductCarousel';
+import DebugComponent from './DebugComponent';
 
 // --- Cart Context ---
 type CartContextType = {
@@ -24,11 +25,13 @@ export const CartContext = createContext<CartContextType>({
 
 
 function App() {
-
+  // Add a simple console log to check if App component is rendering
+  console.log('App component rendering');
 
   const [showSoliraPreview, setShowSoliraPreview] = useState(false);
   const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' ? window.innerWidth > 900 : true);
   const [cart, setCart] = useState<any[]>([]);
+  const [showDebug, setShowDebug] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -132,7 +135,9 @@ function App() {
 
   return (
     <CartContext.Provider value={{ cart, setCart, addToCart }}>
-      <>
+      <div className="App">
+        {/* Temporary Debug Component */}
+        {showDebug && <DebugComponent />}
         <GlitterParticlesPortal />
         <header className="babylon-header">
           <div className="babylon-header-inner">
@@ -185,7 +190,7 @@ function App() {
           </div>
         )}
         <AppRoutes />
-      </>
+      </div>
     </CartContext.Provider>
   );
 }
