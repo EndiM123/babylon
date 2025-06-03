@@ -1,4 +1,106 @@
 @media (min-width: 1200px) {
+  /* Checkout Summary - Desktop Styles */
+  .checkout-summary {
+    flex: 1 1 800px;
+    max-width: 800px;
+    padding: 3.5em 3.5em;
+    margin: 3.5em 0 0 4em;
+    background: #F5EDE5;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  
+  .checkout-summary h3 {
+    font-size: 2rem;
+    margin-bottom: 1.8em;
+    color: #1E3932;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  
+  .checkout-summary-product {
+    margin-bottom: 1.8em;
+    padding-bottom: 1.8em;
+    border-bottom: 1px solid rgba(166, 120, 153, 0.15);
+    display: flex;
+    gap: 1.5em;
+  }
+  
+  .checkout-summary-thumbnail {
+    width: 120px;
+    height: 120px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #fff;
+    padding: 0.5em;
+  }
+  
+  .checkout-summary-name {
+    font-size: 1.2rem;
+    margin-bottom: 0.6em;
+    font-weight: 600;
+    color: #1E3932;
+    line-height: 1.3;
+  }
+  
+  .checkout-summary-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    margin: 0.5em 0;
+  }
+  
+  .checkout-summary-detail {
+    display: flex;
+    gap: 0.5em;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .checkout-summary-detail .detail-label {
+    font-weight: 500;
+    color: #777;
+  }
+  
+  .checkout-summary-detail .detail-value {
+    font-weight: 500;
+    color: #1E3932;
+  }
+  
+  .checkout-summary-price {
+    font-weight: 600;
+    color: #1E3932;
+    margin-top: 0.5em;
+    font-size: 1.1rem;
+  }
+  
+  .checkout-summary-qty {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 0.3em;
+  }
+  
+  .checkout-summary-row {
+    margin-top: 2em;
+    padding-top: 1.8em;
+    font-size: 1.4rem;
+    border-top: 2px solid rgba(166, 120, 153, 0.15);
+  }
+  
+  .checkout-summary-total {
+    font-size: 1.8rem;
+    margin-top: 1.2em;
+    padding-top: 1.2em;
+    font-weight: 700;
+    color: #1E3932;
+  }
+  
+  .checkout-summary-empty {
+    font-size: 1.1rem;
+    color: #666;
+    text-align: center;
+    padding: 1.5em 0;
+  }
   /* Adjust layout for desktop view */
   main {
     display: flex;
