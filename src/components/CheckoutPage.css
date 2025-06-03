@@ -117,16 +117,20 @@
 }
 .checkout-summary-product {
   display: flex;
+  gap: 1em;
   margin-bottom: 1.2em;
   padding-bottom: 1.2em;
   border-bottom: 1px solid rgba(166, 120, 153, 0.2);
+  min-height: 100px;
+  align-items: stretch;
 }
 .checkout-summary-thumbnail {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 100%;
   object-fit: cover;
-  margin-right: 1em;
   background: #fff;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 .checkout-summary-info {
   flex: 1;
@@ -136,17 +140,85 @@
 }
 .checkout-summary-name {
   font-weight: 600;
-  margin-bottom: 0.4em;
+  margin-bottom: 0.3em;
+  color: #1E3932;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.checkout-summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  margin: 0.4em 0;
+}
+
+.checkout-summary-detail {
+  display: flex;
+  gap: 0.5em;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.checkout-summary-detail .detail-label {
+  font-weight: 400;
+  color: #777;
+}
+
+.checkout-summary-detail .detail-value {
+  font-weight: 500;
   color: #1E3932;
 }
+.checkout-summary-qty-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 0.2em;
+}
+
 .checkout-summary-qty {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #666;
-  margin-bottom: 0.2em;
+  margin: 0;
+}
+
+.checkout-qty-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  background: #f8f8f8;
+  color: #333;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.checkout-qty-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (min-width: 1200px) {
+  .checkout-qty-btn {
+    width: 28px;
+    height: 28px;
+    transition: all 0.2s ease;
+  }
+  
+  .checkout-qty-btn:hover {
+    background: #f0f0f0;
+  }
 }
 .checkout-summary-price {
   font-weight: 600;
   color: #1E3932;
+  margin-top: 0.3em;
+  font-size: 0.95rem;
 }
 .checkout-summary-row {
   display: flex;
@@ -208,6 +280,22 @@
 
 /* Desktop-only styles (min-width: 1200px) */
 @media (min-width: 1200px) {
+  .checkout-summary {
+    position: sticky;
+    top: 100px; /* Space for header */
+    padding: 2em;
+  }
+  
+  .checkout-summary-product {
+    min-height: 120px; /* Slightly taller for desktop */
+    gap: 1.2em;
+  }
+  
+  .checkout-summary-thumbnail {
+    width: 100px; /* Slightly larger on desktop */
+    flex-shrink: 0; /* Prevent image from shrinking */
+  }
+  
   .address-fields {
     display: grid;
     grid-template-columns: 1fr 1fr;

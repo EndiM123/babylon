@@ -210,33 +210,61 @@ export default function ProductDetail() {
     setCartOpen(true);
   }
 
-  function handleCartPanelAdd() {
+  function handleCartPanelAdd(panelQuantity?: number) {
+    // Use the panelQuantity if provided, otherwise use the component's quantity state
+    const finalQuantity = panelQuantity !== undefined ? panelQuantity : quantity;
+    
     // Add or update product in cart
     if (!product) return;
     setCart((prevCart: any[]) => {
-      const idx = prevCart.findIndex(item => item.product.id === product.id);
+      const idx = prevCart.findIndex(item => 
+        item.product.id === product.id && 
+        item.size === selectedSize && 
+        item.color === selectedColor
+      );
       if (idx !== -1) {
-        // Update quantity if already in cart
+        // Update quantity if same product, size and color already in cart
         const updated = [...prevCart];
-        updated[idx] = { ...updated[idx], quantity: updated[idx].quantity + quantity };
+        updated[idx] = { 
+          ...updated[idx], 
+          quantity: updated[idx].quantity + finalQuantity 
+        };
         return updated;
       } else {
-        // Add new product
-        return [...prevCart, { product, quantity }];
+        // Add new product with size and color
+        return [...prevCart, { 
+          product, 
+          quantity: finalQuantity, 
+          size: selectedSize, 
+          color: selectedColor 
+        }];
       }
     });
     setCartOpen(false);
   }
   function handleBuyNow() {
-    // Ensure product has all required properties for checkout
-    if (product) {
-      const checkoutProduct = {
+    if (!product) return;
+    
+    // Create the cart item with all necessary details
+    const cartItem = {
+      product: {
         ...product,
-        // Ensure image is always defined
         image: product.image || DEFAULT_PRODUCT_DETAILS.image
-      };
-      navigate('/checkout', { state: { product: checkoutProduct, quantity, selectedSize, selectedColor } });
-    }
+      },
+      quantity,
+      size: selectedSize,
+      color: selectedColor
+    };
+    
+    // Add the item to the cart
+    setCart((prevCart: any[]) => [cartItem]);
+    
+    // Navigate to checkout
+    navigate('/checkout', { 
+      state: { 
+        buyNow: true // This flag indicates it's a buy now flow
+      } 
+    });
   }
 
   if (loading) {
@@ -263,10 +291,13 @@ export default function ProductDetail() {
       <CartPanel
         open={cartOpen}
         product={product}
-        quantity={1}
-        onClose={handleCartPanelAdd}
-        onQuantityChange={() => {}}
-        onCheckout={() => { setCartOpen(false); navigate('/checkout', { state: { product, quantity: 1 } }); }}
+        quantity={quantity}
+        onClose={(qty) => handleCartPanelAdd(qty)}
+        onQuantityChange={(newQty) => setQuantity(newQty)}
+        onCheckout={() => {
+          handleCartPanelAdd(quantity);
+          navigate('/checkout');
+        }}
       />
       <main>
         <div className="product-detail-mobile-image">

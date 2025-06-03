@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import CartItem from './CartItem';
 import { supabase } from '../lib/supabase';
 import './CheckoutPage.css';
 import { CartContext } from '../App';
@@ -32,26 +33,43 @@ interface OrderItem {
   product_id: number;
   quantity: number;
   price_per_unit: number;
+  size?: string | null;
+  color?: string | null;
 }
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { cart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
   
-  // Get product from location state if coming from Buy Now
-  const buyNowProduct = location.state?.product;
-  const buyNowQuantity = location.state?.quantity || 1;
+  // All purchases now go through the cart for a unified checkout experience
   
-  // Determine if we're in Buy Now flow or Cart flow
-  const isBuyNow = !!buyNowProduct;
-  
-  // Calculate totals based on cart or buy now product
-  const subtotal = isBuyNow 
-    ? buyNowProduct.price * buyNowQuantity 
-    : cart.reduce((sum: number, item: any) => sum + item.product.price * item.quantity, 0);
+  // Calculate totals based on cart
+  const subtotal = cart.reduce((sum: number, item: any) => sum + item.product.price * item.quantity, 0);
   const shipping = subtotal > 0 ? 0 : 0;
   const total = subtotal + shipping;
+  
+  // Function to handle quantity changes in checkout summary
+  const handleQuantityChange = (item: any, newQuantity: number) => {
+    if (newQuantity <= 0) {
+      // Remove item from cart if quantity is 0
+      setCart(prevCart => prevCart.filter(cartItem => 
+        !(cartItem.product.id === item.product.id && 
+          cartItem.size === item.size && 
+          cartItem.color === item.color)
+      ));
+    } else {
+      // Update quantity for the specific item
+      setCart(prevCart => prevCart.map(cartItem => {
+        if (cartItem.product.id === item.product.id && 
+            cartItem.size === item.size && 
+            cartItem.color === item.color) {
+          return { ...cartItem, quantity: newQuantity };
+        }
+        return cartItem;
+      }));
+    }
+  };
 
   // Form state with fields that match our Customer interface
   const [form, setForm] = useState<Omit<Customer, 'id'>>({
@@ -78,7 +96,53 @@ export default function CheckoutPage() {
     items: []
   });
   
-  // Function to send order notification email using EmailJS
+  // Function to send order confirmation email to customer using EmailJS
+  const sendCustomerConfirmationEmail = async (orderData: {
+    customer_name: string;
+    customer_email: string;
+    total_amount: number;
+    order_id: number | null;
+  }) => {
+    try {
+      // EmailJS service, template, and user IDs for customer email
+      const serviceId = 'service_378zmls';
+      const templateId = 'template_7w50g1m';
+      const publicKey = 'SALww_CcwbXpsAYiC';
+      
+      // Create a detailed order summary for the email
+      const orderItems = cart.map(item => {
+        const productName = item.product?.name || 'Product';
+        const productPrice = item.product?.price || 0;
+        const size = item.size ? `\n   Size: ${item.size}` : '';
+        const color = item.color ? `\n   Color: ${item.color}` : '';
+        return `${item.quantity}x ${productName} - $${(productPrice * item.quantity).toFixed(2)}${size}${color}`;
+      }).join('\n\n');
+      
+      // Create template params that exactly match the EmailJS template variables for customer email
+      const templateParams = {
+        email: form.email,
+        name: form.name,
+        phone_number: form.phone_number,
+        country: form.country,
+        city: form.city,
+        street: form.street,
+        house_number: form.house_number,
+        order_items: orderItems,
+        total_amount: `$${orderData.total_amount.toFixed(2)}`,
+        order_id: orderData.order_id,
+        order_date: new Date().toLocaleDateString()
+      };
+      
+      const response = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      console.log('Customer confirmation email sent successfully:', response);
+    } catch (error) {
+      console.error('Failed to send customer confirmation email:', error);
+      // Don't throw error here - we don't want to disrupt the checkout flow
+      // if email notification fails
+    }
+  };
+
+  // Function to send order notification email to admin using EmailJS
   const sendOrderEmail = async (orderData: {
     customer_name: string;
     customer_email: string;
@@ -93,20 +157,13 @@ export default function CheckoutPage() {
       const publicKey = 'SALww_CcwbXpsAYiC';
       
       // Create a detailed order summary for the email - using simple text format to avoid image reference issues
-      let orderItems = '';
-      if (isBuyNow && buyNowProduct) {
-        // Create a simple text representation without image references
-        const productName = buyNowProduct.name || 'Product';
-        const productPrice = buyNowProduct.price || 0;
-        orderItems = `${buyNowQuantity}x ${productName} - $${(productPrice * buyNowQuantity).toFixed(2)}`;
-      } else {
-        // Create simple text representations for cart items without image references
-        orderItems = cart.map(item => {
-          const productName = item.product?.name || 'Product';
-          const productPrice = item.product?.price || 0;
-          return `${item.quantity}x ${productName} - $${(productPrice * item.quantity).toFixed(2)}`;
-        }).join('\n');
-      }
+      const orderItems = cart.map(item => {
+        const productName = item.product?.name || 'Product';
+        const productPrice = item.product?.price || 0;
+        const size = item.size ? `\n   Size: ${item.size}` : '';
+        const color = item.color ? `\n   Color: ${item.color}` : '';
+        return `${item.quantity}x ${productName} - $${(productPrice * item.quantity).toFixed(2)}${size}${color}`;
+      }).join('\n\n');
       
       // Create template params that exactly match the Supabase customers table and EmailJS template variables
       const templateParams = {
@@ -199,47 +256,43 @@ export default function CheckoutPage() {
       setOrderId(orderId);
       setOrderDetails(prev => ({ ...prev, order_id: orderId }));
       
-      // 3. Insert order items
-      if (isBuyNow) {
-        // Handle Buy Now flow - insert single product
-        const orderItem: OrderItem = {
-          order_id: orderId,
-          product_id: buyNowProduct.id,
-          quantity: buyNowQuantity,
-          price_per_unit: buyNowProduct.price
-        };
-        
-        const { error: itemError } = await supabase
-          .from('order_items')
-          .insert([orderItem]);
-        
-        if (itemError) throw new Error(`Order item creation failed: ${itemError.message}`);
-        
-        setOrderDetails(prev => ({ ...prev, items: [{ product: buyNowProduct, quantity: buyNowQuantity }] }));
-      } else {
-        // Handle Cart flow - insert all cart items
-        const orderItems: OrderItem[] = cart.map((item: any) => ({
-          order_id: orderId,
-          product_id: item.product.id,
-          quantity: item.quantity,
-          price_per_unit: item.product.price
-        }));
-        
-        const { error: itemsError } = await supabase
-          .from('order_items')
-          .insert(orderItems);
-        
-        if (itemsError) throw new Error(`Order items creation failed: ${itemsError.message}`);
-        
-        setOrderDetails(prev => ({ ...prev, items: [...cart] }));
-      }
+      // Insert order items from cart
+      const orderItems: OrderItem[] = cart.map((item: any) => ({
+        order_id: orderId,
+        product_id: item.product.id,
+        quantity: item.quantity,
+        price_per_unit: item.product.price,
+        size: item.size || null,
+        color: item.color || null
+      }));
+      
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+      
+      if (itemsError) throw new Error(`Order items creation failed: ${itemsError.message}`);
+      
+      // Update order details with cart items
+      setOrderDetails(prev => ({ ...prev, items: [...cart] }));
+      
+      // Clear the cart after successful order
+      setCart([]);
       
       // Order successfully completed
       setShowReceipt(true);
       
-      // Send order notification email - wrap in setTimeout to prevent blocking UI
+      // Send order notification emails - wrap in setTimeout to prevent blocking UI
       setTimeout(() => {
+        // Send admin notification email
         sendOrderEmail({
+          customer_name: form.name,
+          customer_email: form.email,
+          total_amount: total,
+          order_id: orderId
+        });
+        
+        // Send customer confirmation email
+        sendCustomerConfirmationEmail({
           customer_name: form.name,
           customer_email: form.email,
           total_amount: total,
@@ -259,7 +312,7 @@ export default function CheckoutPage() {
     <div className="checkout-page-root">
       {showReceipt && (
         <ReceiptModal
-          items={isBuyNow ? [{ product: buyNowProduct, quantity: buyNowQuantity }] : cart}
+          items={cart}
           subtotal={subtotal}
           shipping={shipping}
           total={total}
@@ -285,11 +338,39 @@ export default function CheckoutPage() {
               <h3>Your Cart</h3>
               {cart.length > 0 ? (
                 cart.map((item: any) => (
-                  <div className="checkout-summary-product" key={item.product.id}>
+                  <div className="checkout-summary-product" key={`${item.product.id}-${item.size || ''}-${item.color || ''}`}>
                     <img src={item.product.image} alt={item.product.name} className="checkout-summary-thumbnail" />
                     <div className="checkout-summary-info">
                       <div className="checkout-summary-name">{item.product.name}</div>
-                      <div className="checkout-summary-qty">Qty: {item.quantity}</div>
+                      {item.size && (
+                        <div className="checkout-summary-detail">
+                          <span className="detail-label">Size:</span>
+                          <span className="detail-value">{item.size}</span>
+                        </div>
+                      )}
+                      {item.color && (
+                        <div className="checkout-summary-detail">
+                          <span className="detail-label">Color:</span>
+                          <span className="detail-value">{item.color}</span>
+                        </div>
+                      )}
+                      <div className="checkout-summary-qty-control" data-component-name="CheckoutPage">
+                        <button 
+                          className="checkout-qty-btn minus" 
+                          onClick={() => handleQuantityChange(item, Math.max(0, item.quantity - 1))}
+                          aria-label="Decrease quantity"
+                        >
+                          -
+                        </button>
+                        <span className="checkout-summary-qty">Qty: {item.quantity}</span>
+                        <button 
+                          className="checkout-qty-btn plus" 
+                          onClick={() => handleQuantityChange(item, item.quantity + 1)}
+                          aria-label="Increase quantity"
+                        >
+                          +
+                        </button>
+                      </div>
                       <div className="checkout-summary-price">${item.product.price.toFixed(2)}</div>
                     </div>
                   </div>
@@ -339,11 +420,39 @@ export default function CheckoutPage() {
               <h3>Your Cart</h3>
               {cart.length > 0 ? (
                 cart.map((item: any) => (
-                  <div className="checkout-summary-product" key={item.product.id}>
+                  <div className="checkout-summary-product" key={`${item.product.id}-${item.size || ''}-${item.color || ''}`}>
                     <img src={item.product.image} alt={item.product.name} className="checkout-summary-thumbnail" />
                     <div className="checkout-summary-info">
                       <div className="checkout-summary-name">{item.product.name}</div>
-                      <div className="checkout-summary-qty">Qty: {item.quantity}</div>
+                      {item.size && (
+                        <div className="checkout-summary-detail">
+                          <span className="detail-label">Size:</span>
+                          <span className="detail-value">{item.size}</span>
+                        </div>
+                      )}
+                      {item.color && (
+                        <div className="checkout-summary-detail">
+                          <span className="detail-label">Color:</span>
+                          <span className="detail-value">{item.color}</span>
+                        </div>
+                      )}
+                      <div className="checkout-summary-qty-control" data-component-name="CheckoutPage">
+                        <button 
+                          className="checkout-qty-btn minus" 
+                          onClick={() => handleQuantityChange(item, Math.max(0, item.quantity - 1))}
+                          aria-label="Decrease quantity"
+                        >
+                          -
+                        </button>
+                        <span className="checkout-summary-qty">Qty: {item.quantity}</span>
+                        <button 
+                          className="checkout-qty-btn plus" 
+                          onClick={() => handleQuantityChange(item, item.quantity + 1)}
+                          aria-label="Increase quantity"
+                        >
+                          +
+                        </button>
+                      </div>
                       <div className="checkout-summary-price">${item.product.price.toFixed(2)}</div>
                     </div>
                   </div>
