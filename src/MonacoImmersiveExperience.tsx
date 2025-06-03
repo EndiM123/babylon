@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './MonacoImmersiveExperience.css';
+import Footer from './Footer';
 
 const MonacoImmersiveExperience: React.FC = () => {
   const [activeAudioLayer, setActiveAudioLayer] = useState('track');
@@ -186,6 +187,8 @@ const MonacoImmersiveExperience: React.FC = () => {
       <div className="hidden-cta" onClick={toggleVelocityEdit}>
         <div className="cta-symbol"></div>
       </div>
+      
+      <Footer />
 
       {/* The Velocity Edit gallery */}
       {showVelocityEdit && (

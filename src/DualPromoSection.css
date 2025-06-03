@@ -255,16 +255,23 @@
     margin: 1rem auto;
     border-radius: 16px;
   }
-  .promo-content-block, .promo-image-block {
+  .promo-content-block {
+    width: 100%;
+    min-height: 32vw;
+    padding: 6vw 4vw 6vw 6vw;
+    transform: translateX(-10px); /* Shift content 10px to the left */
+  }
+  .promo-image-block {
     width: 100vw;
     min-height: 32vw;
-    padding: 6vw 4vw;
+    padding: 6vw 4vw 6vw 8vw;
   }
   .promo-main-title {
     font-size: 1.5rem;
   }
   .promo-desc {
     font-size: 1rem;
+    padding-right: 2vw; /* Ensure text doesn't touch right edge */
   }
 }
 

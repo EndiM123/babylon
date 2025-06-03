@@ -31,9 +31,27 @@
   grid-template-columns: 1fr;
   gap: 1rem;
   padding: 0 0.75rem;
-  margin: 0;
+  margin: 0 auto;
   width: 100%;
+  max-width: 1200px;
   box-sizing: border-box;
+}
+
+@media (min-width: 1200px) {
+  .brand-values-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1000px; /* Increased from 900px */
+    margin-left: 19%; /* Increased left margin to move content further right */
+    padding-right: 2rem; /* Add some right padding */
+    width: 85%; /* Adjusted width to prevent overflow */
+  }
+  
+  .brand-value-item {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding: 1.25rem 0.75rem; /* Slightly more padding */
+    margin: 0 0.5rem; /* Add some horizontal margin */
+  }
 }
 
 .brand-value-item {

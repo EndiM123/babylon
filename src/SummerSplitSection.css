@@ -203,9 +203,12 @@
   .summer-product-card {
     flex-direction: column;
     align-items: center;
-    padding: 1.25rem;
+    padding: 1.25rem 1rem;
     height: 100%;
     text-align: center;
+    width: calc(100% - 24px); /* Account for padding */
+    margin: 0 auto;
+    box-sizing: border-box;
   }
   
   .summer-product-thumbnail {
@@ -230,7 +233,7 @@
 }
 
 /* Tablet styles */
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (max-width: 1199px) {
   .summer-split-container {
     flex-direction: row;
     flex-wrap: wrap;

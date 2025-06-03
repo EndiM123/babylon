@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './GreenCoastVisual.css';
 import './immersive-blog-responsive.css';
+import Footer from './Footer';
 
 // Riviera Capsule collection items
 const CAPSULE_ITEMS = [
@@ -335,6 +336,7 @@ export default function GreenCoastVisualBlogPost() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

@@ -2,12 +2,11 @@ import React from 'react';
 import './BrandValues.css';
 
 const BrandValues = () => {
-  // Define the exact colors for alternating diamonds
+  // Define the exact colors for the diamonds
   const colors = [
     '#1E3932', // Dark green
     '#3D2F4C', // Purple
-    '#1E3932', // Dark green
-    '#3D2F4C'  // Purple
+    '#1E3932'   // Dark green
   ] as const;
 
   // Function to get the style with specified color
@@ -44,8 +43,8 @@ const BrandValues = () => {
                 data-color="purple"
               />
             </div>
-            <h3 className="brand-value-heading">15-Day Returns</h3>
-            <p className="brand-value-description">Flexible return window on all purchases, no questions asked</p>
+            <h3 className="brand-value-heading">25 Years of Tradition</h3>
+            <p className="brand-value-description">Established legacy of craftsmanship and design since 1999</p>
           </div>
           
           {/* Column 3 - Dark Green */}
@@ -59,19 +58,6 @@ const BrandValues = () => {
             </div>
             <h3 className="brand-value-heading">Trend-Curated Fashion</h3>
             <p className="brand-value-description">Every piece in our collection reflects the latest global styles</p>
-          </div>
-          
-          {/* Column 4 - Purple */}
-          <div className="brand-value-item">
-            <div className="brand-value-icon">
-              <div 
-                className="brand-value-icon-square" 
-                style={getIconStyle(colors[3])} 
-                data-color="purple"
-              />
-            </div>
-            <h3 className="brand-value-heading">25 Years of Tradition</h3>
-            <p className="brand-value-description">Established legacy of craftsmanship and design since 1999</p>
           </div>
         </div>
       </div>
