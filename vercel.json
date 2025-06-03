@@ -1,13 +1,18 @@
 {
-  "rewrites": [
-    { "source": "/:file((?:.*)\\.(?:png|jpg|jpeg|gif|webp|svg))", "destination": "/:file" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "build" }
+    }
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
-  ],
-  "buildCommand": "./build.sh",
-  "outputDirectory": "build",
-  "framework": "create-react-app"
+    { "src": "/static/(.*)", "dest": "/static/$1" },
+    { "src": "/favicon.ico", "dest": "/favicon.ico" },
+    { "src": "/manifest.json", "dest": "/manifest.json" },
+    { "src": "/(.+)\\.(?:png|jpg|jpeg|gif|webp|svg)", "dest": "/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }
