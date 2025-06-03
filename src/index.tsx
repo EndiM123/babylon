@@ -5,24 +5,18 @@ import './global-video-override.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import ErrorBoundary from './ErrorBoundary';
 
-// Get the root element
-const rootElement = document.getElementById('root');
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 
-// Make sure the element exists before creating the root
-if (rootElement) {
-  const root = ReactDOM.createRoot(rootElement);
-  
-  // Wrap with error boundary for production
-  root.render(
-    <ErrorBoundary>
-      <BrowserRouter basename="/">
-        <App />
-      </BrowserRouter>
-    </ErrorBoundary>
-  );
-}
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);
 
 reportWebVitals();
 

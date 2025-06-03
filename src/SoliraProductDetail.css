@@ -1,6 +1,5 @@
 /* Product Detail Styles */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Wolmer:wght@400;500;600;700&display=swap');
+/* Font imports moved to index.html */
 
 .product-detail-main-row.product-detail-split-layout {
   max-width: 1400px;
