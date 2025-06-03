@@ -7,7 +7,7 @@
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
   ],
-  "buildCommand": "npm run build",
+  "buildCommand": "./build.sh",
   "outputDirectory": "build",
   "framework": "create-react-app"
 }
