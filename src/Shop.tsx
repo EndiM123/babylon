@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Shop.css';
 import './App.css';
 import { supabase } from './lib/supabase';
@@ -24,16 +24,35 @@ interface Product {
 
 
 export default function Shop() {
-  // Filter state
-  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [categories, setCategories] = useState<string[]>(['All']);
-  const filterRef = useRef<HTMLDivElement>(null);
+  // Get query parameters from URL
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const categoryParam = queryParams.get('category');
   
   // Search state
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  
+  // Category state
+  const [categories, setCategories] = useState<string[]>(['All']);
+  const [showCategoryMenu, setShowCategoryMenu] = useState<boolean>(false);
+  const categoryMenuRef = useRef<HTMLDivElement>(null);
+  
+  // Mobile detection state
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+  
+  // Update mobile detection on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
   // Focus search input when search modal opens
   useEffect(() => {
@@ -42,11 +61,11 @@ export default function Shop() {
     }
   }, [isSearching]);
   
-  // Close filter when clicking outside
+  // Close category menu when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
-        setIsFilterOpen(false);
+      if (categoryMenuRef.current && !categoryMenuRef.current.contains(event.target as Node)) {
+        setShowCategoryMenu(false);
       }
     }
     
@@ -54,8 +73,8 @@ export default function Shop() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [filterRef]);
-
+  }, []);
+  
   // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
   // Products state
@@ -70,64 +89,35 @@ export default function Shop() {
   };
 
   // Apply search to products
-  const applySearch = (products: Product[]) => {
-    if (!searchQuery.trim()) return products;
+  const applySearch = React.useCallback((products: Product[], query: string) => {
+    if (!query.trim()) return products;
     
     return products.filter(product => 
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      product.category.toLowerCase().includes(searchQuery.toLowerCase())
+      product.name.toLowerCase().includes(query.toLowerCase()) || 
+      product.category.toLowerCase().includes(query.toLowerCase())
     );
-  };
-  
-  // Check if device is mobile
-  const isMobile = window.innerWidth <= 700;
+  }, []);
 
-  // Filter products when category or search query changes
+  // Apply category and search filters when products, search query, or category param changes
   useEffect(() => {
-    console.log('Filtering products...');
-    console.log('Selected category:', selectedCategory);
-    console.log('All products:', allProducts);
-    
     let filtered = [...allProducts];
     
-    // Apply category filter if any category is selected
-    if (selectedCategory && selectedCategory !== 'All') {
-      console.log(`Filtering by category: ${selectedCategory}`);
-      filtered = filtered.filter(product => {
-        // Trim and normalize whitespace in category names for comparison
-        const productCategory = product.category?.trim().toLowerCase() || '';
-        const selectedCat = selectedCategory.trim().toLowerCase();
-        
-        const isMatch = productCategory === selectedCat;
-        if (!isMatch) {
-          console.log(`Product ${product.name} category '${productCategory}' doesn't match '${selectedCat}'`);
-        }
-        return isMatch;
-      });
-      console.log(`Found ${filtered.length} products in category '${selectedCategory}':`, filtered);
-    } else {
-      console.log('No category filter applied, showing all products');
+    // Apply category filter if specified in URL
+    if (categoryParam) {
+      filtered = filtered.filter(product => 
+        product.category.toLowerCase().includes(categoryParam.toLowerCase())
+      );
     }
     
     // Apply search filter if there's a search query
     if (searchQuery.trim()) {
-      console.log(`Applying search filter: ${searchQuery}`);
-      filtered = applySearch(filtered);
-      console.log(`After search '${searchQuery}':`, filtered);
+      filtered = applySearch(filtered, searchQuery);
     }
-    
-    // Log the final filtered products before updating state
-    console.log('Final filtered products:', filtered);
     
     // Update filtered products and reset to first page
     setFilteredProducts(filtered);
     setCurrentPage(1);
-    
-    // Close the filter menu on mobile after selection
-    if (isMobile && selectedCategory !== 'All') {
-      setIsFilterOpen(false);
-    }
-  }, [selectedCategory, searchQuery, allProducts, isMobile]);
+  }, [searchQuery, allProducts, applySearch, categoryParam]);
 
   // On mount, fetch products and categories
   useEffect(() => {
@@ -204,7 +194,7 @@ export default function Shop() {
       }
     };
     
-    // Fetch both products and categories in parallel
+    // Fetch both products and categories
     Promise.all([fetchProducts(), fetchCategories()]);
   }, []);
   
@@ -259,39 +249,14 @@ export default function Shop() {
     };
   }, []);
 
-  // Handle category selection
-  const handleCategorySelect = (category: string) => {
-    console.log('Category selected:', category);
-    setSelectedCategory(category);
-    
-    // Reset to first page and close filter menu
-    setCurrentPage(1);
-    
-    // The actual filtering will be handled by the useEffect that watches selectedCategory
-    setIsFilterOpen(false);
-    
-    // Log all unique categories for debugging
-    const uniqueCategories = Array.from(new Set(allProducts.map(p => p.category)));
-    console.log('Available categories in products:', uniqueCategories);
-  };
 
-  // Toggle filter dropdown
-  const toggleFilter = () => {
-    setIsFilterOpen(!isFilterOpen);
-  };
 
   return (
     <div className="shop-page-container">
       <div className="shop-video-frame">
-        {/* Overlay for mobile filter only */}
-        {isMobile && (
-          <div 
-            className={`filter-overlay ${isFilterOpen ? 'visible' : ''}`}
-            onClick={() => setIsFilterOpen(false)}
-          />
-        )}
+
         <video
-          className="word-transition-video"
+          className="shop-video-frame-video"
           src="/endi.mp4"
           autoPlay
           loop
@@ -316,77 +281,188 @@ export default function Shop() {
             </nav>
           </div>
         </header>
-        {/* Unified Container for Filter/Sort Bar and Product Grid */}
-        <div className="shop-main-container">
-          <div className="shop-side-controls" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '0.5em', padding: '0 10px' }}>
-            {/* Left side - Search icon */}
-            <div className="shop-side-search" style={{ flex: '0 0 40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div className="search-icon-container" onClick={() => setIsSearching(!isSearching)} style={{ cursor: 'pointer' }}>
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style={{ color: '#1E3932' }}
-                >
-                  <path
-                    d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+          {/* Unified Container for Search and Product Grid */}
+          <div className="shop-main-container">
+            <div className="shop-side-controls" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', padding: '0 10px' }}>
+              {/* Category heading if category filter is applied */}
+              {categoryParam && (
+                <h2 style={{ 
+                  fontFamily: 'Wolmer, serif', 
+                  color: '#1E3932', 
+                  margin: '20px 0', 
+                  textTransform: 'capitalize',
+                  textAlign: 'center'
+                }}>
+                  {categoryParam} Collection
+                </h2>
+              )}
+              
+              {/* Category and Search Controls */}
+              <div className="shop-controls-container">
+                <div className="shop-controls-inner">
+                {/* Category Filter Button - positioned at left */}
+                <div ref={categoryMenuRef} className="category-button-container">
+                  <button 
+                    onClick={() => setShowCategoryMenu(!showCategoryMenu)}
+                    data-component-name="Shop"
+                    style={{
+                      background: '#1E3932',
+                      color: 'white',
+                      border: '1px solid #1E3932',
+                      borderRadius: '20px',
+                      padding: '6px 12px',
+                      fontSize: '13px',
+                      fontWeight: 500,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '4px',
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      marginLeft: '0',
+                      transform: 'scale(0.9)'
+                    }}
+                  >
+                    <span data-component-name="Shop">Categories</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  
+                  {/* Category Menu - Different styles for mobile/desktop */}
+                  {showCategoryMenu && (
+                    isMobile ? (
+                      // Mobile: Full screen overlay
+                      <div className="category-menu-mobile">
+                        <div className="category-menu-mobile-header">
+                          <h2 style={{ margin: 0, color: '#1E3932' }}>Categories</h2>
+                          <button 
+                            onClick={() => setShowCategoryMenu(false)}
+                            style={{
+                              background: 'none',
+                              border: 'none',
+                              fontSize: '24px',
+                              cursor: 'pointer',
+                              color: '#1E3932'
+                            }}
+                          >
+                            ×
+                          </button>
+                        </div>
+                        
+                        {categories.map((category) => (
+                          <Link 
+                            key={category}
+                            to={category === 'All' ? '/shop' : `/shop?category=${category}`}
+                            style={{
+                              display: 'block',
+                              padding: '15px 0',
+                              fontSize: '18px',
+                              color: categoryParam === category || (!categoryParam && category === 'All') ? '#1E3932' : '#333',
+                              fontWeight: categoryParam === category || (!categoryParam && category === 'All') ? 'bold' : 'normal',
+                              borderBottom: '1px solid #eee',
+                              textDecoration: 'none'
+                            }}
+                            onClick={() => setShowCategoryMenu(false)}
+                          >
+                            {category}
+                            {(categoryParam === category || (!categoryParam && category === 'All')) && (
+                              <span style={{ float: 'right', color: '#1E3932' }}>✓</span>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : (
+                      // Desktop: Sidebar from left
+                      <>
+                        {/* Overlay for desktop */}
+                        <div 
+                          className="category-menu-overlay"
+                          onClick={() => setShowCategoryMenu(false)}
+                        />
+                        
+                        {/* Sidebar menu */}
+                        <div className="category-menu-desktop">
+                          <div className="category-menu-desktop-header">
+                            <h2 style={{ margin: 0, color: '#1E3932' }}>Categories</h2>
+                            <button 
+                              onClick={() => setShowCategoryMenu(false)}
+                              style={{
+                                background: 'none',
+                                border: 'none',
+                                fontSize: '24px',
+                                cursor: 'pointer',
+                                color: '#1E3932'
+                              }}
+                            >
+                              ×
+                            </button>
+                          </div>
+                          
+                          {categories.map((category) => (
+                            <Link 
+                              key={category}
+                              to={category === 'All' ? '/shop' : `/shop?category=${category}`}
+                              style={{
+                                display: 'block',
+                                padding: '12px 0',
+                                color: categoryParam === category || (!categoryParam && category === 'All') ? '#1E3932' : '#333',
+                                fontWeight: categoryParam === category || (!categoryParam && category === 'All') ? 'bold' : 'normal',
+                                borderBottom: '1px solid #eee',
+                                textDecoration: 'none'
+                              }}
+                              onClick={() => setShowCategoryMenu(false)}
+                            >
+                              {category}
+                              {(categoryParam === category || (!categoryParam && category === 'All')) && (
+                                <span style={{ float: 'right', color: '#1E3932' }}>✓</span>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    )
+                  )}
+                </div>
+                
+                {/* Babylon Logo Text */}
+                <div className="babylon-logo-text">
+                  BABYLON
+                </div>
+                
+                {/* Search icon - positioned at right */}
+                <div className="shop-side-search" style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  marginLeft: 'auto',
+                  position: 'absolute',
+                  right: '0',
+                  paddingRight: '20px'
+                }}>
+                  <div className="search-icon-container" onClick={() => setIsSearching(!isSearching)} style={{ cursor: 'pointer' }}>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      style={{ color: '#1E3932' }}
+                    >
+                      <path
+                        d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
               </div>
             </div>
-            
-            {/* Babylon Logo Centered */}
-            <span className="shop-side-logo" style={{ flex: 1, textAlign: 'center', fontFamily: 'Wolmer, Inter, Arial, sans-serif', color: '#A67899', fontWeight: 900, letterSpacing: '0.16em' }}>BABYLON</span>
-            
-            {/* Filter button - visible on all screen sizes */}
-            <div 
-              className="shop-side-filters" 
-              ref={filterRef}
-              style={{ flex: '0 0 80px', display: 'flex', justifyContent: 'flex-end' }}
-            >
-              <button 
-                className="shop-filter-button" 
-                aria-label="Filter products"
-                onClick={toggleFilter}
-                aria-expanded={isFilterOpen}
-                style={{
-                  background: '#1E3932',
-                  color: 'white',
-                  border: '1px solid #1E3932',
-                  borderRadius: '20px',
-                  padding: '8px 16px',
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '6px',
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                }}
-              >
-                <span>Filter</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-                  <path d="M4 6H20M8 12H16M11 18H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-          
-          {/* Desktop-only filter overlay - visible when filter is open */}
-          {!isMobile && isFilterOpen && (
-            <div 
-              className={`filter-overlay ${isFilterOpen ? 'visible' : ''}`}
-              onClick={() => setIsFilterOpen(false)}
-            ></div>
-          )}
           
           {/* Search modal - visible when search icon is clicked */}
           {isSearching && (
@@ -420,39 +496,7 @@ export default function Shop() {
             </div>
           )}
           
-          {/* Filter dropdown - different styles for mobile/desktop */}
-          {isFilterOpen && (
-            <div 
-              className={`filter-dropdown ${isFilterOpen ? 'visible' : ''}`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Mobile header with close button */}
-              <div className="filter-header">
-                <h3>Filter by Category</h3>
-                <button 
-                  className="filter-close-button"
-                  onClick={() => setIsFilterOpen(false)}
-                  aria-label="Close filter"
-                >
-                  X
-                </button>
-              </div>
-              <div className="filter-options">
-                {categories.map(category => (
-                  <div 
-                    key={category}
-                    onClick={() => handleCategorySelect(category)}
-                    className={`filter-option ${selectedCategory === category ? 'selected' : ''}`}
-                  >
-                    {category}
-                    {selectedCategory === category && (
-                      <span className="filter-checkmark">✓</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+
           
           {/* Product Grid */}
           {loading ? (

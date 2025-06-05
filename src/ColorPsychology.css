@@ -507,6 +507,45 @@
   text-align: center;
 }
 
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .immersive-hero-wrap {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    margin: 0;
+    padding: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    background: #000; /* Match video background */
+  }
+  
+  .immersive-hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  /* Ensure the video fills the screen width */
+  .immersive-blog-post {
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  /* Remove any default margins */
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
+
 /* Desktop styles */
 @media (min-width: 1200px) {
   /* Make hero section cover the full landing screen */

@@ -32,101 +32,21 @@ interface Product {
   returns?: string;
 }
 
-// Local product metadata that won't change frequently
-const PRODUCT_METADATA = {
-  1: {
-    image: '/media1.png',
-    video: '',
-    oldPrice: 520,
-    rating: 4.7,
-    reviews: 32,
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'A modern linen dress with sculpted lines and editorial silhouette. Perfect for luxury evenings or elevated daywear.',
-    materials: '100% Linen. Dry clean only.',
-    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
-    returns: 'Returns accepted within 30 days. Free return shipping.',
-    category: 'Dresses',
-  },
-  2: {
-    image: '/media2.png',
-    video: '',
-    oldPrice: 790,
-    rating: 4.9,
-    reviews: 18,
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'A luxury blazer with a curved-edge design, crafted from premium wool blend.',
-    materials: 'Wool blend. Dry clean only.',
-    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
-    returns: 'Returns accepted within 30 days. Free return shipping.',
-    category: 'Outerwear',
-  },
-  3: {
-    image: '/media3.png',
-    video: '',
-    oldPrice: 280,
-    rating: 4.6,
-    reviews: 21,
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'A sleek, minimalist silk top perfect for layering or wearing solo. Lightweight, soft, and versatile.',
-    materials: '100% Silk. Dry clean only.',
-    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
-    returns: 'Returns accepted within 30 days. Free return shipping.',
-    category: 'Tops',
-  },
-  4: {
-    image: '/media4.png',
-    video: '',
-    oldPrice: 350,
-    rating: 4.5,
-    reviews: 15,
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'A soft, flowing trapeze skirt with a flattering silhouette. Effortlessly chic for any occasion.',
-    materials: 'Viscose blend. Machine wash cold.',
-    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
-    returns: 'Returns accepted within 30 days. Free return shipping.',
-    category: 'Bottoms',
-  },
-  5: {
-    image: '/media5.png',
-    video: '',
-    oldPrice: 220,
-    rating: 4.3,
-    reviews: 11,
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'A stylish bikini set in a signature Tiffany blue. Comfortable, supportive, and eye-catching.',
-    materials: 'Nylon, Spandex. Hand wash.',
-    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
-    returns: 'Returns accepted within 30 days. Free return shipping.',
-    category: 'Swimwear',
-  },
-  6: {
-    image: '/media6.png',
-    video: '',
-    oldPrice: 180,
-    rating: 4.8,
-    reviews: 8,
-    sizes: [],
-    description: 'A compact linen mini bag, perfect for summer outings and essentials. Lightweight and stylish.',
-    materials: '100% Linen. Spot clean only.',
-    shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
-    returns: 'Returns accepted within 30 days. Free return shipping.',
-    category: 'Accessories',
-  }
-};
-
-// Default product details for fields not in the database
-const DEFAULT_PRODUCT_DETAILS = {
-  image: '/media1.png',
-  video: '',
-  oldPrice: 0,
-  rating: 4.5,
-  reviews: 0,
-  sizes: ['S', 'M', 'L'],
-  materials: 'Please see product description for materials information.',
+// Default values for product details
+const DEFAULT_PRODUCT = {
+  id: 0,
+  name: 'Loading...',
+  description: 'Loading product details...',
+  price: 0,
+  image: '/placeholder-image.jpg',
+  category: '',
+  sizes: ['XS', 'S', 'M', 'L', 'XL'],
+  materials: 'Material information not available',
   shipping: 'Free shipping on all orders. Delivery in 2-5 business days.',
   returns: 'Returns accepted within 30 days. Free return shipping.',
-  category: 'Uncategorized',
-  description: 'Product description not available'
+  rating: 4.5,
+  reviews: 0,
+  oldPrice: 0
 };
 
 const COLOR_OPTIONS = [
@@ -146,56 +66,53 @@ export default function ProductDetail() {
   const [cartOpen, setCartOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch product details from Supabase and combine with local metadata
+  // Fetch product details from Supabase
   useEffect(() => {
     const fetchProduct = async () => {
       if (!id) return;
       
       try {
         setLoading(true);
+        setError(null);
+        
+        // Fetch product from products table
         const { data, error } = await supabase
           .from('products')
-          .select('id, name, price')
+          .select('id, name, description, price, image, category')
           .eq('id', id)
           .single();
           
-        if (error) {
-          throw error;
-        }
+        if (error) throw error;
         
         if (data) {
-          // Get metadata for this product ID
-          const metadata = PRODUCT_METADATA[data.id as keyof typeof PRODUCT_METADATA];
+          // Merge with default values and set the product
+          const productWithDefaults: Product = {
+            ...DEFAULT_PRODUCT,
+            ...data,
+            // Ensure image URL is properly formatted
+            image: data.image || DEFAULT_PRODUCT.image,
+            // Add default values for missing fields
+            sizes: ['XS', 'S', 'M', 'L', 'XL'],
+            materials: 'Material information not specified',
+            rating: 4.5, // Default rating
+            reviews: Math.floor(Math.random() * 50), // Random reviews for demo
+            oldPrice: data.price ? Math.round(data.price * 1.2) : 0, // Add 20% to price for oldPrice
+          };
           
-          if (metadata) {
-            // Product exists in our local metadata
-            const mergedProduct = {
-              ...data,
-              ...metadata
-            };
-            
-            setProduct(mergedProduct);
-            // Set initial selected size if available
-            if (mergedProduct.sizes && mergedProduct.sizes.length > 0) {
-              setSelectedSize(mergedProduct.sizes[0]);
-            }
-          } else {
-            // Product exists in Supabase but not in our local metadata
-            const productWithDefaults = {
-              ...DEFAULT_PRODUCT_DETAILS,
-              ...data
-            };
-            
-            setProduct(productWithDefaults);
-            // Set initial selected size
-            if (productWithDefaults.sizes && productWithDefaults.sizes.length > 0) {
-              setSelectedSize(productWithDefaults.sizes[0]);
-            }
-          }
+          setProduct(productWithDefaults);
+          setSelectedSize(productWithDefaults.sizes?.[0] || 'M');
+        } else {
+          throw new Error('Product not found');
         }
       } catch (error: any) {
-        setError(error.message);
         console.error('Error fetching product:', error);
+        setError(error.message || 'Failed to load product details');
+        // Set default product with error state
+        setProduct({
+          ...DEFAULT_PRODUCT,
+          name: 'Product Not Found',
+          description: 'The requested product could not be found or loaded.',
+        });
       } finally {
         setLoading(false);
       }
@@ -249,7 +166,7 @@ export default function ProductDetail() {
     const cartItem = {
       product: {
         ...product,
-        image: product.image || DEFAULT_PRODUCT_DETAILS.image
+        image: product.image || DEFAULT_PRODUCT.image
       },
       quantity,
       size: selectedSize,

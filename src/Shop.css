@@ -1,5 +1,161 @@
 /* SHOP PAGE: Modern Luxury Editorial Style */
 
+/* Shop Controls */
+.shop-controls-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.shop-controls-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px 0;
+  position: relative;
+}
+
+@media (min-width: 1200px) {
+  .shop-controls-inner {
+    justify-content: flex-start;
+    max-width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  
+  .category-button-container {
+    margin-left: 0;
+  }
+  
+  .shop-side-search {
+    margin-left: auto !important;
+  }
+}
+
+/* Category Button */
+.category-button-container {
+  position: relative;
+  margin-right: auto;
+  margin-left: 10px;
+}
+
+/* Babylon Logo Text */
+.babylon-logo-text {
+  font-family: 'Wolmer', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1E3932;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .babylon-logo-text {
+    margin: 0 auto;
+    position: absolute;
+    left: 48%;
+    transform: translateX(-50%);
+  }
+  
+  .shop-side-search {
+    margin-right: 60px !important;
+    margin-left: auto !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .babylon-logo-text {
+    font-size: 20px;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .category-button-container {
+    margin-left: -10px !important;
+    padding-left: 0;
+  }
+  
+  .shop-controls-inner {
+    padding-left: 0;
+    margin-left: -5px;
+  }
+}
+
+/* Category Menu Styles */
+.category-menu-desktop {
+  position: fixed;
+  top: 0 !important;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background: white;
+  z-index: 100;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh !important;
+}
+
+.category-menu-desktop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-top: 80px; /* Space for the header */
+}
+
+.category-menu-mobile {
+  position: fixed;
+  top: 0 !important;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+  height: 100vh !important;
+}
+
+.category-menu-mobile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-top: 60px; /* Space for the mobile header */
+}
+
+.category-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 99;
+}
+
 .shop-page-container {
   display: flex;
   flex-direction: column;
@@ -619,6 +775,15 @@
   .search-icon-container svg {
     width: 20px;
     height: 20px;
+  }
+  
+  .shop-side-search {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    padding: 0;
   }
   
   /* Desktop search modal styles */

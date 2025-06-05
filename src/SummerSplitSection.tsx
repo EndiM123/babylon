@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './SummerSplitSection.css';
 
 interface ProductCardProps {
@@ -49,10 +50,10 @@ export default function SummerSplitSection() {
     <section className="summer-split-section">
       <div className="summer-split-container">
         <div className="summer-split-left">
-          <div className="corner-label top-left">shop bikini</div>
-          <div className="corner-label top-right">shop dresses</div>
-          <div className="corner-label bottom-left">shop sunhats</div>
-          <div className="corner-label bottom-right">shop accessories</div>
+          <Link to="/shop?category=Swimwear" className="corner-label top-left" data-component-name="SummerSplitSection">shop bikini</Link>
+          <Link to="/shop?category=dresses" className="corner-label top-right">shop dresses</Link>
+          <Link to="/shop?category=sunhats" className="corner-label bottom-left">shop sunhats</Link>
+          <Link to="/shop?category=accessories" className="corner-label bottom-right">shop accessories</Link>
           <div className="summer-image-container">
             <img src="babylonbag.png" alt="Summer scene" className="summer-scene-image" />
           </div>

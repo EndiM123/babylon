@@ -423,6 +423,8 @@
 @media (max-width: 767px) {
   .mobile-hero-title-wrap {
     display: block !important;
+    margin-top: 2.5em !important; /* Increased from 1.6em */
+    margin-bottom: 0.5em !important; /* Slightly increased from 0.2em */
   }
   .mobile-hero-title-wrap .rooftop-hero-date {
     display: block !important;
